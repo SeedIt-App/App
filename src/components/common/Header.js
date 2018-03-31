@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { View, Colors, Touchable, Icon, Text, Image } from "./";
 
 class Header extends React.PureComponent {
-  goToSocialSignUp = () => this.props.navigation.navigate("SignUp");
+  goToSocialSignUp = () => this.props.navigation.navigate("SocialSignUp");
 
   render() {
     const { props } = this;

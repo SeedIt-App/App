@@ -11,7 +11,7 @@ const grey = "#545454";
 const darkgrey = "#808080";
 const lightBlue = "#40ACBA";
 const lgGrey = "#DCDCDC";
-const lgBlue = "#3CCDFD";
+const lgBlue = "#68E9DC";
 
 const Colors = {
   white,

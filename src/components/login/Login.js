@@ -38,7 +38,7 @@ class Login extends React.PureComponent {
                 />
               </View>
               <View className="f-center mt20">
-                <View className="bg-lightBlue f-row inputField j-start m10">
+                <View className="bg-Field f-row inputField j-start m10">
                   <Image
                     className="mini_thumb m10"
                     source={require("../images/icons/User_Login.png")}
