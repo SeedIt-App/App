@@ -5,11 +5,9 @@ import android.app.Application;
 import com.facebook.react.ReactApplication;
 import com.brentvatne.react.ReactVideoPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
-import com.geektime.rnonesignalandroid.ReactNativeOneSignalPackage;
 import fr.bamlab.rnimageresizer.ImageResizerPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.rnfs.RNFSPackage;
-import com.lwansbrough.RCTCamera.RCTCameraPackage;
 import com.RNFetchBlob.RNFetchBlobPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -33,11 +31,9 @@ public class MainApplication extends Application implements ReactApplication {
           new MainReactPackage(),
             new ReactVideoPackage(),
             new VectorIconsPackage(),
-            new ReactNativeOneSignalPackage(),
             new ImageResizerPackage(),
             new ImagePickerPackage(),
             new RNFSPackage(),
-            new RCTCameraPackage(),
             new RNFetchBlobPackage()
       );
     }
