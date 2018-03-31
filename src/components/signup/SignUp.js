@@ -18,13 +18,35 @@ class SignUp extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      date: ""
+      date: "",
+      fisrtname : "",
+      lastname : "",
+      username : "",
+      email : "",
+      phoneNo : "",
+      pwd : "",
+      gender : "",
+      confirmPwd : "",
     };
   }
 
   gotToBack = () => this.props.navigation.navigate("SocialSignUp");
 
   gotToLogin = () => this.props.navigation.navigate("Login");
+
+   componentDidMount() {
+    this.setState({
+      date :"",
+      fisrtname : "First Name",
+      lastname : "Last Name",
+      username : "User Name",
+      email : "Email",
+      phoneNo : "Phone Number",
+      pwd : "Password",
+      gender : "Gender",
+      confirmPwd : "Confirm Password",
+       });
+  }
 
   render() {
     const { props } = this;
@@ -47,11 +69,11 @@ class SignUp extends React.PureComponent {
                     </View>
                     <View className="dividerVertrical mt12 mr10" />
                     <TextInput
-                      placeholder="First Name"
                       style={{ color: "white", fontSize: 16 }}
-                      value={"First Name"}
+                      value={this.state.fisrtname}
                       autoCapitalize="none"
                       underlineColorAndroid="transparent"
+                      onChangeText={fisrtname => this.setState({ fisrtname })}
                     />
                   </View>
                   <View className="bg-lightBlue f-row formInputField j-start m5">
@@ -60,11 +82,11 @@ class SignUp extends React.PureComponent {
                     </View>
                     <View className="dividerVertrical mt12 mr10" />
                     <TextInput
-                      placeholder="Last Name"
                       style={{ color: "white", fontSize: 16 }}
-                      value={"Last Name"}
+                      value={this.state.lastname}
                       autoCapitalize="none"
                       underlineColorAndroid="transparent"
+                      onChangeText={lastname => this.setState({ lastname })}
                     />
                   </View>
                   <View className="bg-lightBlue f-row formInputField j-start m5">
@@ -74,11 +96,11 @@ class SignUp extends React.PureComponent {
                     />
                     <View className="dividerVertrical mt12 mr10" />
                     <TextInput
-                      placeholder="Username "
                       style={{ color: "white", fontSize: 16 }}
-                      value={"Username"}
+                      value={this.state.username}
                       autoCapitalize="none"
                       underlineColorAndroid="transparent"
+                      onChangeText={username => this.setState({ username })}
                     />
                   </View>
                   <View className="bg-lightBlue f-row formInputField j-start m5">
@@ -88,11 +110,11 @@ class SignUp extends React.PureComponent {
                     />
                     <View className="dividerVertrical mt12 mr10" />
                     <TextInput
-                      placeholder="Email"
                       style={{ color: "white", fontSize: 16 }}
-                      value={"Email"}
+                      value={this.state.email}
                       autoCapitalize="none"
                       underlineColorAndroid="transparent"
+                      onChangeText={email => this.setState({ email })}
                     />
                   </View>
                   <View className="bg-lightBlue f-row formInputField j-start m5">
@@ -102,11 +124,11 @@ class SignUp extends React.PureComponent {
                     />
                     <View className="dividerVertrical mt12 mr10" />
                     <TextInput
-                      placeholder="Phone Number"
                       style={{ color: "white", fontSize: 16 }}
-                      value={"Phone Number"}
+                      value={this.state.phoneNo}
                       autoCapitalize="none"
                       underlineColorAndroid="transparent"
+                      onChangeText={phoneNo => this.setState({ phoneNo })}
                     />
                   </View>
                   <View className="bg-lightBlue f-row formInputField j-start m5">
@@ -116,11 +138,11 @@ class SignUp extends React.PureComponent {
                     />
                     <View className="dividerVertrical mt12 mr10" />
                     <TextInput
-                      placeholder="Password"
                       style={{ color: "white", fontSize: 16 }}
-                      value={"Password"}
+                      value={this.state.pwd}
                       autoCapitalize="none"
                       underlineColorAndroid="transparent"
+                      onChangeText={pwd => this.setState({ pwd })}
                     />
                   </View>
                   <View className="bg-lightBlue f-row formInputField j-start m5">
@@ -130,11 +152,11 @@ class SignUp extends React.PureComponent {
                     />
                     <View className="dividerVertrical mt12 mr10" />
                     <TextInput
-                      placeholder="Confirm Password"
                       style={{ color: "white", fontSize: 16 }}
-                      value={"Confirm Password"}
+                      value={this.state.confirmPwd}
                       autoCapitalize="none"
                       underlineColorAndroid="transparent"
+                      onChangeText={confirmPwd => this.setState({ confirmPwd })}
                     />
                   </View>
                   <View className="f-center j-end f-both mv20">
