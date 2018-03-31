@@ -1,13 +1,13 @@
-import { combineReducers } from 'redux';
-import { reducer as formReducer } from 'redux-form';
-import { AuthActions } from '../actions';
-import signupReducer from './signupReducer';
-import authReducer from './authReducer';
+import { combineReducers } from "redux";
+import { reducer as formReducer } from "redux-form";
+import { AuthActions } from "../actions";
+import signupReducer from "./signupReducer";
+import authReducer from "./authReducer";
 
 const appReducer = combineReducers({
   form: formReducer,
   signup: signupReducer,
-  auth: authReducer,
+  auth: authReducer
 });
 
 const rootReducer = (state, action) => {

@@ -1,39 +1,39 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet, Dimensions } from "react-native";
 
-const { width, height } = Dimensions.get('screen');
+const { width, height } = Dimensions.get("screen");
 
 const styles = StyleSheet.create({
   wrapperView: {
     width,
     height,
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF"
   },
   topView: {
     height: 0.2 * height,
-    width,
+    width
   },
   backgroundImage: {
     width,
     height: 0.2 * height,
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: "row"
   },
   imageOverlay: {
     width: width / 2,
     height: 0.3 * height,
-    backgroundColor: 'transparent',
-    marginLeft: 15,
+    backgroundColor: "transparent",
+    marginLeft: 15
   },
   topViewData: {
-    marginTop: 20,
+    marginTop: 20
   },
   middleView: {
     height: 0.15 * height,
     width,
     flex: 1,
-    flexDirection: 'row',
-    marginBottom: 70,
+    flexDirection: "row",
+    marginBottom: 70
   },
   dropDownSelectStyles: {
     flex: 0,
@@ -46,15 +46,15 @@ const styles = StyleSheet.create({
     borderRightWidth: 0,
     borderBottomWidth: 1,
     height: 40,
-    width: width * 0.4,
+    width: width * 0.4
   },
   dateView: {
-    backgroundColor: '#285F9C',
+    backgroundColor: "#285F9C",
     width: 0.9 * width,
     marginLeft: 15,
     marginRight: 15,
-    flex: 0.5,
-  },
+    flex: 0.5
+  }
 });
 
 export default styles;

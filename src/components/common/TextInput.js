@@ -1,31 +1,31 @@
-import React from 'react';
-import { FormInput } from 'react-native-elements';
-import Colors from './colors';
-import View from './View';
+import React from "react";
+import { FormInput } from "react-native-elements";
+import Colors from "./colors";
+import View from "./View";
 
 const Styles = {
   textInputStyle: {
     borderWidth: 1,
-    borderBottomColor: Colors.black,
+    borderBottomColor: Colors.black
   },
   inputStyle: {
-    alignSelf: 'stretch',
-    width: '100%',
-    color: Colors.black,
+    alignSelf: "stretch",
+    width: "100%",
+    color: Colors.black
   },
   textInputLightStyle: {
     borderWidth: 1,
-    borderBottomColor: Colors.white,
+    borderBottomColor: Colors.white
   },
   inputLightStyle: {
-    alignSelf: 'stretch',
-    width: '100%',
-    color: Colors.white,
+    alignSelf: "stretch",
+    width: "100%",
+    color: Colors.white
   },
   containerStyle: {
     marginLeft: 0,
-    marginRight: 0,
-  },
+    marginRight: 0
+  }
 };
 
 const TextInput = props => {
@@ -35,12 +35,12 @@ const TextInput = props => {
     }
   };
   const keyboardType =
-    !props.type || props.type === 'password' ? 'default' : props.type;
+    !props.type || props.type === "password" ? "default" : props.type;
   let inputProps = {
     inputStyle: Styles.inputStyle,
     textInputStyle: Styles.textInputStyle,
     underlineColorAndroid: Colors.black,
-    selectionColor: Colors.black,
+    selectionColor: Colors.black
   };
   if (props.light) {
     inputProps = {
@@ -48,7 +48,7 @@ const TextInput = props => {
       textInputStyle: Styles.textInputLightStyle,
       underlineColorAndroid: Colors.white,
       selectionColor: Colors.white,
-      placeholderTextColor: Colors.white,
+      placeholderTextColor: Colors.white
     };
   }
   return (
@@ -64,9 +64,9 @@ const TextInput = props => {
         placeholder={props.placeholder}
         maxLength={props.maxLength}
         editable={props.editable}
-        autoCapitalize={props.autoCapitalize || 'none'}
+        autoCapitalize={props.autoCapitalize || "none"}
         autoCorrect={false}
-        secureTextEntry={props.type === 'password'}
+        secureTextEntry={props.type === "password"}
         onChangeText={onChangeText}
         value={props.value}
       />

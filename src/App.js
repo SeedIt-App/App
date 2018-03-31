@@ -1,79 +1,74 @@
-import React from 'react';
-import { StackNavigator, DrawerNavigator } from 'react-navigation';
-import { AsyncStorage } from 'react-native';
-import { Provider } from 'react-redux';
-import { View } from './components/common';
-import Splash from './components/splash-screen/Splash';
-import SplashScreen from './components/splash-screen/SplashScreen';
-import SocialSignUp from './components/signup/SocialSignUp';
-import SignUp from './components/signup/SignUp';
-import Login from './components/login/Login';
-import Home from './components/home/Home';
-import configureStore from './configure-store';
+import React from "react";
+import { StackNavigator, DrawerNavigator } from "react-navigation";
+import { AsyncStorage } from "react-native";
+import { Provider } from "react-redux";
+import { View } from "./components/common";
+import Splash from "./components/splash-screen/Splash";
+import SplashScreen from "./components/splash-screen/SplashScreen";
+import SocialSignUp from "./components/signup/SocialSignUp";
+import SignUp from "./components/signup/SignUp";
+import Login from "./components/login/Login";
+import Home from "./components/home/Home";
+import configureStore from "./configure-store";
 
-const MainNavigator = DrawerNavigator(
-  {
-    Home: {
-      screen: Home,
-    }
+const MainNavigator = DrawerNavigator({
+  Home: {
+    screen: Home
   }
-);
-
+});
 
 const AppNavigator = StackNavigator({
   Splash: {
     screen: Splash,
     navigationOptions: () => ({
-      header: null,
-    }),
+      header: null
+    })
   },
   Home: {
     screen: Home,
     navigationOptions: () => ({
-      header: null,
-    }),
+      header: null
+    })
   },
   Login: {
     screen: Login,
     navigationOptions: () => ({
-      header: null,
-    }),
-  },  
+      header: null
+    })
+  },
   SocialSignUp: {
     screen: SocialSignUp,
     navigationOptions: () => ({
-      header: null,
-    }),
+      header: null
+    })
   },
   SignUp: {
     screen: SignUp,
     navigationOptions: () => ({
-      header: null,
-    }),
+      header: null
+    })
   }
 });
 
 class App extends React.PureComponent {
-
   constructor() {
     super();
     this.state = {
-      store: null,
+      store: null
     };
   }
 
   componentWillMount() {
     let store = null;
-    const initialState = '';
-    if(initialState){
+    const initialState = "";
+    if (initialState) {
       store = configureStore(initialState);
-    } 
-    else {
+    } else {
       store = configureStore();
     }
     this.setState({ store });
   }
- 
+
   render() {
     return (
       <View className="screen app-container">
@@ -86,8 +81,8 @@ class App extends React.PureComponent {
             <Splash />
           </View>
         )}
-      </View>    
-    )
+      </View>
+    );
   }
 }
 

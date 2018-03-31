@@ -1,9 +1,8 @@
-import React from 'react';
-import { Field, reduxForm } from 'redux-form';
-import { View, Touchable, Text, FormInput, Spinner } from '../common';
+import React from "react";
+import { Field, reduxForm } from "redux-form";
+import { View, Touchable, Text, FormInput, Spinner } from "../common";
 
 class LoginForm extends React.PureComponent {
-
   render() {
     return (
       <View className="mh15">
@@ -21,18 +20,17 @@ class LoginForm extends React.PureComponent {
           type="password"
           light
         />
-          <Touchable
-            onPress={ () => {}}
-            className="btn-complementary rounded m15 expand"
-          >
-            <Text className="primary large bold">Sign In</Text>
-          </Touchable>
+        <Touchable
+          onPress={() => {}}
+          className="btn-complementary rounded m15 expand"
+        >
+          <Text className="primary large bold">Sign In</Text>
+        </Touchable>
       </View>
     );
   }
 }
 
-
 export default reduxForm({
-  form: 'LoginForm'
+  form: "LoginForm"
 })(LoginForm);

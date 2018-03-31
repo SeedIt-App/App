@@ -12,20 +12,19 @@ import {
   ScrollView
 } from "../common";
 import { TextInput } from "react-native";
-import DatePicker from 'react-native-datepicker'
+import DatePicker from "react-native-datepicker";
 
 class SignUp extends React.PureComponent {
-  
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
-      date: ''
-    }
+      date: ""
+    };
   }
 
-  gotToBack =()=> this.props.navigation.navigate('SocialSignUp')
+  gotToBack = () => this.props.navigation.navigate("SocialSignUp");
 
-  gotToLogin =()=> this.props.navigation.navigate('Login')
+  gotToLogin = () => this.props.navigation.navigate("Login");
 
   render() {
     const { props } = this;
@@ -34,103 +33,106 @@ class SignUp extends React.PureComponent {
         <View className="screen">
           <BackgroundImage
             className="flex f-row expand"
-            source={require('../images/background_images/Seed_IT.png')}
+            source={require("../images/background_images/Seed_IT.png")}
           >
             <View className="h-1-1 space-around flex">
               <View className="f-center mt20 mb20">
-                <Text className="dashHeading complementary bold">
-                  Join 
-                </Text>
+                <Text className="dashHeading complementary bold">Join</Text>
               </View>
               <ScrollView>
                 <View className="f-center">
                   <View className="bg-lightBlue f-row formInputField j-start m5">
                     <View className="m10 f-both">
-                     <Text className="bold xx_large white mr10">F</Text>
+                      <Text className="bold xx_large white mr10">F</Text>
                     </View>
-                    <View className="dividerVertrical mt12 mr10"></View>
+                    <View className="dividerVertrical mt12 mr10" />
                     <TextInput
                       placeholder="First Name"
                       style={{ color: "white", fontSize: 16 }}
-                      value={'First Name'}
+                      value={"First Name"}
                       autoCapitalize="none"
                       underlineColorAndroid="transparent"
                     />
                   </View>
                   <View className="bg-lightBlue f-row formInputField j-start m5">
                     <View className="m10 mr10">
-                     <Text className="bold xx_large white mr10">L</Text>
+                      <Text className="bold xx_large white mr10">L</Text>
                     </View>
-                    <View className="dividerVertrical mt12 mr10"></View>
+                    <View className="dividerVertrical mt12 mr10" />
                     <TextInput
                       placeholder="Last Name"
                       style={{ color: "white", fontSize: 16 }}
-                      value={'Last Name'}
+                      value={"Last Name"}
                       autoCapitalize="none"
                       underlineColorAndroid="transparent"
                     />
                   </View>
                   <View className="bg-lightBlue f-row formInputField j-start m5">
-                    <Image className="mini_thumb m10"
-                      source={require('../images/icons/User_Login.png')}>
-                    </Image>
-                    <View className="dividerVertrical mt12 mr10"></View>
+                    <Image
+                      className="mini_thumb m10"
+                      source={require("../images/icons/User_Login.png")}
+                    />
+                    <View className="dividerVertrical mt12 mr10" />
                     <TextInput
                       placeholder="Username "
                       style={{ color: "white", fontSize: 16 }}
-                      value={'Username'}
+                      value={"Username"}
                       autoCapitalize="none"
                       underlineColorAndroid="transparent"
                     />
                   </View>
                   <View className="bg-lightBlue f-row formInputField j-start m5">
-                    <Image className="mini_thumb m10"
-                      source={require('../images/icons/Mail.png')}>
-                    </Image>
-                    <View className="dividerVertrical mt12 mr10"></View>
+                    <Image
+                      className="mini_thumb m10"
+                      source={require("../images/icons/Mail.png")}
+                    />
+                    <View className="dividerVertrical mt12 mr10" />
                     <TextInput
                       placeholder="Email"
                       style={{ color: "white", fontSize: 16 }}
-                      value={'Email'}
+                      value={"Email"}
                       autoCapitalize="none"
                       underlineColorAndroid="transparent"
                     />
                   </View>
                   <View className="bg-lightBlue f-row formInputField j-start m5">
-                    <Image className="mini_thumb m10"
-                      source={require('../images/icons/Phone.png')}>
-                    </Image>
-                    <View className="dividerVertrical mt12 mr10"></View>
+                    <Image
+                      className="mini_thumb m10"
+                      source={require("../images/icons/Phone.png")}
+                    />
+                    <View className="dividerVertrical mt12 mr10" />
                     <TextInput
                       placeholder="Phone Number"
                       style={{ color: "white", fontSize: 16 }}
-                      value={'Phone Number'}
+                      value={"Phone Number"}
                       autoCapitalize="none"
                       underlineColorAndroid="transparent"
                     />
                   </View>
                   <View className="bg-lightBlue f-row formInputField j-start m5">
-                    <Image className="mini_thumb m10"
-                      source={require('../images/icons/Password.png')}>
-                    </Image>
-                    <View className="dividerVertrical mt12 mr10"></View>
+                    <Image
+                      className="mini_thumb m10"
+                      source={require("../images/icons/Password.png")}
+                    />
+                    <View className="dividerVertrical mt12 mr10" />
                     <TextInput
                       placeholder="Password"
                       style={{ color: "white", fontSize: 16 }}
-                      value={'Password'}
+                      value={"Password"}
                       autoCapitalize="none"
                       underlineColorAndroid="transparent"
                     />
                   </View>
                   <View className="bg-lightBlue f-row formInputField j-start m5">
-                    <Image className="mini_thumb m10"
-                      source={require('../images/icons/Password.png')}>
-                    </Image>
-                    <View className="dividerVertrical mt12 mr10"></View>
+                    <Image
+                      className="mini_thumb m10"
+                      source={require("../images/icons/Password.png")}
+                    />
+                    <View className="dividerVertrical mt12 mr10" />
                     <TextInput
                       placeholder="Confirm Password"
                       style={{ color: "white", fontSize: 16 }}
-                      value={'Confirm Password'}
+                      value={"Confirm Password"}
                       autoCapitalize="none"
                       underlineColorAndroid="transparent"
                     />
@@ -138,79 +140,70 @@ class SignUp extends React.PureComponent {
                   <View className="f-center j-end f-both mv20">
                     <View className=" f-both">
                       <Text className="complementary bold">Gender</Text>
-                      <View className="whiteBottomBorder"></View>
+                      <View className="whiteBottomBorder" />
                     </View>
                     <View className="f-row">
-                      <Touchable className="m20" onPress={()=> {}}>
-                        <Text className="complementary m10">
-                          Female
-                        </Text>
+                      <Touchable className="m20" onPress={() => {}}>
+                        <Text className="complementary m10">Female</Text>
                       </Touchable>
-                      <Touchable className="m20" onPress={()=> {}}>
-                        <Text className="complementary m10">
-                          Male
-                        </Text>
+                      <Touchable className="m20" onPress={() => {}}>
+                        <Text className="complementary m10">Male</Text>
                       </Touchable>
-                      <Touchable className="m20" onPress={()=> {}}>
-                        <Text className="complementary m10">
-                          Other
-                        </Text>
+                      <Touchable className="m20" onPress={() => {}}>
+                        <Text className="complementary m10">Other</Text>
                       </Touchable>
-                    </View>  
+                    </View>
                   </View>
                   <View className="bg-lightBlue f-row formInputField j-start m5">
-                    <Image className="mini_thumb m10"
-                      source={require('../images/icons/Cake.png')}>
-                    </Image>
-                    <View className="dividerVertrical mt7 mr10"></View>
-                      <DatePicker
-                        customStyles={{
-                          dateInput : {
-                            borderWidth: 0
-                          },
-                          dateText: {
-                            marginLeft : -10,
-                            fontSize : 16,
-                            color : 'white',
-                            textAlign: 'left'
-                          },
-                          placeholderText :{
-                            marginLeft : -10,
-                            fontSize : 16,
-                            color : 'white',
-                            textAlign: 'left'
-                          }
-                        }}
-                        date={this.state.date}
-                        mode="date"
-                        placeholder="Birthday"
-                        format="MM-DD-YYYY"
-                        confirmBtnText="Confirm"
-                        cancelBtnText="Cancel"
-                        showIcon={false}
-                        onDateChange={(date) => {this.setState({date: date})}}
-                      />
+                    <Image
+                      className="mini_thumb m10"
+                      source={require("../images/icons/Cake.png")}
+                    />
+                    <View className="dividerVertrical mt7 mr10" />
+                    <DatePicker
+                      customStyles={{
+                        dateInput: {
+                          borderWidth: 0
+                        },
+                        dateText: {
+                          marginLeft: -10,
+                          fontSize: 16,
+                          color: "white",
+                          textAlign: "left"
+                        },
+                        placeholderText: {
+                          marginLeft: -10,
+                          fontSize: 16,
+                          color: "white",
+                          textAlign: "left"
+                        }
+                      }}
+                      date={this.state.date}
+                      mode="date"
+                      placeholder="Birthday"
+                      format="MM-DD-YYYY"
+                      confirmBtnText="Confirm"
+                      cancelBtnText="Cancel"
+                      showIcon={false}
+                      onDateChange={date => {
+                        this.setState({ date: date });
+                      }}
+                    />
                   </View>
                 </View>
               </ScrollView>
 
               <View className="f-center mt20 mv20">
-                <Touchable className="submitField m20" onPress={()=> {}}>
-                  <Text className="complementary title m10">
-                    Sign Up
-                  </Text>
+                <Touchable className="submitField m20" onPress={() => {}}>
+                  <Text className="complementary title m10">Sign Up</Text>
                 </Touchable>
               </View>
               <View className="f-center j-end f-both f-row mv20">
                 <Touchable className="m20" onPress={this.gotToLogin}>
-                  <Text className="complementary bold  m10">
-                    Login
-                  </Text>
+                  <Text className="complementary bold  m10">Login</Text>
                 </Touchable>
                 <Touchable className="m20" onPress={this.gotToBack}>
-                  <Text className="complementary  m10">
-                    Cancel
-                  </Text>
+                  <Text className="complementary  m10">Cancel</Text>
                 </Touchable>
               </View>
             </View>

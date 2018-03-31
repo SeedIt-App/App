@@ -1,18 +1,18 @@
-import React, { Component } from 'react'
-import DatePicker from 'react-native-datepicker'
-import Colors from './colors';
-import View from './View';
+import React, { Component } from "react";
+import DatePicker from "react-native-datepicker";
+import Colors from "./colors";
+import View from "./View";
 
 class DatePicker extends Component {
-  constructor(props){
-    super(props)
-    this.state = {date:"2016-05-15"}
+  constructor(props) {
+    super(props);
+    this.state = { date: "2016-05-15" };
   }
 
-  render(){
+  render() {
     return (
       <DatePicker
-        style={{width: 200}}
+        style={{ width: 200 }}
         date={this.state.date}
         mode="date"
         placeholder="select date"
@@ -23,7 +23,7 @@ class DatePicker extends Component {
         cancelBtnText="Cancel"
         customStyles={{
           dateIcon: {
-            position: 'absolute',
+            position: "absolute",
             left: 0,
             top: 4,
             marginLeft: 0
@@ -33,9 +33,11 @@ class DatePicker extends Component {
           }
           // ... You can check the source to find the other keys.
         }}
-        onDateChange={(date) => {this.setState({date: date})}}
+        onDateChange={date => {
+          this.setState({ date: date });
+        }}
       />
-    )
+    );
   }
 }
 

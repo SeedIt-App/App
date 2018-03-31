@@ -1,6 +1,6 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import Splash from './Splash';
+import React from "react";
+import { connect } from "react-redux";
+import Splash from "./Splash";
 
 class SplashScreen extends React.PureComponent {
   render() {
