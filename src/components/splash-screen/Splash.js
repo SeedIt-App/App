@@ -2,7 +2,6 @@ import React from "react";
 import { Text, View, BackgroundImage, Image, Touchable } from "../common";
 
 class Splash extends React.PureComponent {
-  goToHome = () => this.props.navigation.navigate("Home");
   render() {
     return (
       <View className="screen">
@@ -15,7 +14,7 @@ class Splash extends React.PureComponent {
               <Text className="heading complementary bold">Seed It</Text>
             </View>
             <View className="f-center">
-              <Touchable className="mv15" onPress={this.goToHome}>
+              <Touchable className="mv15" onPress={() => {}}>
                 <Image source={require("../images/logo.png")} />
               </Touchable>
             </View>

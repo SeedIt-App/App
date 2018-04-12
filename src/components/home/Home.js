@@ -9,11 +9,11 @@ import {
   Footer,
   ScrollView
 } from "../common";
+import { AuthActions } from "../../actions";
 
 class Home extends React.PureComponent {
   render() {
     const { props } = this;
-
     return (
       <View className="screen">
         <Header title="Newsfeed" navigation={this.props.navigation} />

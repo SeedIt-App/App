@@ -57,7 +57,7 @@ const textStyle = StyleSheet.create({
     color: Colors.darkgrey
   },
   blue: {
-    color: Colors.blue
+    color: Colors.headerBg
   },
   error: {
     color: Colors.error,

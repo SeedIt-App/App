@@ -10,18 +10,61 @@ import {
   Colors,
   KeyboardAvoidingView
 } from "../common";
-import LoginForm from "./LoginForm";
 import { TextInput } from "react-native";
+import { AuthActions } from "../../actions";
+import Toast from "react-native-root-toast";
+import idx from "idx";
 
 class Login extends React.PureComponent {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      username : "",
+      password: "",
+    };
+  }
+
   goToSocialSignUp = () => this.props.navigation.navigate("SocialSignUp");
 
-  login = () => {
-    console.log("login");
+  componentWillReceiveProps(nextProps) {
+   if (this.props.loginErrorStatus) {
+      Toast.show(this.props.loginErrorStatus, {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM
+      });
+    }
+    if (nextProps.loginRequestStatus === "SUCCESS") {
+      Toast.show("Logged in Successfully!", {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM
+      });
+    }
+  }
+   
+  componentDidMount() {
+    this.setState({
+      username : "Username",
+      password : "Password",
+    });
+  }
+
+  Login =() => {
+    const loginValues = {
+      "usernameOrEmail" : this.state.username,
+      "password" : this.state.password
+    }
+    this.props.login(loginValues);
+    if (this.props.loginRequestStatus === "SUCCESS") {
+      this.props.navigation.navigate('Home')
+    }
   };
 
   render() {
-    const { props } = this;
+    const {
+      loginRequestStatus,
+      loginErrorStatus,
+    } = this.props;
     return (
       <KeyboardAvoidingView>
         <View className="screen">
@@ -45,11 +88,11 @@ class Login extends React.PureComponent {
                   />
                   <View className="dividerVertrical mt10 mr10" />
                   <TextInput
-                    placeholder="Username"
                     style={{ color: "white", fontSize: 16 }}
-                    value={"Username"}
+                    value={this.state.username}
                     autoCapitalize="none"
                     underlineColorAndroid="transparent"
+                    onChangeText={username => this.setState({ username })}
                   />
                 </View>
                 <View className="bg-lightBlue f-row inputField j-start m10">
@@ -59,18 +102,23 @@ class Login extends React.PureComponent {
                   />
                   <View className="dividerVertrical mt10 mr10" />
                   <TextInput
-                    placeholder="Password"
                     style={{ color: "white", fontSize: 16 }}
-                    value={"Password"}
+                    value={this.state.password}
                     autoCapitalize="none"
                     underlineColorAndroid="transparent"
+                    onChangeText={password => this.setState({ password })}
                   />
+                  <View className="pull-right">
+                    <Touchable className="showPasswordAuth" onPress={() =>{}}>
+                      <Text className="darkGrey bold medium m10">Show</Text>
+                    </Touchable>
+                  </View> 
                 </View>
                 <Text className="normal white">Forgot Password ?</Text>
               </View>
               <View className="f-center  mt20 mv20">
-                <Touchable className="submitField m20" onPress={() => {}}>
-                  <Text className="complementary title m10">Login</Text>
+                <Touchable className="submitField m20" onPress={this.Login}>
+                  <Text className="complementary title m10"> Login</Text>
                 </Touchable>
                 <View className="f-row mt10">
                   <Text className="normal white mt12">New</Text>
@@ -87,4 +135,14 @@ class Login extends React.PureComponent {
   }
 }
 
-export default connect()(Login);
+function mapStateToProps(state) {
+  const {loginErrorStatus, loginRequestStatus} = state.login;
+  return {
+    loginRequestStatus,
+    loginErrorStatus,
+    isAuthorizedUser: idx(state, _ => _.auth.isAuthorizedUser)
+  };
+}
+export default connect(mapStateToProps, { ...AuthActions})(
+  Login
+);

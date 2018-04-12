@@ -133,6 +133,9 @@ const margins = {
 };
 
 const paddings = {
+  p3 : {
+   padding : 3,
+  },
   p5: {
     padding: 5
   },
@@ -505,15 +508,27 @@ export default StyleSheet.create({
   },
   inputField: {
     height: 45,
-    width: 350
+    width: 300
+  },
+  editField: {
+    height: 40,
+    width: 300,
+    borderColor : Colors.headerBg,
+    borderWidth : 1,
   },
   formInputField: {
     height: 45,
     width: 310
   },
+  textArea : {
+    borderColor : Colors.headerBg,
+    borderWidth : 1,
+    height: 60,
+    width: 300,
+  },
   textField: {
     height: 60,
-    width: 320,
+    width: 300,
     backgroundColor: Colors.white,
     shadowColor: "#000000",
     shadowOffset: {
@@ -523,9 +538,24 @@ export default StyleSheet.create({
     shadowRadius: 5,
     shadowOpacity: 1.0
   },
+  showPassword: {
+    height: 40,
+    width: 70,
+    backgroundColor : Colors.vlblue,
+  },
+  showPasswordAuth: {
+    height: 40,
+    width: 70,
+    backgroundColor : '#D8F6F7',
+  },
   submitField: {
     height: 40,
     width: 120,
+    backgroundColor: Colors.headerBg
+  },
+  submitFieldPwd: {
+    height: 40,
+    width: 150,
     backgroundColor: Colors.headerBg
   },
   "hamburger-menu": {

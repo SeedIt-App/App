@@ -9,7 +9,7 @@ import { setAuthHeaders } from "./api";
 const localStorageMiddleware = ({ getState }) => next => action => {
   const result = next(action);
   if (action.type === AuthActions.SET_AUTH_USER) {
-    AsyncStorage.setItem("authState", JSON.stringify(getState().auth));
+    AsyncStorage.setItem("authState", JSON.stringify(getState().auth.authToken));
     setAuthHeaders(getState().auth.authToken);
   }
   if (action.type === AuthActions.LOGOUT) {
@@ -32,7 +32,11 @@ export default function configureStore(initialState = {}) {
   if (initialState && initialState.auth) {
     setAuthHeaders(initialState.auth.authToken);
   }
-  const middleware = [sagaMiddleware, networkErrorMiddleware];
+  const middleware = [
+    sagaMiddleware,
+    localStorageMiddleware,
+    networkErrorMiddleware,
+  ];
   const composeEnhancers =
     global.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
   const enhancer = composeEnhancers(applyMiddleware(...middleware));

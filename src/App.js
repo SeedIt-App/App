@@ -10,27 +10,55 @@ import SignUp from "./components/signup/SignUp";
 import Login from "./components/login/Login";
 import Home from "./components/home/Home";
 import configureStore from "./configure-store";
+import ProfileNavigator from "./components/profile/ProfileNavigator";
 
 const MainNavigator = DrawerNavigator({
   Home: {
-    screen: Home
-  }
+    screen: Home,
+  },
+  Login: {
+    screen: Login,
+  },
+  SocialSignUp: {
+    screen: SocialSignUp,
+  },
+  SignUp: {
+    screen: SignUp,
+  },
+
+  'Profile': {
+    screen: ({ navigation, screenProps }) => (
+      <ProfileNavigator
+        screenProps={{
+          rootNavigation: screenProps.rootNavigation,
+          mainNavigation: navigation,
+        }}
+        onNavigationStateChange={() => {}}
+      />
+    ),
+  },
 });
 
 const AppNavigator = StackNavigator({
-  Splash: {
-    screen: Splash,
+  
+ /* Splash: {
+    screen: SplashScreen,
     navigationOptions: () => ({
-      header: null
-    })
-  },
-  Home: {
-    screen: Home,
+      header: null,
+    }),
+  },*/
+  Main: {
+    screen: ({ navigation }) => (
+      <MainNavigator
+        screenProps={{ rootNavigation: navigation }}
+        onNavigationStateChange={() => {}}
+      />
+    ),
     navigationOptions: () => ({
-      header: null
-    })
+      header: null,
+    }),
   },
-  Login: {
+  /* Login: {
     screen: Login,
     navigationOptions: () => ({
       header: null
@@ -47,7 +75,7 @@ const AppNavigator = StackNavigator({
     navigationOptions: () => ({
       header: null
     })
-  }
+  }*/
 });
 
 class App extends React.PureComponent {
@@ -59,27 +87,33 @@ class App extends React.PureComponent {
   }
 
   componentWillMount() {
-    let store = null;
-    const initialState = "";
-    if (initialState) {
-      store = configureStore(initialState);
-    } else {
-      store = configureStore();
-    }
-    this.setState({ store });
+    AsyncStorage.multiGet(['authState'], (error, localState) => {
+      let store = null;
+      if (!error && localState) {
+        const auth = JSON.parse(localState[0][1]);
+        const initialState = {};
+        if (auth) {
+          initialState.auth = auth;
+        }
+        store = configureStore(initialState);
+      } else {
+        store = configureStore();
+      }
+      this.setState({ store });
+    });
   }
 
   render() {
     return (
       <View className="screen app-container">
-        {this.state.store ? (
+          {/*<Provider store={this.state.store}>
+                      <AppNavigator onNavigationStateChange={null} />
+                    </Provider>*/}
+
+        {this.state.store && (
           <Provider store={this.state.store}>
             <AppNavigator onNavigationStateChange={null} />
           </Provider>
-        ) : (
-          <View className="abs-cover f-both">
-            <Splash />
-          </View>
         )}
       </View>
     );

@@ -12,6 +12,7 @@ const darkgrey = "#808080";
 const lightBlue = "#40ACBA";
 const lgGrey = "#DCDCDC";
 const lgBlue = "#68E9DC";
+const vlblue = "#D3EEEC";
 
 const Colors = {
   white,
@@ -27,7 +28,8 @@ const Colors = {
   lightBlue,
   darkgrey,
   lgGrey,
-  lgBlue
+  lgBlue,
+  vlblue
 };
 
 export default Colors;

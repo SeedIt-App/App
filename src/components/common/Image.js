@@ -48,12 +48,11 @@ const imageStyles = StyleSheet.create({
     backgroundColor: "white"
   },
   med_thumb_view: {
-    height: 65,
-    width: 65,
-    borderRadius: 65 / 2,
-    borderWidth: 3,
-    borderColor: "red",
-    backgroundColor: "white"
+    height: 85,
+    width: 85,
+    borderRadius: 65,
+    borderWidth: 1,
+    borderColor: Colors.transparent
   },
   big_thumb: {
     height: 100,

@@ -10,14 +10,16 @@ import {
   Colors,
   KeyboardAvoidingView
 } from "../common";
+import Toast from "react-native-root-toast";
 
 class SocialSignUp extends React.PureComponent {
+  
   gotToBack = () => this.props.navigation.navigate("Home");
-
   goToSignUp = () => this.props.navigation.navigate("SignUp");
-
+  goToLogin = () => this.props.navigation.navigate("Login");
+  
   render() {
-    const { props } = this;
+    const { props} = this;
     return (
       <KeyboardAvoidingView>
         <View className="screen">
@@ -44,7 +46,7 @@ class SocialSignUp extends React.PureComponent {
                   </Touchable>
                 </View>
                 <View className=" f-row textField m10 f-both">
-                  <Touchable className="m20" onPress={() => {}}>
+                  <Touchable className="m20" onPress={this.SignUpByGoogle}>
                     <Text className="bold darkGrey">Sign Up with Gmail</Text>
                   </Touchable>
                 </View>
@@ -56,7 +58,7 @@ class SocialSignUp extends React.PureComponent {
                 </View>
               </View>
               <View className="f-center j-end f-both f-row mv20">
-                <Touchable className="m20" onPress={() => {}}>
+                <Touchable className="m20" onPress={this.goToLogin}>
                   <Text className="complementary bold  m10">Login</Text>
                 </Touchable>
                 <Touchable className="m20" onPress={this.gotToBack}>

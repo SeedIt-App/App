@@ -1,18 +1,20 @@
 import { combineReducers } from "redux";
-import { reducer as formReducer } from "redux-form";
 import { AuthActions } from "../actions";
 import signupReducer from "./signupReducer";
 import authReducer from "./authReducer";
+import loginReducer from "./loginReducer";
+import userReducer from "./userReducer";
 
 const appReducer = combineReducers({
-  form: formReducer,
   signup: signupReducer,
-  auth: authReducer
+  auth: authReducer,
+  login : loginReducer,
+  loggedUser : userReducer,
 });
 
 const rootReducer = (state, action) => {
   if (action.type === AuthActions.LOGOUT) {
-    state = { otp: state.otp };
+    state = { auth: state.auth };
   }
 
   return appReducer(state, action);

@@ -1,4 +1,4 @@
-import React from "react";
+/*import React from "react";
 import { connect } from "react-redux";
 import { AuthActions } from "../../actions";
 import { Spinner } from "../common";
@@ -18,3 +18,4 @@ class Logout extends React.PureComponent {
 }
 
 export default connect(null, { ...AuthActions })(Logout);
+*/

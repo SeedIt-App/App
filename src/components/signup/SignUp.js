@@ -13,20 +13,23 @@ import {
 } from "../common";
 import { TextInput } from "react-native";
 import DatePicker from "react-native-datepicker";
+import { AuthActions } from "../../actions";
+import Toast from "react-native-root-toast";
 
 class SignUp extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       date: "",
-      fisrtname : "",
+      firstname : "",
       lastname : "",
       username : "",
       email : "",
       phoneNo : "",
       pwd : "",
-      gender : "",
+      gender : ["Male" , "Female" , "Other"],
       confirmPwd : "",
+      selectedGender: "",
     };
   }
 
@@ -34,22 +37,58 @@ class SignUp extends React.PureComponent {
 
   gotToLogin = () => this.props.navigation.navigate("Login");
 
-   componentDidMount() {
+  componentDidMount() {
     this.setState({
       date :"",
-      fisrtname : "First Name",
+      firstname : "First Name",
       lastname : "Last Name",
       username : "User Name",
       email : "Email",
       phoneNo : "Phone Number",
       pwd : "Password",
-      gender : "Gender",
       confirmPwd : "Confirm Password",
-       });
+    });
+  }
+
+  componentWillReceiveProps() {
+    if (this.props.signupErrorStatus) {
+      Toast.show(this.props.signupErrorStatus, {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM
+      });
+    }
+  }
+
+  selectGender = () => {
+    this.setState({selectedGender : 'female'})
+    console.log(this.state.selectedGender)
+  }
+
+  SignUp = () => {
+    const userData = {
+      "firstName": this.state.firstName,
+      "lastName": this.state.lastname,
+      "userName": this.state.username,
+      "email": this.state.email,
+      "password": this.state.pwd,
+      "phone": this.state.phoneNo,
+      "gender": this.state.selectedGender,
+      "birthDate": this.state.date,
+    }
+    this.props.signup(userData);
+    if (this.props.signupRequestStatus == "SUCCESS") {
+      Toast.show('SUCCESS', {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM
+      });
+    }
   }
 
   render() {
-    const { props } = this;
+     const {
+      signupRequestStatus,
+      signupErrorStatus,
+    } = this.props;
     return (
       <KeyboardAvoidingView>
         <View className="screen">
@@ -70,10 +109,10 @@ class SignUp extends React.PureComponent {
                     <View className="dividerVertrical mt12 mr10" />
                     <TextInput
                       style={{ color: "white", fontSize: 16 }}
-                      value={this.state.fisrtname}
+                      value={this.state.firstname}
                       autoCapitalize="none"
                       underlineColorAndroid="transparent"
-                      onChangeText={fisrtname => this.setState({ fisrtname })}
+                      onChangeText={firstname => this.setState({ firstname })}
                     />
                   </View>
                   <View className="bg-lightBlue f-row formInputField j-start m5">
@@ -144,6 +183,11 @@ class SignUp extends React.PureComponent {
                       underlineColorAndroid="transparent"
                       onChangeText={pwd => this.setState({ pwd })}
                     />
+                    <View className="pull-right">
+                      <Touchable className="showPasswordAuth" onPress={() =>{}}>
+                        <Text className="darkGrey bold medium m10">Show</Text>
+                      </Touchable>
+                    </View> 
                   </View>
                   <View className="bg-lightBlue f-row formInputField j-start m5">
                     <Image
@@ -158,6 +202,11 @@ class SignUp extends React.PureComponent {
                       underlineColorAndroid="transparent"
                       onChangeText={confirmPwd => this.setState({ confirmPwd })}
                     />
+                    <View className="pull-right">
+                      <Touchable className="showPasswordAuth" onPress={() =>{}}>
+                        <Text className="darkGrey bold medium m10">Show</Text>
+                      </Touchable>
+                    </View> 
                   </View>
                   <View className="f-center j-end f-both mv20">
                     <View className=" f-both">
@@ -165,16 +214,14 @@ class SignUp extends React.PureComponent {
                       <View className="whiteBottomBorder" />
                     </View>
                     <View className="f-row">
-                      <Touchable className="m20" onPress={() => {}}>
-                        <Text className="complementary m10">Female</Text>
-                      </Touchable>
-                      <Touchable className="m20" onPress={() => {}}>
-                        <Text className="complementary m10">Male</Text>
-                      </Touchable>
-                      <Touchable className="m20" onPress={() => {}}>
-                        <Text className="complementary m10">Other</Text>
-                      </Touchable>
-                    </View>
+                      {this.state.gender.map(g => (
+                        <View className="f-row">
+                          <Touchable className="m20" onPress={this.selectGender}>
+                            <Text className="complementary m10">{g}</Text>
+                          </Touchable>
+                        </View>  
+                      ))}
+                     </View>    
                   </View>
                   <View className="bg-lightBlue f-row formInputField j-start m5">
                     <Image
@@ -216,16 +263,16 @@ class SignUp extends React.PureComponent {
               </ScrollView>
 
               <View className="f-center mt20 mv20">
-                <Touchable className="submitField m20" onPress={() => {}}>
+                <Touchable className="submitField m20" onPress={this.SignUp}>
                   <Text className="complementary title m10">Sign Up</Text>
                 </Touchable>
               </View>
               <View className="f-center j-end f-both f-row mv20">
                 <Touchable className="m20" onPress={this.gotToLogin}>
-                  <Text className="complementary bold  m10">Login</Text>
+                  <Text className="complementary bold m10">Login</Text>
                 </Touchable>
                 <Touchable className="m20" onPress={this.gotToBack}>
-                  <Text className="complementary  m10">Cancel</Text>
+                  <Text className="complementary m10">Cancel</Text>
                 </Touchable>
               </View>
             </View>
@@ -236,4 +283,13 @@ class SignUp extends React.PureComponent {
   }
 }
 
-export default connect()(SignUp);
+function mapStateToProps(state) {
+  const {signupErrorStatus, signupRequestStatus} = state.signup;
+  return {
+    signupErrorStatus,
+    signupRequestStatus,
+  };
+}
+export default connect(mapStateToProps, { ...AuthActions})(
+  SignUp
+);

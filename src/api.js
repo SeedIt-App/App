@@ -46,5 +46,5 @@ export function PUT(location, body) {
 axios.defaults.baseURL = API_BASE_URL;
 
 export function setAuthHeaders(authToken) {
-  axios.defaults.headers.common.Authorization = `JWT ${authToken}`;
+  axios.defaults.headers.Authorization = `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MjM1MzYxMDgsImlhdCI6MTUyMzUzNTIwOCwic3ViIjoiNWFjYjBlZWViNDQ5YjEwMDIwNjQwOGFkIn0.0G9859VQxGDr3RolivM7vBZC0DIlR_TAyy_I3whFdEs`;
 }
