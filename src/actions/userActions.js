@@ -1,5 +1,16 @@
 import { createAction } from "redux-actions";
 
+//State for Get Single User
+/*export const GETSINGLEUSER = "LUSER/GETSINGLEUSER";
+export const GETSINGLEUSER_REQUEST = "LUSER/GETSINGLEUSER_REQUEST";
+export const GETSINGLEUSER_SUCCESS = "LUSER/GETSINGLEUSER_SUCCESS";
+export const GETSINGLEUSER_FAILURE = "LUSER/GETSINGLEUSER_FAILURE";
+
+export const getSingleUser = createAction(GETSINGLEUSER);
+export const getSingleUserRequest = createAction(GETSINGLEUSER_REQUEST);
+export const getSingleUserSuccess = createAction(GETSINGLEUSER_SUCCESS);
+export const getSingleUserFailure = createAction(GETSINGLEUSER_FAILURE);*/
+
 // State for PROFILE process
 
 export const PROFILE = "LUSER/PROFILE";
@@ -14,13 +25,13 @@ export const profileFailure = createAction(PROFILE_FAILURE);
 
 // State for Edit PROFILE process
 
-/*export const EDITPROFILE = "AUTH/EDITPROFILE";
-export const EDITPROFILE_REQUEST = "AUTH/EDITPROFILE_REQUEST";
-export const EDITPROFILE_SUCCESS = "AUTH/EDITPROFILE_REQUEST";
-export const EDITPROFILE_FAILURE = "AUTH/EDITPROFILE_FAILURE";
+export const EDITPROFILE = "LUSER/EDITPROFILE";
+export const EDITPROFILE_REQUEST = "LUSER/EDITPROFILE_REQUEST";
+export const EDITPROFILE_SUCCESS = "LUSER/EDITPROFILE_SUCCESS";
+export const EDITPROFILE_FAILURE = "LUSER/EDITPROFILE_FAILURE";
 
 export const editProfile = createAction(EDITPROFILE);
 export const editProfileRequest = createAction(EDITPROFILE_REQUEST);
-export const editProfileSuccess = createAction(EDITPROFILE_REQUEST);
-export const editProfileFailure = createAction(EDITPROFILE_FAILURE);*/
+export const editProfileSuccess = createAction(EDITPROFILE_SUCCESS);
+export const editProfileFailure = createAction(EDITPROFILE_FAILURE);
 

@@ -8,10 +8,10 @@ import { setAuthHeaders } from "./api";
 
 const localStorageMiddleware = ({ getState }) => next => action => {
   const result = next(action);
-  if (action.type === AuthActions.SET_AUTH_USER) {
+  //if (action.type === AuthActions.SET_AUTH_USER) {
     AsyncStorage.setItem("authState", JSON.stringify(getState().auth.authToken));
     setAuthHeaders(getState().auth.authToken);
-  }
+  //}
   if (action.type === AuthActions.LOGOUT) {
     AsyncStorage.removeItem("authState");
     setAuthHeaders("");

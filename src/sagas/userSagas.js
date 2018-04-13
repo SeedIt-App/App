@@ -3,7 +3,7 @@ import { UserActions } from "../actions";
 import { GET, POST, PUT } from "../api";
 import idx from "idx";
 
-/*function* getSingleUser(action) {
+function* getSingleUser(action) {
   yield put(UserActions.signupRequest());
   try {
     const user = yield select(getUser);
@@ -18,16 +18,16 @@ import idx from "idx";
     }
     yield put(UserActions.signupFailure(msgError));
   }
-}*/
+}
 
-function* profile() {
+function* profile(action) {
   yield put(UserActions.profileRequest());
   try {
     const userprofileURL = "/users/profile";
     const { response } = yield call(GET, userprofileURL);
     console.log(response,"pR")
     yield put(UserActions.profileSuccess({
-      hello: idx(response, _ => _.data.data),
+      luser:response.data
     }));
   } catch (error) {
     console.log(error)
@@ -39,7 +39,7 @@ function* profile() {
   }
 }
 
-/*function* updateUserProfile(action) {
+function* editProfile(action) {
   yield put(UserActions.googlesignupRequest());
   try {
     const googleLoginURL = "/auth/google";
@@ -54,11 +54,10 @@ function* profile() {
       msgError = error.data.error.message;
     }
     yield put(UserActions.googlesignupFailure(msgError));
-  
-}}*/
+}}
 
 export default function* authSagas() {
-/*  yield all([fork(takeLatest, UserActions.PROFILE, getSingleUser)]);
-*/  
+yield all([fork(takeLatest, UserActions.PROFILE, getSingleUser)]);
+yield all([fork(takeLatest, UserActions.EDITPROFILE, editProfile)]);
 yield all([fork(takeLatest, UserActions.PROFILE, profile)]);
 }

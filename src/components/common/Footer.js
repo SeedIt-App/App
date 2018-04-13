@@ -6,6 +6,8 @@ import { AuthActions } from "../../actions";
 class Footer extends React.PureComponent {
   goToLogin = () => this.props.navigation.navigate("Login");
   goToProfile = () => this.props.navigation.navigate("Profile");
+    goToHome = () => {this.props.navigation.navigate("Home")}
+
 
   render() {
     const { props } = this;
@@ -55,7 +57,7 @@ class Footer extends React.PureComponent {
             <Text>Tags</Text>
           </View>
           <View className="p5">
-            <Touchable onPress={() => {}}>
+            <Touchable onPress={this.goToHome}>
               <View className="f-row f-both m20">
                 <Image
                   className="mini_thumb m10"

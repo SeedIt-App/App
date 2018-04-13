@@ -116,8 +116,10 @@ class Profile extends React.PureComponent {
   };
 
   render() {
-    const { profileRequestStatus, profileErrorStatus } = this.props;
+    const { profileRequestStatus, profileErrorStatus, luser} = this.props;
     console.log(this.props)
+
+
     return (
       <KeyboardAvoidingView>
         <View className="screen">
@@ -134,17 +136,18 @@ class Profile extends React.PureComponent {
                   </View>
                   <View className="mh25">
                     <Text className="darkGrey bold medium">
-                      Sarah Lengley
+                      {luser &&  luser.firstName + '  ' + luser.lastName || 'Full Name'}
                     </Text>
                     <Text className="darkGrey medium">
-                      CokieeMonster
+                      {luser && luser.userName || 'UserName'}
                     </Text>
                     <Text className="darkGrey medium">
-                      Wilcusion
+                      {luser && luser.address.city + ' ' + luser.address.state + '\n ' + 
+                      luser.address.country + '' + luser.address.zip || 'Address'}
                     </Text>
                   </View>
                 </View>
-                <View className="mh25 mt10">
+                <View className="mh5 mt10">
                   <Text className="blue bold large">
                     Follow
                   </Text>
@@ -153,8 +156,7 @@ class Profile extends React.PureComponent {
               <View className="bg-transparent f-row mt10 space-between">
                 <View className="mh25 mt10">
                   <Text className="darkGrey medium">
-                    I Love House of Cards and lasanga. Passionate{'\n'}
-                    about the revival of detroit
+                    {luser && luser.bio || 'Bio'}
                   </Text>
                 </View>
               </View>  
@@ -165,7 +167,7 @@ class Profile extends React.PureComponent {
                     source={require("../images/avatars/Abbott.png")}
                   />
                   <Text className="mh10 darkGrey medium">
-                    Cards
+                    Moderator
                   </Text>
                 </View>
                 <View className=" f-center f-column">
@@ -174,7 +176,7 @@ class Profile extends React.PureComponent {
                     source={require("../images/avatars/Abbott.png")}
                   />
                   <Text className=" mh10 darkGrey medium">
-                    Cards1
+                    Badge
                   </Text>
                 </View>
                 <View className="mr25 f-center f-column">
@@ -183,7 +185,7 @@ class Profile extends React.PureComponent {
                     source={require("../images/avatars/Abbott.png")}
                   />
                   <Text className="mh10 darkGrey medium">
-                    Cards2
+                    Advocate
                   </Text>
                 </View>
               </View>  
@@ -288,11 +290,13 @@ function mapStateToProps(state) {
   const {
     profileRequestStatus,
     profileErrorStatus,
-  } = state;
+    luser
+  } = state.loggedUser;
   console.log(state, "prState")
   return {
     profileRequestStatus,
     profileErrorStatus,
+    luser,
   };
 }
 

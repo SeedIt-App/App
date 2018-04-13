@@ -12,6 +12,7 @@ import {
   ScrollView
 } from "../common";
 import { TextInput } from "react-native";
+import { UserActions } from '../../actions';
 
 class EditProfile extends React.PureComponent {
 
@@ -38,12 +39,13 @@ class EditProfile extends React.PureComponent {
       address: '',
       bio: '',
       badges : [],
-      fullName : this.state.firstName
+      fullName : this.state.firstName + this.state.lastName
     });
   }
 
   
   render() {
+    const { profileRequestStatus, profileErrorStatus, luser}
     const { props } = this;
     return (
       <KeyboardAvoidingView>
@@ -157,5 +159,18 @@ class EditProfile extends React.PureComponent {
     );
   }
 }
+function mapStateToProps(state) {
+  const {
+    profileRequestStatus,
+    profileErrorStatus,
+    luser
+  } = state.loggedUser;
+  console.log(state, "EditProfile")
+  return {
+    profileRequestStatus,
+    profileErrorStatus,
+    luser,
+  };
+}
 
-export default connect()(EditProfile);
+export default connect(mapStateToProps, { ...UserActions })(EditProfile);

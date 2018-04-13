@@ -9,6 +9,9 @@ class Header extends React.PureComponent {
     this.props.navigation.goBack();
   };
 
+      goToHome = () => {this.props.navigation.navigate("Home")}
+
+
   goToSocialSignUp = () => this.props.navigation.navigate("SocialSignUp");
 
   render() {
@@ -23,7 +26,7 @@ class Header extends React.PureComponent {
                 <Icon name="keyboard-backspace" color={Colors.white} size={28} />
               </Touchable>
               ) : (
-              <Touchable className="pull-left" onPress={() => {}}>
+              <Touchable className="pull-left" onPress={this.goToHome}>
                 <Image
                   className="medium_thumb"
                   source={require("../images/logo.png")}
