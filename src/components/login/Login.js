@@ -1,5 +1,5 @@
-import React from "react";
-import { connect } from "react-redux";
+import React from 'react';
+import { connect } from 'react-redux';
 import {
   View,
   BackgroundImage,
@@ -8,87 +8,97 @@ import {
   Text,
   Spinner,
   Colors,
-  KeyboardAvoidingView
-} from "../common";
-import { TextInput } from "react-native";
-import { AuthActions } from "../../actions";
-import Toast from "react-native-root-toast";
-import idx from "idx";
+  KeyboardAvoidingView,
+} from '../common';
+import { TextInput } from 'react-native';
+import { AuthActions } from '../../actions';
+import Toast from 'react-native-root-toast';
+import idx from 'idx';
 
 class Login extends React.PureComponent {
-
   constructor(props) {
     super(props);
     this.state = {
-      username : "",
-      password: "",
+      username: '',
+      password: '',
+      showPassword: true,
     };
   }
 
-  goToSocialSignUp = () => this.props.navigation.navigate("SocialSignUp");
+  goToSocialSignUp = () => this.props.navigation.navigate('SocialSignUp');
 
   componentWillReceiveProps(nextProps) {
-   if (this.props.loginErrorStatus) {
-      Toast.show(this.props.loginErrorStatus, {
+    if (nextProps.loginErrorStatus) {
+      Toast.show(nextProps.loginErrorStatus, {
         duration: Toast.durations.LONG,
-        position: Toast.positions.BOTTOM
+        position: Toast.positions.BOTTOM,
       });
     }
-    if (nextProps.loginRequestStatus === "SUCCESS") {
-      Toast.show("Logged in Successfully!", {
+    if (nextProps.loginRequestStatus === 'SUCCESS') {
+      Toast.show('Logged in Successfully!', {
         duration: Toast.durations.LONG,
-        position: Toast.positions.BOTTOM
+        position: Toast.positions.BOTTOM,
+      });
+      this.props.navigation.dispatch({
+        type: 'Navigation/RESET',
+        index: 0,
+        actions: [{ type: 'Navigation/NAVIGATE', routeName: 'SplashScreen' }],
+      });
+    }
+    if (!this.props.isAuthorizedUser && nextProps.isAuthorizedUser) {
+      this.props.navigation.dispatch({
+        type: 'Navigation/RESET',
+        index: 0,
+        actions: [{ type: 'Navigation/NAVIGATE', routeName: 'Home' }],
       });
     }
   }
-   
+
   componentDidMount() {
     this.setState({
-      username : "Username",
-      password : "Password",
+      username: 'Username',
+      password: 'Password',
     });
   }
 
-  Login =() => {
+  Login = () => {
     const loginValues = {
-      "usernameOrEmail" : this.state.username,
-      "password" : this.state.password
-    }
+      usernameOrEmail: this.state.username,
+      password: this.state.password,
+    };
     this.props.login(loginValues);
-    if (this.props.loginRequestStatus === "SUCCESS") {
-      this.props.navigation.navigate('Home')
-    }
+  };
+
+  toggleSwitch = () => {
+    this.setState({ showPassword: !this.state.showPassword });
   };
 
   render() {
-    const {
-      loginRequestStatus,
-      loginErrorStatus,
-    } = this.props;
+    const { loginRequestStatus, loginErrorStatus } = this.props;
     return (
       <KeyboardAvoidingView>
         <View className="screen">
           <BackgroundImage
             className="flex f-row expand"
-            source={require("../images/background_images/Seed_IT.png")}
+            source={require('../images/background_images/Seed_IT.png')}
           >
             <View className="h-2-1 space-around flex">
               <View className="f-center">
                 <Text className="dashHeading complementary bold">Seed It</Text>
                 <Image
                   className="x_large_thumb mt20"
-                  source={require("../images/icons/Jar.png")}
+                  source={require('../images/icons/Jar.png')}
                 />
               </View>
               <View className="f-center mt20">
                 <View className="bg-Field f-row inputField j-start m10">
                   <Image
                     className="mini_thumb m10"
-                    source={require("../images/icons/User_Login.png")}
+                    source={require('../images/icons/User_Login.png')}
                   />
                   <View className="dividerVertrical mt10 mr10" />
                   <TextInput
-                    style={{ color: "white", fontSize: 16 }}
+                    style={{ color: 'white', fontSize: 16 }}
                     value={this.state.username}
                     autoCapitalize="none"
                     underlineColorAndroid="transparent"
@@ -98,21 +108,25 @@ class Login extends React.PureComponent {
                 <View className="bg-lightBlue f-row inputField j-start m10">
                   <Image
                     className="mini_thumb m10"
-                    source={require("../images/icons/Password.png")}
+                    source={require('../images/icons/Password.png')}
                   />
                   <View className="dividerVertrical mt10 mr10" />
                   <TextInput
-                    style={{ color: "white", fontSize: 16 }}
+                    style={{ color: 'white', fontSize: 16 }}
                     value={this.state.password}
                     autoCapitalize="none"
+                    secureTextEntry={this.state.showPassword}
                     underlineColorAndroid="transparent"
                     onChangeText={password => this.setState({ password })}
                   />
                   <View className="pull-right">
-                    <Touchable className="showPasswordAuth" onPress={() =>{}}>
+                    <Touchable
+                      className="showPasswordAuth"
+                      onPress={this.toggleSwitch}
+                    >
                       <Text className="darkGrey bold medium m10">Show</Text>
                     </Touchable>
-                  </View> 
+                  </View>
                 </View>
                 <Text className="normal white">Forgot Password ?</Text>
               </View>
@@ -136,13 +150,11 @@ class Login extends React.PureComponent {
 }
 
 function mapStateToProps(state) {
-  const {loginErrorStatus, loginRequestStatus} = state.login;
+  const { loginErrorStatus, loginRequestStatus } = state.login;
   return {
     loginRequestStatus,
     loginErrorStatus,
-    isAuthorizedUser: idx(state, _ => _.auth.isAuthorizedUser)
+    isAuthorizedUser: idx(state, _ => _.auth.isAuthorizedUser),
   };
 }
-export default connect(mapStateToProps, { ...AuthActions})(
-  Login
-);
+export default connect(mapStateToProps, { ...AuthActions })(Login);

@@ -1,4 +1,4 @@
-/*import React from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import Splash from './Splash';
 
@@ -21,11 +21,10 @@ class SplashScreen extends React.PureComponent {
 }
 
 function mapStateToProps(state) {
-  const { isAuthorizedUser } = state;
+  const { isAuthorizedUser } = state.auth;
   return {
-    isAuthorizedUser
+    isAuthorizedUser,
   };
 }
 
 export default connect(mapStateToProps, {})(SplashScreen);
-*/

@@ -1,88 +1,63 @@
-import React from "react";
-import { StackNavigator, DrawerNavigator } from "react-navigation";
-import { AsyncStorage } from "react-native";
-import { Provider } from "react-redux";
-import { View } from "./components/common";
-import Splash from "./components/splash-screen/Splash";
-import SplashScreen from "./components/splash-screen/SplashScreen";
-import SocialSignUp from "./components/signup/SocialSignUp";
-import SignUp from "./components/signup/SignUp";
-import Login from "./components/login/Login";
-import Home from "./components/home/Home";
-import configureStore from "./configure-store";
-import ProfileNavigator from "./components/profile/ProfileNavigator";
-
-const MainNavigator = DrawerNavigator({
-  Home: {
-    screen: Home,
-  },
-  Login: {
-    screen: Login,
-  },
-  SocialSignUp: {
-    screen: SocialSignUp,
-  },
-  SignUp: {
-    screen: SignUp,
-  },
-
-  'Profile': {
-    screen: ({ navigation, screenProps }) => (
-      <ProfileNavigator
-        screenProps={{
-          rootNavigation: screenProps.rootNavigation,
-          mainNavigation: navigation,
-        }}
-        onNavigationStateChange={() => {}}
-      />
-    ),
-  },
-});
+import React from 'react';
+import { StackNavigator } from 'react-navigation';
+import { AsyncStorage } from 'react-native';
+import { Provider } from 'react-redux';
+import { View } from './components/common';
+import Splash from './components/splash-screen/Splash';
+import SplashScreen from './components/splash-screen/SplashScreen';
+import SocialSignUp from './components/signup/SocialSignUp';
+import SignUp from './components/signup/SignUp';
+import Login from './components/login/Login';
+import Home from './components/home/Home';
+import configureStore from './configure-store';
+import ProfileNavigator from './components/profile/ProfileNavigator';
 
 const AppNavigator = StackNavigator({
-  
- /* Splash: {
+  SplashScreen: {
     screen: SplashScreen,
     navigationOptions: () => ({
       header: null,
     }),
-  },*/
-  Main: {
-    screen: ({ navigation }) => (
-      <MainNavigator
-        screenProps={{ rootNavigation: navigation }}
-        onNavigationStateChange={() => {}}
-      />
-    ),
+  },
+
+  Home: {
+    screen: Home,
     navigationOptions: () => ({
       header: null,
     }),
   },
-  /* Login: {
+  Login: {
     screen: Login,
     navigationOptions: () => ({
-      header: null
-    })
+      header: null,
+    }),
   },
   SocialSignUp: {
     screen: SocialSignUp,
     navigationOptions: () => ({
-      header: null
-    })
+      header: null,
+    }),
   },
   SignUp: {
     screen: SignUp,
     navigationOptions: () => ({
-      header: null
-    })
-  }*/
+      header: null,
+    }),
+  },
+
+  ProfileNavigator: {
+    screen: ProfileNavigator,
+    navigationOptions: () => ({
+      header: null,
+    }),
+  },
 });
 
 class App extends React.PureComponent {
   constructor() {
     super();
     this.state = {
-      store: null
+      store: null,
     };
   }
 
@@ -106,14 +81,14 @@ class App extends React.PureComponent {
   render() {
     return (
       <View className="screen app-container">
-          {/*<Provider store={this.state.store}>
-                      <AppNavigator onNavigationStateChange={null} />
-                    </Provider>*/}
-
-        {this.state.store && (
+        {this.state.store ? (
           <Provider store={this.state.store}>
             <AppNavigator onNavigationStateChange={null} />
           </Provider>
+        ) : (
+          <View>
+            <Splash />
+          </View>
         )}
       </View>
     );

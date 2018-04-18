@@ -1,5 +1,5 @@
-import React from "react";
-import { connect } from "react-redux";
+import React from 'react';
+import { connect } from 'react-redux';
 import {
   Text,
   View,
@@ -7,12 +7,13 @@ import {
   Header,
   Image,
   Footer,
-  ScrollView
-} from "../common";
-import { AuthActions } from "../../actions";
+  ScrollView,
+} from '../common';
+import { AuthActions } from '../../actions';
 
 class Home extends React.PureComponent {
   render() {
+    const { user } = this.props;
     const { props } = this;
     return (
       <View className="screen">
@@ -25,26 +26,30 @@ class Home extends React.PureComponent {
                   <View className="f-row f-both m20">
                     <Image
                       className="med_thumb m10"
-                      source={require("../images/avatars/Abbott.png")}
+                      source={require('../images/avatars/Abbott.png')}
                       resizeMode="cover"
                     />
                   </View>
-                  <View className="f-column mt10">
-                    <View className="f-both">
+                  <View className="f-column j-start mt10">
+                    <View className="f-row">
                       <Text className="black bold large t-center">
-                        Cookie Master
+                        Cookie moster
                       </Text>
+                      {user &&
+                        user.role === 'admin' && (
+                          <Image
+                            className="micro_thumb m5"
+                            source={require('../images/icons/delete.jpg')}
+                            resizeMode="cover"
+                          />
+                        )}
                     </View>
-                    <View className="f-both">
-                      <Text className="black medium t-center">
-                        Cookie Master
-                      </Text>
-                    </View>
+                    <Text className="black medium t-center">Cookiemoster</Text>
                   </View>
                   <View className="f-row pull-right f-both m20">
                     <Image
                       className="normal_thumb m10"
-                      source={require("../images/icons/drop.jpg")}
+                      source={require('../images/icons/drop.jpg')}
                       resizeMode="cover"
                     />
                   </View>
@@ -54,26 +59,30 @@ class Home extends React.PureComponent {
                   <View className="f-row f-both m20">
                     <Image
                       className="med_thumb m10"
-                      source={require("../images/avatars/Abbott.png")}
+                      source={require('../images/avatars/Abbott.png')}
                       resizeMode="cover"
                     />
                   </View>
-                  <View className="f-column mt10">
-                    <View className="f-both">
+                  <View className="f-column j-start mt10">
+                    <View className="f-row">
                       <Text className="black bold large t-center">
-                        Cookie Master
+                        Cookie moster
                       </Text>
+                      {user &&
+                        user.role === 'admin' && (
+                          <Image
+                            className="micro_thumb m5"
+                            source={require('../images/icons/delete.jpg')}
+                            resizeMode="cover"
+                          />
+                        )}
                     </View>
-                    <View className="f-both">
-                      <Text className="black medium t-center">
-                        Cookie Master
-                      </Text>
-                    </View>
+                    <Text className="black medium t-center">Cookiemoster</Text>
                   </View>
                   <View className="f-row pull-right f-both m20">
                     <Image
                       className="normal_thumb m10"
-                      source={require("../images/icons/drop.jpg")}
+                      source={require('../images/icons/drop.jpg')}
                       resizeMode="cover"
                     />
                   </View>
@@ -83,26 +92,30 @@ class Home extends React.PureComponent {
                   <View className="f-row f-both m20">
                     <Image
                       className="med_thumb m10"
-                      source={require("../images/avatars/Abbott.png")}
+                      source={require('../images/avatars/Abbott.png')}
                       resizeMode="cover"
                     />
                   </View>
-                  <View className="f-column mt10">
-                    <View className="f-both">
+                  <View className="f-column j-start mt10">
+                    <View className="f-row">
                       <Text className="black bold large t-center">
-                        Cookie Master
+                        Cookie moster
                       </Text>
+                      {user &&
+                        user.role === 'admin' && (
+                          <Image
+                            className="micro_thumb m5"
+                            source={require('../images/icons/delete.jpg')}
+                            resizeMode="cover"
+                          />
+                        )}
                     </View>
-                    <View className="f-both">
-                      <Text className="black medium t-center">
-                        Cookie Master
-                      </Text>
-                    </View>
+                    <Text className="black medium t-center">Cookiemoster</Text>
                   </View>
                   <View className="f-row pull-right f-both m20">
                     <Image
                       className="normal_thumb m10"
-                      source={require("../images/icons/drop.jpg")}
+                      source={require('../images/icons/drop.jpg')}
                       resizeMode="cover"
                     />
                   </View>
@@ -118,4 +131,12 @@ class Home extends React.PureComponent {
   }
 }
 
-export default connect()(Home);
+function mapStateToProps(state) {
+  const token = state.auth.authToken;
+  const user = state.user;
+  return {
+    token,
+    user,
+  };
+}
+export default connect(mapStateToProps, { ...AuthActions })(Home);

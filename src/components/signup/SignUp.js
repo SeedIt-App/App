@@ -1,5 +1,5 @@
-import React from "react";
-import { connect } from "react-redux";
+import React from 'react';
+import { connect } from 'react-redux';
 import {
   View,
   BackgroundImage,
@@ -9,92 +9,100 @@ import {
   Spinner,
   Colors,
   KeyboardAvoidingView,
-  ScrollView
-} from "../common";
-import { TextInput } from "react-native";
-import DatePicker from "react-native-datepicker";
-import { AuthActions } from "../../actions";
-import Toast from "react-native-root-toast";
+  ScrollView,
+} from '../common';
+import { TextInput } from 'react-native';
+import DatePicker from 'react-native-datepicker';
+import { AuthActions } from '../../actions';
+import Toast from 'react-native-root-toast';
 
 class SignUp extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      date: "",
-      firstname : "",
-      lastname : "",
-      username : "",
-      email : "",
-      phoneNo : "",
-      pwd : "",
-      gender : ["Male" , "Female" , "Other"],
-      confirmPwd : "",
-      selectedGender: "",
+      date: '',
+      firstname: '',
+      lastname: '',
+      username: '',
+      email: '',
+      phoneNo: '',
+      pwd: '',
+      gender: ['Male', 'Female', 'Other'],
+      confirmPwd: '',
+      selectedGender: '',
+      showPassword: true,
+      showCPassword: true,
     };
   }
 
-  gotToBack = () => this.props.navigation.navigate("SocialSignUp");
+  gotToBack = () => this.props.navigation.navigate('SocialSignUp');
 
-  gotToLogin = () => this.props.navigation.navigate("Login");
+  gotToLogin = () => this.props.navigation.navigate('Login');
 
   componentDidMount() {
     this.setState({
-      date :"",
-      firstname : "First Name",
-      lastname : "Last Name",
-      username : "User Name",
-      email : "Email",
-      phoneNo : "Phone Number",
-      pwd : "Password",
-      confirmPwd : "Confirm Password",
+      date: '',
+      firstname: 'First Name',
+      lastname: 'Last Name',
+      username: 'User Name',
+      email: 'Email',
+      phoneNo: 'Phone Number',
+      pwd: 'Password',
+      confirmPwd: 'Confirm Password',
     });
   }
 
   componentWillReceiveProps() {
-    if (this.props.signupErrorStatus) {
-      Toast.show(this.props.signupErrorStatus, {
+    if (nextProps.signupErrorStatus) {
+      Toast.show(nextProps.signupErrorStatus, {
         duration: Toast.durations.LONG,
-        position: Toast.positions.BOTTOM
+        position: Toast.positions.BOTTOM,
       });
+    }
+    if (nextProps.signupRequestStatus == 'SUCCESS') {
+      Toast.show('Signed Up successfully', {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM,
+      });
+      this.props.navigation.navigate('Login');
     }
   }
 
   selectGender = () => {
-    this.setState({selectedGender : 'female'})
-    console.log(this.state.selectedGender)
-  }
+    this.setState({ selectedGender: 'female' });
+    console.log(this.state.selectedGender);
+  };
 
   SignUp = () => {
     const userData = {
-      "firstName": this.state.firstName,
-      "lastName": this.state.lastname,
-      "userName": this.state.username,
-      "email": this.state.email,
-      "password": this.state.pwd,
-      "phone": this.state.phoneNo,
-      "gender": this.state.selectedGender,
-      "birthDate": this.state.date,
-    }
+      firstName: this.state.firstName,
+      lastName: this.state.lastname,
+      userName: this.state.username,
+      email: this.state.email,
+      password: this.state.pwd,
+      phone: this.state.phoneNo,
+      gender: this.state.selectedGender,
+      birthDate: this.state.date,
+    };
     this.props.signup(userData);
-    if (this.props.signupRequestStatus == "SUCCESS") {
-      Toast.show('SUCCESS', {
-        duration: Toast.durations.LONG,
-        position: Toast.positions.BOTTOM
-      });
-    }
-  }
+  };
+
+  toggleSwitchP = () => {
+    this.setState({ showPassword: !this.state.showPassword });
+  };
+
+  toggleSwitchCp = () => {
+    this.setState({ showCPassword: !this.state.showCPassword });
+  };
 
   render() {
-     const {
-      signupRequestStatus,
-      signupErrorStatus,
-    } = this.props;
+    const { signupRequestStatus, signupErrorStatus } = this.props;
     return (
       <KeyboardAvoidingView>
         <View className="screen">
           <BackgroundImage
             className="flex f-row expand"
-            source={require("../images/background_images/Seed_IT.png")}
+            source={require('../images/background_images/Seed_IT.png')}
           >
             <View className="h-1-1 space-around flex">
               <View className="f-center mt20 mb20">
@@ -108,7 +116,7 @@ class SignUp extends React.PureComponent {
                     </View>
                     <View className="dividerVertrical mt12 mr10" />
                     <TextInput
-                      style={{ color: "white", fontSize: 16 }}
+                      style={{ color: 'white', fontSize: 16 }}
                       value={this.state.firstname}
                       autoCapitalize="none"
                       underlineColorAndroid="transparent"
@@ -121,7 +129,7 @@ class SignUp extends React.PureComponent {
                     </View>
                     <View className="dividerVertrical mt12 mr10" />
                     <TextInput
-                      style={{ color: "white", fontSize: 16 }}
+                      style={{ color: 'white', fontSize: 16 }}
                       value={this.state.lastname}
                       autoCapitalize="none"
                       underlineColorAndroid="transparent"
@@ -131,11 +139,11 @@ class SignUp extends React.PureComponent {
                   <View className="bg-lightBlue f-row formInputField j-start m5">
                     <Image
                       className="mini_thumb m10"
-                      source={require("../images/icons/User_Login.png")}
+                      source={require('../images/icons/User_Login.png')}
                     />
                     <View className="dividerVertrical mt12 mr10" />
                     <TextInput
-                      style={{ color: "white", fontSize: 16 }}
+                      style={{ color: 'white', fontSize: 16 }}
                       value={this.state.username}
                       autoCapitalize="none"
                       underlineColorAndroid="transparent"
@@ -145,11 +153,11 @@ class SignUp extends React.PureComponent {
                   <View className="bg-lightBlue f-row formInputField j-start m5">
                     <Image
                       className="mini_thumb m10"
-                      source={require("../images/icons/Mail.png")}
+                      source={require('../images/icons/Mail.png')}
                     />
                     <View className="dividerVertrical mt12 mr10" />
                     <TextInput
-                      style={{ color: "white", fontSize: 16 }}
+                      style={{ color: 'white', fontSize: 16 }}
                       value={this.state.email}
                       autoCapitalize="none"
                       underlineColorAndroid="transparent"
@@ -159,11 +167,11 @@ class SignUp extends React.PureComponent {
                   <View className="bg-lightBlue f-row formInputField j-start m5">
                     <Image
                       className="mini_thumb m10"
-                      source={require("../images/icons/Phone.png")}
+                      source={require('../images/icons/Phone.png')}
                     />
                     <View className="dividerVertrical mt12 mr10" />
                     <TextInput
-                      style={{ color: "white", fontSize: 16 }}
+                      style={{ color: 'white', fontSize: 16 }}
                       value={this.state.phoneNo}
                       autoCapitalize="none"
                       underlineColorAndroid="transparent"
@@ -173,40 +181,48 @@ class SignUp extends React.PureComponent {
                   <View className="bg-lightBlue f-row formInputField j-start m5">
                     <Image
                       className="mini_thumb m10"
-                      source={require("../images/icons/Password.png")}
+                      source={require('../images/icons/Password.png')}
                     />
                     <View className="dividerVertrical mt12 mr10" />
                     <TextInput
-                      style={{ color: "white", fontSize: 16 }}
+                      style={{ color: 'white', fontSize: 16 }}
                       value={this.state.pwd}
                       autoCapitalize="none"
+                      secureTextEntry={this.state.showPassword}
                       underlineColorAndroid="transparent"
                       onChangeText={pwd => this.setState({ pwd })}
                     />
                     <View className="pull-right">
-                      <Touchable className="showPasswordAuth" onPress={() =>{}}>
+                      <Touchable
+                        className="showPasswordAuth"
+                        onPress={this.toggleSwitchP}
+                      >
                         <Text className="darkGrey bold medium m10">Show</Text>
                       </Touchable>
-                    </View> 
+                    </View>
                   </View>
                   <View className="bg-lightBlue f-row formInputField j-start m5">
                     <Image
                       className="mini_thumb m10"
-                      source={require("../images/icons/Password.png")}
+                      source={require('../images/icons/Password.png')}
                     />
                     <View className="dividerVertrical mt12 mr10" />
                     <TextInput
-                      style={{ color: "white", fontSize: 16 }}
+                      style={{ color: 'white', fontSize: 16 }}
                       value={this.state.confirmPwd}
                       autoCapitalize="none"
+                      secureTextEntry={this.state.showCPassword}
                       underlineColorAndroid="transparent"
                       onChangeText={confirmPwd => this.setState({ confirmPwd })}
                     />
                     <View className="pull-right">
-                      <Touchable className="showPasswordAuth" onPress={() =>{}}>
+                      <Touchable
+                        className="showPasswordAuth"
+                        onPress={this.toggleSwitchCp}
+                      >
                         <Text className="darkGrey bold medium m10">Show</Text>
                       </Touchable>
-                    </View> 
+                    </View>
                   </View>
                   <View className="f-center j-end f-both mv20">
                     <View className=" f-both">
@@ -216,36 +232,39 @@ class SignUp extends React.PureComponent {
                     <View className="f-row">
                       {this.state.gender.map(g => (
                         <View className="f-row">
-                          <Touchable className="m20" onPress={this.selectGender}>
+                          <Touchable
+                            className="m20"
+                            onPress={this.selectGender}
+                          >
                             <Text className="complementary m10">{g}</Text>
                           </Touchable>
-                        </View>  
+                        </View>
                       ))}
-                     </View>    
+                    </View>
                   </View>
                   <View className="bg-lightBlue f-row formInputField j-start m5">
                     <Image
                       className="mini_thumb m10"
-                      source={require("../images/icons/Cake.png")}
+                      source={require('../images/icons/Cake.png')}
                     />
                     <View className="dividerVertrical mt7 mr10" />
                     <DatePicker
                       customStyles={{
                         dateInput: {
-                          borderWidth: 0
+                          borderWidth: 0,
                         },
                         dateText: {
                           marginLeft: -10,
                           fontSize: 16,
-                          color: "white",
-                          textAlign: "left"
+                          color: 'white',
+                          textAlign: 'left',
                         },
                         placeholderText: {
                           marginLeft: -10,
                           fontSize: 16,
-                          color: "white",
-                          textAlign: "left"
-                        }
+                          color: 'white',
+                          textAlign: 'left',
+                        },
                       }}
                       date={this.state.date}
                       mode="date"
@@ -255,7 +274,7 @@ class SignUp extends React.PureComponent {
                       cancelBtnText="Cancel"
                       showIcon={false}
                       onDateChange={date => {
-                        this.setState({ date: date });
+                        this.setState({ date });
                       }}
                     />
                   </View>
@@ -284,12 +303,10 @@ class SignUp extends React.PureComponent {
 }
 
 function mapStateToProps(state) {
-  const {signupErrorStatus, signupRequestStatus} = state.signup;
+  const { signupErrorStatus, signupRequestStatus } = state.signup;
   return {
     signupErrorStatus,
     signupRequestStatus,
   };
 }
-export default connect(mapStateToProps, { ...AuthActions})(
-  SignUp
-);
+export default connect(mapStateToProps, { ...AuthActions })(SignUp);

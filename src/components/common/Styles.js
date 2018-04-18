@@ -1,352 +1,352 @@
-import { StyleSheet, Dimensions, Platform } from "react-native";
-import Colors from "./colors";
+import { StyleSheet, Dimensions, Platform } from 'react-native';
+import Colors from './colors';
 
-export const { width, height } = Dimensions.get("window");
+export const { width, height } = Dimensions.get('window');
 
 const margins = {
   m3: {
-    margin: 3
+    margin: 3,
   },
   m5: {
-    margin: 5
+    margin: 5,
   },
   m10: {
-    margin: 10
+    margin: 10,
   },
   m15: {
-    margin: 15
+    margin: 15,
   },
   mv5: {
-    marginVertical: 5
+    marginVertical: 5,
   },
   mv7: {
-    marginVertical: 7
+    marginVertical: 7,
   },
   mv10: {
-    marginVertical: 10
+    marginVertical: 10,
   },
   mv15: {
-    marginVertical: 15
+    marginVertical: 15,
   },
   mv25: {
-    marginVertical: 30
+    marginVertical: 30,
   },
   mh5: {
-    marginHorizontal: 5
+    marginHorizontal: 5,
   },
   mh10: {
-    marginHorizontal: 10
+    marginHorizontal: 10,
   },
   mh15: {
-    marginHorizontal: 15
+    marginHorizontal: 15,
   },
   mh17: {
-    marginHorizontal: 17
+    marginHorizontal: 17,
   },
   mh20: {
-    marginHorizontal: 20
+    marginHorizontal: 20,
   },
   mh25: {
-    marginHorizontal: 30
+    marginHorizontal: 30,
   },
   mb5: {
-    marginBottom: 5
+    marginBottom: 5,
   },
   mb10: {
-    marginBottom: 10
+    marginBottom: 10,
   },
   mb15: {
-    marginBottom: 15
+    marginBottom: 15,
   },
   mb20: {
-    marginBottom: 20
+    marginBottom: 20,
   },
   mb25: {
-    marginBottom: 25
+    marginBottom: 25,
   },
   mr5: {
-    marginRight: 5
+    marginRight: 5,
   },
   mr10: {
-    marginRight: 10
+    marginRight: 10,
   },
   mr15: {
-    marginRight: 15
+    marginRight: 15,
   },
   mr20: {
-    marginRight: 20
+    marginRight: 20,
   },
   mr25: {
-    marginRight: 25
+    marginRight: 25,
   },
   mr30: {
-    marginRight: 35
+    marginRight: 35,
   },
   ml10: {
-    marginLeft: 10
+    marginLeft: 10,
   },
   marginLeft20: {
-    marginLeft: -20
+    marginLeft: -20,
   },
   ml3: {
-    marginLeft: 3
+    marginLeft: 3,
   },
   ml5: {
-    marginLeft: 5
+    marginLeft: 5,
   },
   ml15: {
-    marginLeft: 15
+    marginLeft: 15,
   },
   mt5: {
-    marginTop: 5
+    marginTop: 5,
   },
   mt7: {
-    marginTop: 8
+    marginTop: 8,
   },
   mt10: {
-    marginTop: 10
+    marginTop: 10,
   },
   mt15: {
-    marginTop: 15
+    marginTop: 15,
   },
   mt12: {
-    marginTop: 12
+    marginTop: 12,
   },
   mt20: {
-    marginTop: 20
+    marginTop: 20,
   },
   mt25: {
-    marginTop: 25
+    marginTop: 25,
   },
   mt50: {
-    marginTop: 50
+    marginTop: 50,
   },
   marginTop10: {
-    marginTop: -7
+    marginTop: -7,
   },
   marginTop15: {
-    marginTop: -15
+    marginTop: -15,
   },
   marginTop20: {
-    marginTop: -25
-  }
+    marginTop: -25,
+  },
 };
 
 const paddings = {
-  p3 : {
-   padding : 3,
+  p3: {
+    padding: 3,
   },
   p5: {
-    padding: 5
+    padding: 5,
   },
   p10: {
-    padding: 10
+    padding: 10,
   },
   p15: {
-    padding: 15
+    padding: 15,
   },
   p20: {
-    padding: 20
+    padding: 20,
   },
   p30: {
-    padding: 30
+    padding: 30,
   },
   pv5: {
-    paddingVertical: 5
+    paddingVertical: 5,
   },
   pv10: {
-    paddingVertical: 10
+    paddingVertical: 10,
   },
   pv15: {
-    paddingVertical: 15
+    paddingVertical: 15,
   },
   ph5: {
-    paddingHorizontal: 5
+    paddingHorizontal: 5,
   },
   ph10: {
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
   },
   ph15: {
-    paddingHorizontal: 15
-  }
+    paddingHorizontal: 15,
+  },
 };
 
 const absolutes = {
   coverOverlay: {
-    position: "absolute",
+    position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
-    bottom: 0
+    bottom: 0,
   },
-  "pull-left": {
-    position: "absolute",
-    left: 0
+  'pull-left': {
+    position: 'absolute',
+    left: 0,
   },
-  "pull-right": {
-    position: "absolute",
-    right: 0
+  'pull-right': {
+    position: 'absolute',
+    right: 0,
   },
   topRight: {
-    position: "absolute",
+    position: 'absolute',
     top: 0,
-    right: 0
+    right: 0,
   },
   topLeft: {
-    position: "absolute",
+    position: 'absolute',
     top: 0,
-    left: 0
+    left: 0,
   },
   bottomLeft: {
-    position: "absolute",
+    position: 'absolute',
     bottom: 0,
-    left: 0
-  }
+    left: 0,
+  },
 };
 
 const bgs = {
   bgWhite: {
-    backgroundColor: Colors.white
+    backgroundColor: Colors.white,
   },
   bgBlack: {
-    backgroundColor: Colors.black
+    backgroundColor: Colors.black,
   },
   bgLightGrey: {
-    backgroundColor: Colors.lightGrey
+    backgroundColor: Colors.lightGrey,
   },
   bgGrey: {
-    backgroundColor: Colors.grey
+    backgroundColor: Colors.grey,
   },
   bgLgGrey: {
-    backgroundColor: Colors.lgGrey
+    backgroundColor: Colors.lgGrey,
   },
-  "bg-primary": {
-    backgroundColor: Colors.primary
+  'bg-primary': {
+    backgroundColor: Colors.primary,
   },
-  "bg-header": {
-    backgroundColor: Colors.headerBg
+  'bg-header': {
+    backgroundColor: Colors.headerBg,
   },
-  "bg-transparent": {
-    backgroundColor: "transparent"
+  'bg-transparent': {
+    backgroundColor: 'transparent',
   },
-  "bg-blue": {
-    backgroundColor: Colors.lightBlue
+  'bg-blue': {
+    backgroundColor: Colors.lightBlue,
   },
-  "bg-lightBlue": {
-    backgroundColor: Colors.lgBlue
+  'bg-lightBlue': {
+    backgroundColor: Colors.lgBlue,
   },
-  "bg-Field" : {
-    backgroundColor : Colors.lgBlue
-  }
+  'bg-Field': {
+    backgroundColor: Colors.lgBlue,
+  },
 };
 
 const images = {
   dashboardIcon: {
     height: 150,
-    width: 150
+    width: 150,
   },
   drawerIcon: {
     height: 20,
-    width: 20
+    width: 20,
   },
   thumbImage: {
     height: 120,
-    width: 150
+    width: 150,
   },
   dashboardThumbImage: {
     height: 100,
     width: 100,
     borderRadius: 50,
     borderColor: Colors.white,
-    borderWidth: 6
+    borderWidth: 6,
   },
-  ImageView: {
-    height: 50,
-    width: 70,
+  badgeView: {
+    height: 40,
+    width: 40,
     borderRadius: 10,
     borderColor: Colors.darkgrey,
     borderWidth: 1,
-    backgroundColor: Colors.darkgrey
+    backgroundColor: Colors.darkgrey,
   },
   videoView: {
     height: 55,
     width: 55,
     borderRadius: 1,
     borderColor: Colors.darkgrey,
-    borderWidth: 1
+    borderWidth: 1,
   },
   Pro_Image: {
     height: 25,
     width: 50,
     borderRadius: 2,
     borderColor: Colors.black,
-    borderWidth: 1
+    borderWidth: 1,
   },
   multiImage: {
     height: 80,
     width: 80,
     borderRadius: 65,
     borderColor: Colors.white,
-    borderWidth: 1
+    borderWidth: 1,
   },
   circle: {
     width: 25,
     height: 25,
     borderRadius: 25 / 2,
-    backgroundColor: "#5FB404"
+    backgroundColor: '#5FB404',
   },
   notification: {
     width: 20,
     height: 20,
     borderRadius: 20 / 2,
-    backgroundColor: "red"
-  }
+    backgroundColor: 'red',
+  },
 };
 
 const flex = {
   flex: {
-    flexGrow: 1
+    flexGrow: 1,
   },
-  "f-row": {
-    flexDirection: "row"
+  'f-row': {
+    flexDirection: 'row',
   },
-  "f-column": {
-    flexDirection: "column"
+  'f-column': {
+    flexDirection: 'column',
   },
-  "f-center": {
-    alignItems: "center"
+  'f-center': {
+    alignItems: 'center',
   },
-  "f-middle": {
-    justifyContent: "center"
+  'f-middle': {
+    justifyContent: 'center',
   },
-  "f-end": {
-    alignItems: "flex-end"
+  'f-end': {
+    alignItems: 'flex-end',
   },
-  "f-both": {
-    alignItems: "center",
-    justifyContent: "center"
+  'f-both': {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  "f-stretch": {
-    alignItems: "stretch"
+  'f-stretch': {
+    alignItems: 'stretch',
   },
-  "space-between": {
-    justifyContent: "space-between"
+  'space-between': {
+    justifyContent: 'space-between',
   },
-  "space-around": {
-    justifyContent: "space-around"
+  'space-around': {
+    justifyContent: 'space-around',
   },
-  "j-end": {
-    justifyContent: "flex-end"
+  'j-end': {
+    justifyContent: 'flex-end',
   },
-  "j-start": {
-    justifyContent: "flex-start"
+  'j-start': {
+    justifyContent: 'flex-start',
   },
   expand: {
-    alignSelf: "stretch"
+    alignSelf: 'stretch',
   },
-  "self-end": {
-    alignSelf: "flex-end"
-  }
+  'self-end': {
+    alignSelf: 'flex-end',
+  },
 };
 
 export default StyleSheet.create({
@@ -358,232 +358,232 @@ export default StyleSheet.create({
   ...images,
   screen: {
     flex: 1,
-    backgroundColor: Colors.white
+    backgroundColor: Colors.white,
   },
   screen_transparent: {
     flex: 1,
-    backgroundColor: Colors.transparent
+    backgroundColor: Colors.transparent,
   },
-  "wh-1-1": {
-    height: "100%",
-    width: "100%"
+  'wh-1-1': {
+    height: '100%',
+    width: '100%',
   },
-  "w-1-1": {
-    width: "100%"
+  'w-1-1': {
+    width: '100%',
   },
-  "w-1-0": {
-    width: "90%"
+  'w-1-0': {
+    width: '90%',
   },
-  "w-1-2": {
-    width: "50%"
+  'w-1-2': {
+    width: '50%',
   },
-  "w-2-1": {
-    width: "70%"
+  'w-2-1': {
+    width: '70%',
   },
-  "w-1-3": {
-    width: "33.33%"
+  'w-1-3': {
+    width: '33.33%',
   },
-  "w-2-5": {
-    width: "40%"
+  'w-2-5': {
+    width: '40%',
   },
-  "h-1-1": {
-    height: "100%"
+  'h-1-1': {
+    height: '100%',
   },
-  "h-2-1": {
-    height: "75%"
+  'h-2-1': {
+    height: '75%',
   },
-  "h-2-3": {
-    height: "80%"
+  'h-2-3': {
+    height: '80%',
   },
-  "h-1-2": {
-    height: "50%"
+  'h-1-2': {
+    height: '50%',
   },
-  "h-2-5": {
-    height: "40%"
+  'h-2-5': {
+    height: '40%',
   },
-  "h-1-3": {
-    height: "33.3%"
+  'h-1-3': {
+    height: '33.3%',
   },
-  "h-1-5": {
-    height: "20%"
+  'h-1-5': {
+    height: '20%',
   },
   h38: {
-    height: 36
+    height: 36,
   },
   h50: {
-    height: 50
+    height: 50,
   },
   h65: {
-    height: 65
+    height: 65,
   },
   dev: {
-    backgroundColor: Colors.error
+    backgroundColor: Colors.error,
   },
   white: {
-    color: Colors.white
+    color: Colors.white,
   },
   primary: {
-    color: Colors.primary
+    color: Colors.primary,
   },
   date: {
     fontSize: 13,
-    color: "black"
+    color: 'black',
   },
   lightBorder: {
     borderWidth: 0.5,
-    borderColor: Colors.lightGrey
+    borderColor: Colors.lightGrey,
   },
   whiteBottomBorder: {
     borderBottomWidth: 1,
-    borderBottomColor: "white",
-    alignSelf: "stretch"
+    borderBottomColor: 'white',
+    alignSelf: 'stretch',
   },
   sectionHeader: {
     ...paddings.ph10,
     ...paddings.pv15,
-    ...bgs.bgLightGrey
+    ...bgs.bgLightGrey,
   },
   actionRow: {
-    flexDirection: "row",
+    flexDirection: 'row',
     flex: 1,
     ...paddings.ph10,
-    justifyContent: "space-between",
-    alignItems: "center",
-    alignSelf: "stretch"
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    alignSelf: 'stretch',
   },
   divider: {
-    alignSelf: "stretch",
+    alignSelf: 'stretch',
     height: 0.5,
     backgroundColor: Colors.white,
-    ...margins.mv5
+    ...margins.mv5,
   },
   dividerHead: {
-    alignSelf: "stretch",
+    alignSelf: 'stretch',
     height: 0.5,
-    backgroundColor: Colors.white
+    backgroundColor: Colors.white,
   },
   dividerBlack: {
-    alignSelf: "stretch",
+    alignSelf: 'stretch',
     height: 0.5,
-    backgroundColor: Colors.black
+    backgroundColor: Colors.black,
   },
   dividerVertrical: {
-    alignSelf: "stretch",
+    alignSelf: 'stretch',
     height: 25,
     width: 1,
-    backgroundColor: Colors.white
+    backgroundColor: Colors.white,
   },
   dividerGrey: {
-    alignSelf: "stretch",
+    alignSelf: 'stretch',
     height: 0.5,
-    backgroundColor: Colors.lgGrey
+    backgroundColor: Colors.lgGrey,
   },
-  "abs-cover": {
-    position: "absolute",
+  'abs-cover': {
+    position: 'absolute',
     left: 0,
     right: 0,
     top: 0,
-    bottom: 0
+    bottom: 0,
   },
-  "border-light": {
-    borderColor: Colors.white
+  'border-light': {
+    borderColor: Colors.white,
   },
-  "border-bottom": {
-    borderBottomWidth: 0.5
+  'border-bottom': {
+    borderBottomWidth: 0.5,
   },
-  "drawer-avatar": {
+  'drawer-avatar': {
     height: 100,
     width: 100,
     borderRadius: 50,
     borderWidth: 1,
-    borderColor: Colors.transparent
+    borderColor: Colors.transparent,
   },
-  "flat-list": {
+  'flat-list': {
     height: 60,
     width: 60,
     borderRadius: 10,
     borderWidth: 1,
     borderColor: Colors.primary,
-    backgroundColor: Colors.primary
+    backgroundColor: Colors.primary,
   },
   inputField: {
     height: 45,
-    width: 300
+    width: 280,
   },
   editField: {
     height: 40,
-    width: 300,
-    borderColor : Colors.headerBg,
-    borderWidth : 1,
+    width: 280,
+    borderColor: Colors.headerBg,
+    borderWidth: 1,
   },
   formInputField: {
     height: 45,
-    width: 310
+    width: 280,
   },
-  textArea : {
-    borderColor : Colors.headerBg,
-    borderWidth : 1,
+  textArea: {
+    borderColor: Colors.headerBg,
+    borderWidth: 1,
     height: 60,
-    width: 300,
+    width: 280,
   },
   textField: {
     height: 60,
-    width: 300,
+    width: 280,
     backgroundColor: Colors.white,
-    shadowColor: "#000000",
+    shadowColor: '#000000',
     shadowOffset: {
       width: 0,
-      height: 3
+      height: 3,
     },
     shadowRadius: 5,
-    shadowOpacity: 1.0
+    shadowOpacity: 1.0,
   },
   showPassword: {
     height: 40,
     width: 70,
-    backgroundColor : Colors.vlblue,
+    backgroundColor: Colors.vlblue,
   },
   showPasswordAuth: {
     height: 40,
     width: 70,
-    backgroundColor : '#D8F6F7',
+    backgroundColor: '#D8F6F7',
   },
   submitField: {
     height: 40,
     width: 120,
-    backgroundColor: Colors.headerBg
+    backgroundColor: Colors.headerBg,
   },
   submitFieldPwd: {
     height: 40,
     width: 150,
-    backgroundColor: Colors.headerBg
+    backgroundColor: Colors.headerBg,
   },
-  "hamburger-menu": {
+  'hamburger-menu': {
     height: 40,
     marginLeft: -20,
-    backgroundColor: Colors.transparent
+    backgroundColor: Colors.transparent,
   },
   addIcon: {
     height: 25,
-    width: 25
+    width: 25,
   },
   statusChecker: {
     height: 15,
-    width: 15
+    width: 15,
   },
   textInput: {
-    color: "white",
-    fontWeight: "bold"
+    color: 'white',
+    fontWeight: 'bold',
   },
   textInputField: {
-    color: "grey",
-    fontSize: 20
+    color: 'grey',
+    fontSize: 20,
   },
-  "app-container": {
-    marginTop: Platform.OS === "ios" ? 20 : 0
+  'app-container': {
+    marginTop: Platform.OS === 'ios' ? 20 : 0,
   },
   footer: {
-    position: "absolute",
+    position: 'absolute',
     flex: 0.1,
     left: 0,
     right: 0,
@@ -591,8 +591,8 @@ export default StyleSheet.create({
     backgroundColor: Colors.white,
     borderTopColor: Colors.lgGrey,
     borderTopWidth: 2,
-    flexDirection: "row",
+    flexDirection: 'row',
     height: 68,
-    alignItems: "center"
-  }
+    alignItems: 'center',
+  },
 });
