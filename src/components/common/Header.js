@@ -66,35 +66,42 @@ class Header extends React.PureComponent {
               </Touchable>
             )}
             <Text className="complementary title bold m10">{props.title}</Text>
-            {props.title === 'Newsfeed' &&
-              (user === '' ||
-              token === '' ||
-              profileErrorStatus === 'jwt malformed' ? (
+              {/*{props.title === 'Newsfeed' &&
                 <Touchable
                   className="pull-right"
                   onPress={this.goToSocialSignUp}
                 >
                   <Text className="complementary title m10">Sign Up</Text>
                 </Touchable>
-              ) : (
-                <Touchable className="pull-right" onPress={() => {}}>
+              }*/}
+              {props.title === 'Newsfeed' &&
+                (user === '' || token === '' ||
+                profileErrorStatus === 'jwt malformed' ? (
+                  <Touchable
+                    className="pull-right"
+                    onPress={this.goToSocialSignUp}
+                  >
+                    <Text className="complementary title m10">Sign Up</Text>
+                  </Touchable>
+                ) : (
+                  <Touchable className="pull-right" onPress={() => {}}>
+                    <Image
+                      className="mini1_thumb"
+                      source={require('../images/icons/plus.png')}
+                    />
+                  </Touchable>
+                ))}
+              {props.title === 'Profile' && (
+                <Touchable
+                  className="pull-right"
+                  onPress={() => this.props.openRequest()}
+                >
                   <Image
-                    className="mini1_thumb"
-                    source={require('../images/icons/plus.png')}
+                    className="medium_thumb"
+                    source={require('../images/icons/setting.png')}
                   />
                 </Touchable>
-              ))}
-            {props.title === 'Profile' && (
-              <Touchable
-                className="pull-right"
-                onPress={() => this.props.openRequest()}
-              >
-                <Image
-                  className="medium_thumb"
-                  source={require('../images/icons/setting.png')}
-                />
-              </Touchable>
-            )}
+              )}
 
             {props.title === 'EditProfile' && (
               <Touchable

@@ -14,6 +14,13 @@ import {
 import { TextInput } from "react-native";
 
 class ChangePassword extends React.PureComponent {
+   constructor(props) {
+    super(props);
+    this.state = {
+      oldPwd : '',
+      newPwd : ''
+    }
+  }
   
   render() {
     const { props } = this;
@@ -25,12 +32,15 @@ class ChangePassword extends React.PureComponent {
               <View className="f-column mt20">
                 <View className="f-center mt25">
                   <View className="bgWhite f-row editField j-start m5">
-                    <Text className="blue medium m10 bold ">Old Password :</Text>
+                    <Text className="blue small m10 bold ">Old Password :</Text>
                     <TextInput
-                      style={{ color: "grey", fontSize: 16 }}
-                      value={'*******'}
+                      style={{ color: "grey", fontSize: 16, width : 280 }}
+                      value={this.state.oldPwd}
+                      placeholder="Old Password"
+                      placeholderTextColor='grey'
                       autoCapitalize="none"
                       underlineColorAndroid="transparent"
+                      onChangeText={oldPwd => this.setState({ oldPwd })}
                     />
                     <View className="pull-right">
                       <Touchable className="showPassword" onPress={() =>{}}>
@@ -39,12 +49,15 @@ class ChangePassword extends React.PureComponent {
                     </View> 
                   </View>
                   <View className="bgWhite f-row editField j-start m5">
-                    <Text className="blue medium m10 bold ">New Password :</Text>
+                    <Text className="blue small m10 bold">New Password :</Text>
                     <TextInput
-                      style={{ color: "grey", fontSize: 16 }}
-                      value={'*******'}
+                      style={{ color: "grey", fontSize: 16, width : 280 }}
+                      value={this.state.newPwd}
+                      placeholder="New Password"
+                      placeholderTextColor='grey'
                       autoCapitalize="none"
                       underlineColorAndroid="transparent"
+                      onChangeText={newPwd => this.setState({ newPwd })}
                     />
                     <View className="pull-right">
                       <Touchable className="showPassword" onPress={() =>{}}>

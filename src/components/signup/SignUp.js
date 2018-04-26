@@ -42,17 +42,17 @@ class SignUp extends React.PureComponent {
   componentDidMount() {
     this.setState({
       date: '',
-      firstname: 'First Name',
-      lastname: 'Last Name',
-      username: 'User Name',
-      email: 'Email',
-      phoneNo: 'Phone Number',
-      pwd: 'Password',
-      confirmPwd: 'Confirm Password',
+      firstname: '',
+      lastname: '',
+      username: '',
+      email: '',
+      phoneNo: '',
+      pwd: '',
+      confirmPwd: '',
     });
   }
 
-  componentWillReceiveProps() {
+  componentWillReceiveProps(nextProps) {
     if (nextProps.signupErrorStatus) {
       Toast.show(nextProps.signupErrorStatus, {
         duration: Toast.durations.LONG,
@@ -73,6 +73,33 @@ class SignUp extends React.PureComponent {
     console.log(this.state.selectedGender);
   };
 
+/*  validateText = (username) => {
+    var re = /^[a-zA-Z]\D{4,20}$/;
+    return re.test(username);
+  };
+
+  validatePhNumber = (phnumber)=>{
+    var re = /^[0-9]{0,10}$/;
+    return re.test(phnumber);
+  };
+
+  validatePassword = (password)=>{
+    var re = /^([A-Za-z0-9]){6,20}$/
+    return re.test(password);
+  };
+
+  handleUserName =(username) =>{
+   if (!this.validateText(username)) {
+      Toast.show('Field length must be at least 4 characters long', {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM,
+      });
+    } else {
+      this.setState({username : username })
+    }  
+  };*/
+
+
   SignUp = () => {
     const userData = {
       firstName: this.state.firstName,
@@ -84,7 +111,19 @@ class SignUp extends React.PureComponent {
       gender: this.state.selectedGender,
       birthDate: this.state.date,
     };
-    this.props.signup(userData);
+    if(this.state.firstName ==="" ||this.state.lastname ==="" ||
+        this.state.username ==="" ||this.state.email ==="" ||
+        this.state.pwd ==="" ||this.state.phoneNo ==="" ||
+        this.state.selectedGender ==="" ||this.state.selectedGender ==="")
+    {
+      Toast.show("Fields is not allowed to be empty", {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM,
+      });
+    }
+    else {
+      this.props.signup(userData);
+    }
   };
 
   toggleSwitchP = () => {
@@ -116,35 +155,41 @@ class SignUp extends React.PureComponent {
                     </View>
                     <View className="dividerVertrical mt12 mr10" />
                     <TextInput
-                      style={{ color: 'white', fontSize: 16 }}
+                      style={{ color: 'white', fontSize: 16, width: 280 }}
                       value={this.state.firstname}
                       autoCapitalize="none"
+                      placeholder="First Name"
+                      placeholderTextColor='white'
                       underlineColorAndroid="transparent"
                       onChangeText={firstname => this.setState({ firstname })}
                     />
                   </View>
                   <View className="bg-lightBlue f-row formInputField j-start m5">
-                    <View className="m10 mr10">
+                    <View className="m10 f-both">
                       <Text className="bold xx_large white mr10">L</Text>
                     </View>
                     <View className="dividerVertrical mt12 mr10" />
                     <TextInput
-                      style={{ color: 'white', fontSize: 16 }}
+                      style={{ color: 'white', fontSize: 16, width: 280 }}
                       value={this.state.lastname}
                       autoCapitalize="none"
+                      placeholder="Last Name"
+                      placeholderTextColor='white'
                       underlineColorAndroid="transparent"
                       onChangeText={lastname => this.setState({ lastname })}
                     />
                   </View>
                   <View className="bg-lightBlue f-row formInputField j-start m5">
                     <Image
-                      className="mini_thumb m10"
+                      className="mini_thumb m10 "
                       source={require('../images/icons/User_Login.png')}
                     />
                     <View className="dividerVertrical mt12 mr10" />
                     <TextInput
-                      style={{ color: 'white', fontSize: 16 }}
+                      style={{ color: 'white', fontSize: 16, width: 280 }}
                       value={this.state.username}
+                      placeholder="Username"
+                      placeholderTextColor='white'
                       autoCapitalize="none"
                       underlineColorAndroid="transparent"
                       onChangeText={username => this.setState({ username })}
@@ -157,9 +202,11 @@ class SignUp extends React.PureComponent {
                     />
                     <View className="dividerVertrical mt12 mr10" />
                     <TextInput
-                      style={{ color: 'white', fontSize: 16 }}
+                      style={{ color: 'white', fontSize: 16, width: 280 }}
                       value={this.state.email}
                       autoCapitalize="none"
+                      placeholder="Email"
+                      placeholderTextColor='white'
                       underlineColorAndroid="transparent"
                       onChangeText={email => this.setState({ email })}
                     />
@@ -171,9 +218,11 @@ class SignUp extends React.PureComponent {
                     />
                     <View className="dividerVertrical mt12 mr10" />
                     <TextInput
-                      style={{ color: 'white', fontSize: 16 }}
+                      style={{ color: 'white', fontSize: 16, width: 280 }}
                       value={this.state.phoneNo}
                       autoCapitalize="none"
+                      placeholder="Phone no"
+                      placeholderTextColor='white'
                       underlineColorAndroid="transparent"
                       onChangeText={phoneNo => this.setState({ phoneNo })}
                     />
@@ -185,9 +234,11 @@ class SignUp extends React.PureComponent {
                     />
                     <View className="dividerVertrical mt12 mr10" />
                     <TextInput
-                      style={{ color: 'white', fontSize: 16 }}
+                      style={{ color: 'white', fontSize: 16 , width: 280}}
                       value={this.state.pwd}
                       autoCapitalize="none"
+                      placeholder="Password"
+                      placeholderTextColor='white'
                       secureTextEntry={this.state.showPassword}
                       underlineColorAndroid="transparent"
                       onChangeText={pwd => this.setState({ pwd })}
@@ -208,9 +259,11 @@ class SignUp extends React.PureComponent {
                     />
                     <View className="dividerVertrical mt12 mr10" />
                     <TextInput
-                      style={{ color: 'white', fontSize: 16 }}
+                      style={{ color: 'white', fontSize: 16, width: 280 }}
                       value={this.state.confirmPwd}
                       autoCapitalize="none"
+                      placeholder="Confirm Password"
+                      placeholderTextColor='white'
                       secureTextEntry={this.state.showCPassword}
                       underlineColorAndroid="transparent"
                       onChangeText={confirmPwd => this.setState({ confirmPwd })}

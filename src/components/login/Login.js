@@ -9,6 +9,7 @@ import {
   Spinner,
   Colors,
   KeyboardAvoidingView,
+  ScrollView
 } from '../common';
 import { TextInput } from 'react-native';
 import { AuthActions } from '../../actions';
@@ -56,8 +57,8 @@ class Login extends React.PureComponent {
 
   componentDidMount() {
     this.setState({
-      username: 'Username',
-      password: 'Password',
+      username: '',
+      password: '',
     });
   }
 
@@ -66,7 +67,15 @@ class Login extends React.PureComponent {
       usernameOrEmail: this.state.username,
       password: this.state.password,
     };
-    this.props.login(loginValues);
+    if(this.state.username ==="" || this.state.password == ""){
+      Toast.show("Fields is not allowed to be empty", {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM,
+      });
+    }
+    else {
+      this.props.login(loginValues);
+    }
   };
 
   toggleSwitch = () => {
@@ -82,65 +91,71 @@ class Login extends React.PureComponent {
             className="flex f-row expand"
             source={require('../images/background_images/Seed_IT.png')}
           >
-            <View className="h-2-1 space-around flex">
-              <View className="f-center">
-                <Text className="dashHeading complementary bold">Seed It</Text>
-                <Image
-                  className="x_large_thumb mt20"
-                  source={require('../images/icons/Jar.png')}
-                />
-              </View>
-              <View className="f-center mt20">
-                <View className="bg-Field f-row inputField j-start m10">
+            <View className="h-1-1 space-around flex">
+              <ScrollView>
+                <View className="f-center">
+                  <Text className="dashHeading complementary bold">Seed It</Text>
                   <Image
-                    className="mini_thumb m10"
-                    source={require('../images/icons/User_Login.png')}
-                  />
-                  <View className="dividerVertrical mt10 mr10" />
-                  <TextInput
-                    style={{ color: 'white', fontSize: 16 }}
-                    value={this.state.username}
-                    autoCapitalize="none"
-                    underlineColorAndroid="transparent"
-                    onChangeText={username => this.setState({ username })}
+                    className="x_large_thumb mt20"
+                    source={require('../images/icons/Jar.png')}
                   />
                 </View>
-                <View className="bg-lightBlue f-row inputField j-start m10">
-                  <Image
-                    className="mini_thumb m10"
-                    source={require('../images/icons/Password.png')}
-                  />
-                  <View className="dividerVertrical mt10 mr10" />
-                  <TextInput
-                    style={{ color: 'white', fontSize: 16 }}
-                    value={this.state.password}
-                    autoCapitalize="none"
-                    secureTextEntry={this.state.showPassword}
-                    underlineColorAndroid="transparent"
-                    onChangeText={password => this.setState({ password })}
-                  />
-                  <View className="pull-right">
-                    <Touchable
-                      className="showPasswordAuth"
-                      onPress={this.toggleSwitch}
-                    >
-                      <Text className="darkGrey bold medium m10">Show</Text>
+                <View className="f-center mt20">
+                  <View className="bg-Field f-row inputField j-start m10">
+                    <Image
+                      className="mini_thumb m10"
+                      source={require('../images/icons/User_Login.png')}
+                    />
+                    <View className="dividerVertrical mt10 mr10" />
+                    <TextInput
+                      style={{ color: 'white', fontSize: 16, width: 280 }}
+                      value={this.state.username}
+                      placeholder="Username"
+                      placeholderTextColor='white'
+                      autoCapitalize="none"
+                      underlineColorAndroid="transparent"
+                      onChangeText={username => this.setState({ username })}
+                    />
+                  </View>
+                  <View className="bg-lightBlue f-row inputField j-start m10">
+                    <Image
+                      className="mini_thumb m10"
+                      source={require('../images/icons/Password.png')}
+                    />
+                    <View className="dividerVertrical mt10 mr10" />
+                    <TextInput
+                      style={{ color: 'white', fontSize: 16 ,width: 280}}
+                      value={this.state.password}
+                      autoCapitalize="none"
+                      placeholder="Password"
+                      placeholderTextColor='white'
+                      secureTextEntry={this.state.showPassword}
+                      underlineColorAndroid="transparent"
+                      onChangeText={password => this.setState({ password })}
+                    />
+                    <View className="pull-right">
+                      <Touchable
+                        className="showPasswordAuth"
+                        onPress={this.toggleSwitch}
+                      >
+                        <Text className="darkGrey bold medium m10">Show</Text>
+                      </Touchable>
+                    </View>
+                  </View>
+                  <Text className="normal white">Forgot Password ?</Text>
+                </View>
+                <View className="f-center  mt20 mv20">
+                  <Touchable className="submitField m20" onPress={this.Login}>
+                    <Text className="complementary title m10"> Login</Text>
+                  </Touchable>
+                  <View className="f-row mt10">
+                    <Text className="normal white mt12">New</Text>
+                    <Touchable className="mv20" onPress={this.goToSocialSignUp}>
+                      <Text className="normal bold white"> ? SignUp</Text>
                     </Touchable>
                   </View>
                 </View>
-                <Text className="normal white">Forgot Password ?</Text>
-              </View>
-              <View className="f-center  mt20 mv20">
-                <Touchable className="submitField m20" onPress={this.Login}>
-                  <Text className="complementary title m10"> Login</Text>
-                </Touchable>
-                <View className="f-row mt10">
-                  <Text className="normal white mt12">New</Text>
-                  <Touchable className="mv20" onPress={this.goToSocialSignUp}>
-                    <Text className="normal bold white"> ? SignUp</Text>
-                  </Touchable>
-                </View>
-              </View>
+              </ScrollView>
             </View>
           </BackgroundImage>
         </View>
