@@ -14,7 +14,7 @@ import {
 import { TextInput } from "react-native";
 
 class ChangePassword extends React.PureComponent {
-   constructor(props) {
+  constructor(props) {
     super(props);
     this.state = {
       oldPwd : '',

@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import idx from 'idx';
 import {
   View,
   Image,
@@ -12,7 +13,7 @@ import {
   ScrollView,
 } from '../common';
 import { TextInput } from 'react-native';
-import { AuthActions, UserActions } from '../../actions';
+import { AuthActions, UserActions ,FollowActions , PostActions } from '../../actions';
 import Toast from 'react-native-root-toast';
 
 class Profile extends React.PureComponent {
@@ -46,6 +47,9 @@ class Profile extends React.PureComponent {
 
   componentDidMount() {
     this.props.profile();
+    this.props.getPosts();
+    this.props.getAllFollowers();
+    this.props.getAllUserFollowings();
   }
 
   goToEditProfile = () => {
@@ -53,6 +57,12 @@ class Profile extends React.PureComponent {
   };
 
   renderTab = () => {
+    const {allFollowers ,allfollowings,allPosts,
+      getAllFollowersRequestStatus,
+      getAllFollowersErrorStatus ,
+      getAllUserFollowingsRequestStatus,
+      getAllUserFollowingsErrorStatu} = this.props;
+
     if (this.state.activeFlag === 'liked') {
       return (
         <View className="f-row f-both mt20">
@@ -62,6 +72,7 @@ class Profile extends React.PureComponent {
     } else if (this.state.activeFlag === 'posted') {
       return (
         <View className="bg-transparent mt10 space-between">
+        {allPosts && allPosts.map(p => (
           <View className="f-row p5 mr20">
             <View className="f-row f-both m20">
               <Image
@@ -72,10 +83,7 @@ class Profile extends React.PureComponent {
             </View>
             <View className="f-column mt10">
               <View className="f-both">
-                <Text className="black bold large t-center">Cookie Master</Text>
-              </View>
-              <View className="f-both">
-                <Text className="black medium t-center">Cookie Master</Text>
+                <Text className="black bold large t-center">{p.text}ter</Text>
               </View>
             </View>
             <View className="f-row pull-right f-both m20">
@@ -86,44 +94,66 @@ class Profile extends React.PureComponent {
               />
             </View>
           </View>
-          <View className="dividerGrey" />
-          <View className="f-row p5 mr20">
-            <View className="f-row f-both m20">
-              <Image
-                className="med_thumb m10"
-                source={require('../images/avatars/Abbott.png')}
-                resizeMode="cover"
-              />
-            </View>
-            <View className="f-column mt10">
-              <View className="f-both">
-                <Text className="black bold large t-center">Cookie Master</Text>
-              </View>
-              <View className="f-both">
-                <Text className="black medium t-center">Cookie Master</Text>
-              </View>
-            </View>
-            <View className="f-row pull-right f-both m20">
-              <Image
-                className="normal_thumb m10"
-                source={require('../images/icons/drop.jpg')}
-                resizeMode="cover"
-              />
-            </View>
-          </View>
-          <View className="dividerGrey" />
+          ))
+        }
         </View>
       );
     } else if (this.state.activeFlag === 'followers') {
       return (
-        <View className="f-row f-both mt20">
-          <Text className="black bold medium t-left">followers</Text>
+        <View className="bg-transparent mt10 space-between">
+        {allFollowers && allFollowers.map(p => (
+          <View className="f-row p5 mr20">
+            <View className="f-row f-both m20">
+              <Image
+                className="med_thumb m10"
+                source={require('../images/avatars/Abbott.png')}
+                resizeMode="cover"
+              />
+            </View>
+            <View className="f-column mt10">
+              <View className="f-both">
+                <Text className="black bold large t-center">{p.userName}</Text>
+              </View>
+            </View>
+            <View className="f-row pull-right f-both m20">
+              <Image
+                className="normal_thumb m10"
+                source={require('../images/icons/drop.jpg')}
+                resizeMode="cover"
+              />
+            </View>
+          </View>
+          ))
+        }
         </View>
       );
     } else if (this.state.activeFlag === 'following') {
       return (
-        <View className="f-row f-both mt20">
-          <Text className="black bold medium t-left">following</Text>
+        <View className="bg-transparent mt10 space-between">
+        {allfollowings && allfollowings.map(f => (
+          <View className="f-row p5 mr20">
+            <View className="f-row f-both m20">
+              <Image
+                className="med_thumb m10"
+                source={require('../images/avatars/Abbott.png')}
+                resizeMode="cover"
+              />
+            </View>
+            <View className="f-column mt10">
+              <View className="f-both">
+                <Text className="black bold large t-center">{f.userName}</Text>
+              </View>
+            </View>
+            <View className="f-row pull-right f-both m20">
+              <Image
+                className="normal_thumb m10"
+                source={require('../images/icons/drop.jpg')}
+                resizeMode="cover"
+              />
+            </View>
+          </View>
+          ))
+        }
         </View>
       );
     }
@@ -135,16 +165,21 @@ class Profile extends React.PureComponent {
       profileErrorStatus,
       luser,
       user,
+      allFollowers ,allfollowings,
+      getAllFollowersRequestStatus,
+      getAllFollowersErrorStatus ,
+      getAllUserFollowingsRequestStatus,
+      getAllUserFollowingsErrorStatus
     } = this.props;
     console.log(this.props);
     let fullAddress = '';
 
-    if (this.props.luser) {
+    if (this.props.luser && this.props.luser.address) {
       fullAddress =
-        this.props.luser.address.city ||
-        `${'' + ' '}${this.props.luser.address.state}` ||
-        `${'' + '\n '}${this.props.luser.address.country}` ||
-        `${'' + ' '}${this.props.luser.address.zip}` ||
+          idx(this.props.luser.address, _ => _.city) + 
+        `${'' + ' '}${this.props.luser.address.state}` +
+        `${'' + '\n '}${this.props.luser.address.country}` +
+        `${'' + ' '}${this.props.luser.address.zip}` + 
         '';
     }
 
@@ -299,13 +334,33 @@ class Profile extends React.PureComponent {
 function mapStateToProps(state) {
   const { profileRequestStatus, profileErrorStatus, luser } = state.loggedUser;
   const { user } = state.auth;
-  console.log(state, 'prState');
+    const { followers ,followings,
+      getAllFollowersRequestStatus,
+      getAllFollowersErrorStatus ,
+      getAllUserFollowingsRequestStatus,
+      getAllUserFollowingsErrorStatus
+    } = state.follow;
+    const allFollowers = followers && followers.followers;
+        const allfollowings = followings && followings.followings
+
+    const { getAllPosts ,
+      getPostsRequestStatus,
+      getPostsErrorStatus } = state.post;
+    const allPosts = getAllPosts && getAllPosts.posts;
   return {
     profileRequestStatus,
     profileErrorStatus,
+    getAllFollowersRequestStatus,
+    getAllFollowersErrorStatus ,
+    getAllUserFollowingsRequestStatus,
+    getAllUserFollowingsErrorStatus,
     luser,
     user,
+    allPosts,
+    allFollowers,
+    allfollowings
   };
 }
 
-export default connect(mapStateToProps, { ...AuthActions, ...UserActions })(Profile);
+export default connect(mapStateToProps, { ...AuthActions, 
+  ...UserActions, ...FollowActions, ...PostActions })(Profile);

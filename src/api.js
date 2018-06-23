@@ -57,6 +57,20 @@ export function PATCH(location, body) {
     });
 }
 
+export function DELETE(location, body) {
+  console.log('API DELETE: ', location);
+  return axios
+    .delete(location, body)
+    .then(response => {
+      console.log('Resolved', response);
+      return { response };
+    })
+    .catch(error => {
+      console.log('Rejected', error.response, error.message, error);
+      throw error.response || error.message || 'NETWORK ERROR';
+    });
+}
+
 axios.defaults.baseURL = API_BASE_URL;
 
 export function setAuthHeaders(auth) {

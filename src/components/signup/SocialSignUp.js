@@ -14,7 +14,7 @@ import Toast from "react-native-root-toast";
 
 class SocialSignUp extends React.PureComponent {
   
-  gotToBack = () => this.props.navigation.navigate("Home");
+  gotToBack = () => this.props.navigation.navigate("Newsfeed");
   goToSignUp = () => this.props.navigation.navigate("SignUp");
   goToLogin = () => this.props.navigation.navigate("Login");
   

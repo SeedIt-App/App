@@ -7,20 +7,27 @@ import {
   Header,
   Image,
   Footer,
-  ScrollView,
+  ScrollView
 } from '../common';
 import { AuthActions } from '../../actions';
 
-class Home extends React.PureComponent {
+class Tags extends React.PureComponent {
+  
+  goToCreatePost = () => {
+    this.props.navigation.navigate('CreatePost');
+  };
+
   render() {
     const { user } = this.props;
     const { props } = this;
     return (
       <View className="screen">
-        <Header title="Newsfeed" navigation={this.props.navigation} />
+        <Header title="Tags" navigation={this.props.navigation} 
+          createPostRequest={this.goToCreatePost}
+          />
         <ScrollView>
           <View>
-            <View className="f-column ">
+            <View className="f-column">
               <View className="bg-transparent mt10 space-between">
                 <View className="f-row p5 mr20">
                   <View className="f-row f-both m20">
@@ -42,7 +49,8 @@ class Home extends React.PureComponent {
                             source={require('../images/icons/delete.jpg')}
                             resizeMode="cover"
                           />
-                        )}
+                        )
+                      }
                     </View>
                     <Text className="black medium t-center">Cookiemoster</Text>
                   </View>
@@ -136,7 +144,7 @@ function mapStateToProps(state) {
   const user = state.user;
   return {
     token,
-    user,
+    user
   };
 }
-export default connect(mapStateToProps, { ...AuthActions })(Home);
+export default connect(mapStateToProps, { ...AuthActions })(Tags);

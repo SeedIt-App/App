@@ -4,9 +4,9 @@ import Splash from './Splash';
 
 class SplashScreen extends React.PureComponent {
   componentDidMount() {
-    let routeName = 'Home';
+    let routeName = 'Newsfeed';
     if (this.props.isAuthorizedUser) {
-      routeName = 'Home';
+      routeName = 'Newsfeed';
     }
     this.props.navigation.dispatch({
       type: 'Navigation/RESET',

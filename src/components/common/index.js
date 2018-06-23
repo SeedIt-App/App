@@ -14,6 +14,7 @@ import TextInput from "./TextInput";
 import KeyboardAvoidingView from "./KeyboardAvoidingView";
 import Header from "./Header";
 import Footer from "./Footer";
+import Switch from "./Switch";
 
 export {
   KeyboardAvoidingView,
@@ -31,5 +32,6 @@ export {
   BackgroundImage,
   TextInput,
   Header,
-  Footer
+  Footer,
+  Switch
 };

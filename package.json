@@ -36,9 +36,13 @@
     "idx": "2.2.0",
     "lint-staged": "5.0.0",
     "moment": "2.19.2",
+    "node-gyp": "^3.7.0",
+    "node-pre-gyp": "^0.10.0",
     "prettier": "1.8.2",
     "react": "16.0.0",
-    "react-native": "^0.54.2",
+    "react-native": "^0.50.3",
+    "react-native-background-fetch": "^2.0.8",
+    "react-native-background-task": "^0.2.1",
     "react-native-collapsible": "0.9.0",
     "react-native-datepicker": "^1.6.0",
     "react-native-elements": "0.18.2",
@@ -48,7 +52,9 @@
     "react-native-image-resizer": "1.0.0",
     "react-native-modal-datetime-picker": "4.13.0",
     "react-native-modal-selector": "0.0.23",
+    "react-native-onesignal": "^3.0.7",
     "react-native-platform-touchable": "^1.1.1",
+    "react-native-queue": "^1.0.1",
     "react-native-root-toast": "^2.2.0",
     "react-native-vector-icons": "4.4.2",
     "react-native-video": "2.0.0",
@@ -59,6 +65,7 @@
     "redux-form": "^7.1.2",
     "redux-saga": "0.16.0",
     "rn-prompt": "^1.0.2",
+    "uuid": "^3.2.1",
     "validator": "9.1.1"
   },
   "devDependencies": {
@@ -72,7 +79,8 @@
   },
   "rnpm": {
     "assets": [
-      "./src/fonts/Roboto"
+      "./src/fonts/Roboto",
+      "./src/fonts/SFPro"
     ]
   }
 }

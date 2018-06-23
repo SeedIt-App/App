@@ -15,7 +15,13 @@ class Header extends React.PureComponent {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.token === '') {
-      if (nextProps.profileErrorStatus === 'jwt expired') {
+      const values = {
+        email: this.props.user.email,
+        refreshToken: this.props.token.refreshToken,
+      };
+      this.props.refreshToken(values);
+
+     /* if (nextProps.profileErrorStatus === 'jwt expired') {
         const values = {
           email: this.props.user.email,
           refreshToken: this.props.token.refreshToken,
@@ -27,24 +33,24 @@ class Header extends React.PureComponent {
           duration: Toast.durations.LONG,
           position: Toast.positions.BOTTOM,
         });
-      }
+      }*/
     }
   }
 
-  goToHome = () => {
-    this.props.navigation.navigate('Home');
+  goToNewsfeed = () => {
+    this.props.navigation.navigate('Newsfeed');
   };
+
+  
+
   goToSocialSignUp = () => this.props.navigation.navigate('SocialSignUp');
 
   render() {
     const { props } = this;
     const {
-      profileRequestStatus,
-      profileErrorStatus,
       user,
-      token,
+      token
     } = this.props;
-    console.log(profileRequestStatus, 'profileRequestStatus');
     return (
       <View>
         <View className="f-row bg-header p5">
@@ -58,7 +64,7 @@ class Header extends React.PureComponent {
                 />
               </Touchable>
             ) : (
-              <Touchable className="pull-left" onPress={this.goToHome}>
+              <Touchable className="pull-left" onPress={this.goToNewsfeed}>
                 <Image
                   className="medium_thumb"
                   source={require('../images/logo.png')}
@@ -74,9 +80,9 @@ class Header extends React.PureComponent {
                   <Text className="complementary title m10">Sign Up</Text>
                 </Touchable>
               }*/}
-              {props.title === 'Newsfeed' &&
-                (user === '' || token === '' ||
-                profileErrorStatus === 'jwt malformed' ? (
+              {(props.title === 'Newsfeed' || props.title === 'Tags' ||
+                props.title ===  'Followed' || props.title ===  'Levels' ) &&
+                (user === '' || token === '' ? (
                   <Touchable
                     className="pull-right"
                     onPress={this.goToSocialSignUp}
@@ -84,7 +90,9 @@ class Header extends React.PureComponent {
                     <Text className="complementary title m10">Sign Up</Text>
                   </Touchable>
                 ) : (
-                  <Touchable className="pull-right" onPress={() => {}}>
+                  <Touchable className="pull-right" 
+                    onPress={() => this.props.createPostRequest()}
+                    >
                     <Image
                       className="mini1_thumb"
                       source={require('../images/icons/plus.png')}
@@ -120,7 +128,6 @@ class Header extends React.PureComponent {
 }
 
 function mapStateToProps(state) {
-  const { profileRequestStatus, profileErrorStatus } = state.loggedUser;
   const {
     user,
     token,
@@ -129,8 +136,6 @@ function mapStateToProps(state) {
   } = state.auth;
   console.log(state, 'HeaderState');
   return {
-    profileRequestStatus,
-    profileErrorStatus,
     user,
     token,
     refreshTokenErrorStatus,

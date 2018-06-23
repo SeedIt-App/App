@@ -62,16 +62,19 @@ class EditProfile extends React.PureComponent {
   }
 
   componentDidMount() {
+    if(this.props.luser.address){
+      this.setState({
+      fullAddress:this.props.luser.address.city `${'' + ' '} 
+       ${this.props.luser.address.state}` ||
+        'state',
+      })
+    }
     if (this.props.luser) {
       this.setState({
         userName: this.props.luser.userName || '',
-        fullAddress:
-          this.props.luser.address.city ||
-          `${'' + ' '}${this.props.luser.address.state}` ||
-          'state',
-        country: this.props.luser.address.country || '',
+        country: this.props.luser.address ? this.props.luser.address.country : '',
         bio: this.props.luser.bio || '',
-        badges: this.props.luser.badges || '',
+        badges: this.props.luser.badges || [],
         fullName:
           this.props.luser.firstName ||
           `${'' + ' '}${this.props.luser.lastName}` ||
@@ -159,9 +162,9 @@ class EditProfile extends React.PureComponent {
       userName: this.state.userName || this.props.luser.userName,
       bio: this.state.bio || this.props.luser.bio,
       address: {
-        city: this.state.city || this.props.luser.address.city,
-        state: this.state.state || this.props.luser.address.state,
-        country: this.state.country || this.props.luser.address.country,
+        city: this.state.city || this.props.luser.address  ? this.props.luser.address.city : '',
+        state: this.state.state || this.props.luser.address  ? this.props.luser.address.state : '',
+        country: this.state.country || this.props.luser.address  ? this.props.luser.address.country : '',
       },
     };
     this.props.editProfile(values);

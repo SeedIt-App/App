@@ -37,6 +37,9 @@ function* doLogin(action) {
   }
 }
 
+const getUser = state => state.auth.user;
+console.log(getUser, 'getUser')
+
 function* refreshToken(action) {
   yield put(AuthActions.refreshTokenRequest());
   try {
@@ -73,9 +76,27 @@ function* doSignupByGoggle(action) {
   }
 }
 
+/*function* forgotPassword(action) {
+  const { email } = action.payload;
+  yield put(AuthActions.forgotPasswordRequest());
+  try {
+    const forgotPasswordUrl = `/users/password/forgot/${email}`;
+    yield call(GET, forgotPasswordUrl);
+    yield put(AuthActions.forgotPasswordSuccess());
+  } catch (error) {
+    let msgError = error;
+    if (error.data) {
+      msgError = error.data.error.message;
+    }
+    yield put(AuthActions.forgotPasswordFailure(msgError));
+  }
+}*/
+
 export default function* authSagas() {
   yield all([fork(takeLatest, AuthActions.SIGNUP, doSignUp)]);
   yield all([fork(takeLatest, AuthActions.LOGIN, doLogin)]);
   yield all([fork(takeLatest, AuthActions.REFRESH_TOKEN, refreshToken)]);
   yield all([fork(takeLatest, AuthActions.GOOGLESIGNUP, doSignupByGoggle)]);
+/*    yield all([fork(takeLatest, AuthActions.FORGOT_PASSWORD, forgotPassword)]);
+*/
 }

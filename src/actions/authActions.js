@@ -35,7 +35,7 @@ export const loginRequest = createAction(LOGIN_REQUEST);
 export const loginSuccess = createAction(LOGIN_SUCCESS);
 export const loginFailure = createAction(LOGIN_FAILURE);
 
-// REFRESH_TOKEN
+// Refresh Token
 export const REFRESH_TOKEN = 'AUTH/REFRESH_TOKEN';
 export const REFRESH_TOKEN_REQUEST = 'AUTH/REFRESH_TOKEN_REQUEST';
 export const REFRESH_TOKEN_SUCCESS = 'AUTH/REFRESH_TOKEN_SUCCESS';
@@ -46,6 +46,12 @@ export const refreshTokenRequest = createAction(REFRESH_TOKEN_REQUEST);
 export const refreshTokenSuccess = createAction(REFRESH_TOKEN_SUCCESS);
 export const refreshTokenFailure = createAction(REFRESH_TOKEN_FAILURE);
 
+// Forgot Password
+/*export const forgotPassword = createAction(FORGOT_PASSWORD);
+export const forgotPasswordRequest = createAction(FORGOT_PASSWORD_REQUEST);
+export const forgotPasswordFailure = createAction(FORGOT_PASSWORD_FAILURE);
+export const forgotPasswordSuccess = createAction(FORGOT_PASSWORD_SUCCESS);
+*/
 // SetAuthUser
 export const SET_AUTH_USER = 'AUTH/SET_AUTH_USER';
 export const setAuthUser = createAction(SET_AUTH_USER);

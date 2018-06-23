@@ -50,7 +50,7 @@ class Login extends React.PureComponent {
       this.props.navigation.dispatch({
         type: 'Navigation/RESET',
         index: 0,
-        actions: [{ type: 'Navigation/NAVIGATE', routeName: 'Home' }],
+        actions: [{ type: 'Navigation/NAVIGATE', routeName: 'Newsfeed' }],
       });
     }
   }
