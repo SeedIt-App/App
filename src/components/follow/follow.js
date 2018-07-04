@@ -7,21 +7,21 @@ import {
   Header,
   Image,
   Footer,
-  ScrollView
+  ScrollView,
 } from '../common';
-import { AuthActions, FollowActions,PostActions} from '../../actions';
+import { AuthActions, FollowActions, PostActions } from '../../actions';
 import { TextInput } from 'react-native';
 import Toast from 'react-native-root-toast';
 import Accordion from 'react-native-collapsible/Accordion';
 import { View as NativeView } from 'react-native';
 
 class Follow extends React.PureComponent {
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super(props);
 
     this.state = {
-      user : this.props.user
-    }
+      user: this.props.user,
+    };
   }
 
   componentDidMount() {
@@ -44,7 +44,7 @@ class Follow extends React.PureComponent {
       });
     }
   }
-  
+
   goToCreatePost = () => {
     this.props.navigation.navigate('CreatePost');
   };
@@ -65,9 +65,7 @@ class Follow extends React.PureComponent {
         </View>
         <View className="f-column j-start mt10">
           <View className="f-row">
-            <Text className="black bold large t-center">
-              {section.text}
-            </Text>
+            <Text className="black bold large t-center">{section.text}</Text>
             {this.state.user &&
               this.state.user.role === 'admin' && (
                 <Image
@@ -75,8 +73,7 @@ class Follow extends React.PureComponent {
                   source={require('../images/icons/delete.jpg')}
                   resizeMode="cover"
                 />
-              )
-            }
+              )}
           </View>
         </View>
         <View className="f-row pull-right f-both m20">
@@ -88,12 +85,12 @@ class Follow extends React.PureComponent {
         </View>
         <View className="dividerGrey" />
         <View className="dividerGrey" />
-      </View>  
+      </View>
     </NativeView>
   );
 
   renderContent = section => (
-    <View >
+    <View>
       <View className="f-row p5 mr20">
         <View className=" f-row space-between w-1-1">
           <View>
@@ -109,41 +106,48 @@ class Follow extends React.PureComponent {
               source={require('../images/icons/cm.png')}
               resizeMode="cover"
             />
-          </View> 
+          </View>
           <View>
             <Image
               className="normal_thumb m10 mb25"
               source={require('../images/icons/drop_grey.png')}
               resizeMode="cover"
             />
-          </View>  
+          </View>
         </View>
       </View>
     </View>
   );
 
   render() {
-    const { user ,followers, allPosts, 
-      getAllFollowersErrorStatus, 
-      getAllFollowersRequestStatus } = this.props;
-      const { props } = this;
+    const {
+      user,
+      followers,
+      allPosts,
+      getAllFollowersErrorStatus,
+      getAllFollowersRequestStatus,
+    } = this.props;
+    const { props } = this;
     return (
       <View className="screen">
-        <Header title="Followed" navigation={this.props.navigation} 
+        <Header
+          title="Followed"
+          navigation={this.props.navigation}
           createPostRequest={this.goToCreatePost}
-          />
+        />
         <ScrollView>
           <View>
             <View className="f-column">
               <View className="bg-transparent mt10 space-between">
-              {allPosts && allPosts.length  > 0 && 
-                <Accordion
-                  sections={allPosts}
-                  renderHeader={this.renderHeader}
-                  renderContent={this.renderContent}
-                  underlayColor="transparent"
-                /> 
-              }
+                {allPosts &&
+                  allPosts.length > 0 && (
+                    <Accordion
+                      sections={allPosts}
+                      renderHeader={this.renderHeader}
+                      renderContent={this.renderContent}
+                      underlayColor="transparent"
+                    />
+                  )}
               </View>
             </View>
           </View>
@@ -156,14 +160,18 @@ class Follow extends React.PureComponent {
 
 function mapStateToProps(state) {
   const token = state.auth.authToken;
-  const { user }= state.auth;
-  const { followers ,
+  const { user } = state.auth;
+  const {
+    followers,
     getAllFollowersRequestStatus,
-    getAllFollowersErrorStatus } = state.follow;
-  const { getAllPosts ,
+    getAllFollowersErrorStatus,
+  } = state.follow;
+  const {
+    getAllPosts,
     getPostsRequestStatus,
-    getPostsErrorStatus } = state.post;
-  const allPosts = getAllPosts && getAllPosts.posts;  
+    getPostsErrorStatus,
+  } = state.post;
+  const allPosts = getAllPosts && getAllPosts.posts;
   return {
     token,
     user,
@@ -172,7 +180,11 @@ function mapStateToProps(state) {
     getAllFollowersErrorStatus,
     allPosts,
     getPostsRequestStatus,
-    getPostsErrorStatus
+    getPostsErrorStatus,
   };
 }
-export default connect(mapStateToProps, { ...AuthActions,...FollowActions, ...PostActions })(Follow);
+export default connect(mapStateToProps, {
+  ...AuthActions,
+  ...FollowActions,
+  ...PostActions,
+})(Follow);

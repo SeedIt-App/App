@@ -7,12 +7,11 @@ import {
   Header,
   Image,
   Footer,
-  ScrollView
+  ScrollView,
 } from '../common';
 import { AuthActions } from '../../actions';
 
 class Tags extends React.PureComponent {
-  
   goToCreatePost = () => {
     this.props.navigation.navigate('CreatePost');
   };
@@ -22,9 +21,11 @@ class Tags extends React.PureComponent {
     const { props } = this;
     return (
       <View className="screen">
-        <Header title="Tags" navigation={this.props.navigation} 
+        <Header
+          title="Tags"
+          navigation={this.props.navigation}
           createPostRequest={this.goToCreatePost}
-          />
+        />
         <ScrollView>
           <View>
             <View className="f-column">
@@ -49,8 +50,7 @@ class Tags extends React.PureComponent {
                             source={require('../images/icons/delete.jpg')}
                             resizeMode="cover"
                           />
-                        )
-                      }
+                        )}
                     </View>
                     <Text className="black medium t-center">Cookiemoster</Text>
                   </View>
@@ -144,7 +144,7 @@ function mapStateToProps(state) {
   const user = state.user;
   return {
     token,
-    user
+    user,
   };
 }
 export default connect(mapStateToProps, { ...AuthActions })(Tags);

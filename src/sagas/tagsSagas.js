@@ -8,10 +8,11 @@ function* getAllTagsList(action) {
   yield put(TagsActions.getAllTagsListRequest());
   try {
     const user = yield select(getUser);
-    const getAllTagsListURL = "/tags?select=tag,tagBy,followers&order=createdAt&sort=desc&page=1&perPage=5";
+    const getAllTagsListURL =
+      '/tags?select=tag,tagBy,followers&order=createdAt&sort=desc&page=1&perPage=5';
     const { response } = yield call(GET, getAllTagsListURL);
     yield put(TagsActions.getAllTagsListSuccess({
-      getAllTagsLists : response.data
+      getAllTagsLists: response.data,
     }));
   } catch (error) {
     let msgError = error;
@@ -20,7 +21,7 @@ function* getAllTagsList(action) {
     }
     yield put(TagsActions.getAllTagsListFailure(msgError));
   }
-} 
+}
 
 // State for Get create new tag
 function* createNewTag(action) {
@@ -30,7 +31,7 @@ function* createNewTag(action) {
     const { response } = yield call(POST, createNewTagURL, action.payload);
     console.log(response, 'pR');
     yield put(TagsActions.createNewTagSuccess({
-      getAllPosts: response.data
+      getAllPosts: response.data,
     }));
   } catch (error) {
     console.log(error);
@@ -68,7 +69,7 @@ function* updateTagName(action) {
     const updateTagNameUrl = '/tags/${tagId}';
     const { response } = yield call(GET, updateTagNameUrl);
     yield put(TagsActions.updateTagNameSuccess({
-      updateTagName : response.data,
+      updateTagName: response.data,
     }));
   } catch (error) {
     let msgError = error;
@@ -116,9 +117,13 @@ function* getAllFollowersTag(action) {
   yield put(TagsActions.getAllFollowersTagRequest());
   try {
     const getAllFollowersTagURL = '/posts/${postId}/comment/${commentId}';
-    const { response } = yield call(PATCH, getAllFollowersTagURL, action.payload);
+    const { response } = yield call(
+      PATCH,
+      getAllFollowersTagURL,
+      action.payload,
+    );
     yield put(TagsActions.getAllFollowersTagSuccess({
-      followTag : response.data,
+      followTag: response.data,
     }));
   } catch (error) {
     console.log(error);
@@ -137,5 +142,7 @@ export default function* authSagas() {
   yield all([fork(takeLatest, TagsActions.UPDATE_TAG_NAME, updateTagName)]);
   yield all([fork(takeLatest, TagsActions.DELETE_TAG, deleteTag)]);
   yield all([fork(takeLatest, TagsActions.FOLLOW_TAG, followTag)]);
-  yield all([fork(takeLatest, TagsActions.GET_ALL_FOLLOWERS_TAG, getAllFollowersTag)]);
+  yield all([
+    fork(takeLatest, TagsActions.GET_ALL_FOLLOWERS_TAG, getAllFollowersTag),
+  ]);
 }

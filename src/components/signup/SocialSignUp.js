@@ -1,5 +1,5 @@
-import React from "react";
-import { connect } from "react-redux";
+import React from 'react';
+import { connect } from 'react-redux';
 import {
   View,
   BackgroundImage,
@@ -8,24 +8,23 @@ import {
   Text,
   Spinner,
   Colors,
-  KeyboardAvoidingView
-} from "../common";
-import Toast from "react-native-root-toast";
+  KeyboardAvoidingView,
+} from '../common';
+import Toast from 'react-native-root-toast';
 
 class SocialSignUp extends React.PureComponent {
-  
-  gotToBack = () => this.props.navigation.navigate("Newsfeed");
-  goToSignUp = () => this.props.navigation.navigate("SignUp");
-  goToLogin = () => this.props.navigation.navigate("Login");
-  
+  gotToBack = () => this.props.navigation.navigate('Newsfeed');
+  goToSignUp = () => this.props.navigation.navigate('SignUp');
+  goToLogin = () => this.props.navigation.navigate('Login');
+
   render() {
-    const { props} = this;
+    const { props } = this;
     return (
       <KeyboardAvoidingView>
         <View className="screen">
           <BackgroundImage
             className="flex f-row expand"
-            source={require("../images/background_images/Seed_IT.png")}
+            source={require('../images/background_images/Seed_IT.png')}
           >
             <View className="h-1-1 space-around flex">
               <View className="f-center mt20">

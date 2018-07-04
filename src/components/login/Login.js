@@ -9,7 +9,7 @@ import {
   Spinner,
   Colors,
   KeyboardAvoidingView,
-  ScrollView
+  ScrollView,
 } from '../common';
 import { TextInput } from 'react-native';
 import { AuthActions } from '../../actions';
@@ -67,13 +67,12 @@ class Login extends React.PureComponent {
       usernameOrEmail: this.state.username,
       password: this.state.password,
     };
-    if(this.state.username ==="" || this.state.password == ""){
-      Toast.show("Fields is not allowed to be empty", {
+    if (this.state.username === '' || this.state.password == '') {
+      Toast.show('Fields is not allowed to be empty', {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
       });
-    }
-    else {
+    } else {
       this.props.login(loginValues);
     }
   };
@@ -94,7 +93,9 @@ class Login extends React.PureComponent {
             <View className="h-1-1 space-around flex">
               <ScrollView>
                 <View className="f-center">
-                  <Text className="dashHeading complementary bold">Seed It</Text>
+                  <Text className="dashHeading complementary bold">
+                    Seed It
+                  </Text>
                   <Image
                     className="x_large_thumb mt20"
                     source={require('../images/icons/Jar.png')}
@@ -111,7 +112,7 @@ class Login extends React.PureComponent {
                       style={{ color: 'white', fontSize: 16, width: 280 }}
                       value={this.state.username}
                       placeholder="Username"
-                      placeholderTextColor='white'
+                      placeholderTextColor="white"
                       autoCapitalize="none"
                       underlineColorAndroid="transparent"
                       onChangeText={username => this.setState({ username })}
@@ -124,11 +125,11 @@ class Login extends React.PureComponent {
                     />
                     <View className="dividerVertrical mt10 mr10" />
                     <TextInput
-                      style={{ color: 'white', fontSize: 16 ,width: 280}}
+                      style={{ color: 'white', fontSize: 16, width: 280 }}
                       value={this.state.password}
                       autoCapitalize="none"
                       placeholder="Password"
-                      placeholderTextColor='white'
+                      placeholderTextColor="white"
                       secureTextEntry={this.state.showPassword}
                       underlineColorAndroid="transparent"
                       onChangeText={password => this.setState({ password })}

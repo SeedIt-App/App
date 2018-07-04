@@ -21,7 +21,7 @@ class Header extends React.PureComponent {
       };
       this.props.refreshToken(values);
 
-     /* if (nextProps.profileErrorStatus === 'jwt expired') {
+      /* if (nextProps.profileErrorStatus === 'jwt expired') {
         const values = {
           email: this.props.user.email,
           refreshToken: this.props.token.refreshToken,
@@ -33,24 +33,22 @@ class Header extends React.PureComponent {
           duration: Toast.durations.LONG,
           position: Toast.positions.BOTTOM,
         });
-      }*/
+      } */
     }
   }
 
   goToNewsfeed = () => {
     this.props.navigation.navigate('Newsfeed');
   };
-
-  
+  goToNotification = () => {
+    this.props.navigation.navigate('Notifications');
+  }
 
   goToSocialSignUp = () => this.props.navigation.navigate('SocialSignUp');
 
   render() {
     const { props } = this;
-    const {
-      user,
-      token
-    } = this.props;
+    const { user, token } = this.props;
     return (
       <View>
         <View className="f-row bg-header p5">
@@ -72,44 +70,32 @@ class Header extends React.PureComponent {
               </Touchable>
             )}
             <Text className="complementary title bold m10">{props.title}</Text>
-              {/*{props.title === 'Newsfeed' &&
+           
+            {(props.title === 'Tags' ||
+              props.title === 'Followed' ||
+              props.title === 'Levels') &&
+              (user === '' || token === '') && (
                 <Touchable
                   className="pull-right"
-                  onPress={this.goToSocialSignUp}
-                >
-                  <Text className="complementary title m10">Sign Up</Text>
-                </Touchable>
-              }*/}
-              {(props.title === 'Newsfeed' || props.title === 'Tags' ||
-                props.title ===  'Followed' || props.title ===  'Levels' ) &&
-                (user === '' || token === '' ? (
-                  <Touchable
-                    className="pull-right"
-                    onPress={this.goToSocialSignUp}
-                  >
-                    <Text className="complementary title m10">Sign Up</Text>
-                  </Touchable>
-                ) : (
-                  <Touchable className="pull-right" 
-                    onPress={() => this.props.createPostRequest()}
-                    >
-                    <Image
-                      className="mini1_thumb"
-                      source={require('../images/icons/plus.png')}
-                    />
-                  </Touchable>
-                ))}
-              {props.title === 'Profile' && (
-                <Touchable
-                  className="pull-right"
-                  onPress={() => this.props.openRequest()}
+                  onPress={() => this.props.createPostRequest()}
                 >
                   <Image
-                    className="medium_thumb"
-                    source={require('../images/icons/setting.png')}
+                    className="mini1_thumb"
+                    source={require('../images/icons/plus.png')}
                   />
                 </Touchable>
               )}
+            {props.title === 'Profile' && (
+              <Touchable
+                className="pull-right"
+                onPress={() => this.props.openRequest()}
+              >
+                <Image
+                  className="medium_thumb"
+                  source={require('../images/icons/setting.png')}
+                />
+              </Touchable>
+            )}
 
             {props.title === 'EditProfile' && (
               <Touchable
@@ -119,6 +105,43 @@ class Header extends React.PureComponent {
                 <Text className="complementary title m10">Save</Text>
               </Touchable>
             )}
+
+            {props.title === 'Newsfeed' && 
+              (user === '' || token === '' ) ? 
+                (
+                <Touchable
+                  className="pull-right"
+                  onPress={this.goToSocialSignUp}
+                  >
+                  <Text className="complementary title m10">Sign Up</Text>
+                </Touchable>
+                ) :
+                (<Touchable
+                  className="pull-right"
+                    onPress={this.goToNotification}
+                  >
+                  <Image
+                    className="mini1_thumb"
+                    source={require('../images/icons/alerts.png')}
+                  />
+                </Touchable>)  
+            }
+
+            {props.title === 'Newsfeed' &&
+              (user !== '' || token !== '' ) ?
+                (
+                <Touchable
+                    className="mr20"
+                    onPress={() => this.props.createPostRequest()}
+                  >
+                  <Image
+                    className="mini1_thumb"
+                    source={require('../images/icons/plus.png')}
+                  />
+                </Touchable>
+              )  : null
+            }
+
           </View>
         </View>
         <View className="dividerBlack" />
@@ -134,6 +157,7 @@ function mapStateToProps(state) {
     refreshTokenRequestStatus,
     refreshTokenErrorStatus,
   } = state.auth;
+
   console.log(state, 'HeaderState');
   return {
     user,

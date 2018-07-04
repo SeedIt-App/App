@@ -47,7 +47,7 @@ export const refreshTokenSuccess = createAction(REFRESH_TOKEN_SUCCESS);
 export const refreshTokenFailure = createAction(REFRESH_TOKEN_FAILURE);
 
 // Forgot Password
-/*export const forgotPassword = createAction(FORGOT_PASSWORD);
+/* export const forgotPassword = createAction(FORGOT_PASSWORD);
 export const forgotPasswordRequest = createAction(FORGOT_PASSWORD_REQUEST);
 export const forgotPasswordFailure = createAction(FORGOT_PASSWORD_FAILURE);
 export const forgotPasswordSuccess = createAction(FORGOT_PASSWORD_SUCCESS);

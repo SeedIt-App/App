@@ -16,6 +16,7 @@ import CreateComment from './components/post/createComment';
 import Follow from './components/follow/follow';
 import Tags from './components/tags/tags';
 import Redwood from './components/redwood/redwood';
+import Notifications from './components/notification/Notification';
 
 const AppNavigator = StackNavigator({
   SplashScreen: {
@@ -87,6 +88,13 @@ const AppNavigator = StackNavigator({
 
   Redwood: {
     screen: Redwood,
+    navigationOptions: () => ({
+      header: null,
+    }),
+  },
+
+  Notifications: {
+    screen: Notifications,
     navigationOptions: () => ({
       header: null,
     }),

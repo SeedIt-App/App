@@ -25,10 +25,11 @@ function* followAnotherUser(action) {
 function* getAllFollowers(action) {
   yield put(FollowActions.getAllFollowersRequest());
   try {
-    const getFollowersUrl = '/users/followers?select=firstName,lastName,email,userName,password&page=1&perPage=5';
+    const getFollowersUrl =
+      '/users/followers?select=firstName,lastName,email,userName,password&page=1&perPage=5';
     const { response } = yield call(GET, getFollowersUrl);
     yield put(FollowActions.getAllFollowersSuccess({
-      followers: response.data,
+      followers: response.data, 
     }));
   } catch (error) {
     let msgError = error;
@@ -42,10 +43,11 @@ function* getAllFollowers(action) {
 function* getAllUserFollowings(action) {
   yield put(FollowActions.getAllUserFollowingsRequest());
   try {
-    const getFollowingsUrl = '/users/followings?select=firstName,lastName,email,userName,password&page=1&perPage=5';
+    const getFollowingsUrl =
+      '/users/followings?select=firstName,lastName,email,userName,password&page=1&perPage=5';
     const { response } = yield call(GET, getFollowingsUrl);
     yield put(FollowActions.getAllUserFollowingsSuccess({
-      followings: response.data,
+      followingUser: response.data,
     }));
   } catch (error) {
     let msgError = error;
@@ -57,7 +59,13 @@ function* getAllUserFollowings(action) {
 }
 
 export default function* authSagas() {
-  yield all([fork(takeLatest, FollowActions.FOLLOW_ANOTHER_USER, followAnotherUser)]);
-  yield all([fork(takeLatest, FollowActions.GET_ALL_FOLLOWERS, getAllFollowers)]);
-  yield all([fork(takeLatest, FollowActions.GET_ALL_USER_FOLLOWINGS, getAllUserFollowings)]);
+  yield all([
+    fork(takeLatest, FollowActions.FOLLOW_ANOTHER_USER, followAnotherUser),
+  ]);
+  yield all([
+    fork(takeLatest, FollowActions.GET_ALL_FOLLOWERS, getAllFollowers),
+  ]);
+  yield all([
+    fork(takeLatest,FollowActions.GET_ALL_USER_FOLLOWINGS ,getAllUserFollowings),
+  ]);
 }

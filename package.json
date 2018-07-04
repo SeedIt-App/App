@@ -33,7 +33,7 @@
     "eslint-plugin-react": "^7.4.0",
     "husky": "0.14.3",
     "icepick": "2.2.1",
-    "idx": "2.2.0",
+    "idx": "^2.2.0",
     "lint-staged": "5.0.0",
     "moment": "2.19.2",
     "node-gyp": "^3.7.0",

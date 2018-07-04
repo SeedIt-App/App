@@ -17,13 +17,12 @@ import Toast from 'react-native-root-toast';
 import ImagePicker from 'react-native-image-picker';
 
 class CreatePost extends React.PureComponent {
-
   constructor(props) {
     super(props);
     this.state = {
-      userNameFlag : false,
-      message:''
-    }
+      userNameFlag: false,
+      message: '',
+    };
   }
 
   componentWillReceiveProps(nextProps) {
@@ -37,81 +36,77 @@ class CreatePost extends React.PureComponent {
 
   ShowUserName = () => {
     this.setState({ userNameFlag: !this.state.userNameFlag });
-  }
+  };
 
-  createNewPost = ()=>{
-    if(this.state.message !== ''){
-      const body ={
-        text : this.state.message,
-        image : []
-      }
-      this.props.createPost(body)
-    }else { 
+  createNewPost = () => {
+    if (this.state.message !== '') {
+      const body = {
+        text: this.state.message,
+        image: [],
+      };
+      this.props.createPost(body);
+    } else {
       Toast.show('Please write the text for post', {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
       });
     }
+  };
 
-  }
-
-   selectPhotoTapped() {
+  selectPhotoTapped() {
     const options = {
       quality: 1.0,
       maxWidth: 500,
       maxHeight: 500,
       storageOptions: {
-        skipBackup: true
-      }
+        skipBackup: true,
+      },
     };
 
-    ImagePicker.showImagePicker(options, (response) => {
-      //console.log('Response = ', response);
+    ImagePicker.showImagePicker(options, response => {
+      // console.log('Response = ', response);
       if (response.didCancel) {
         console.log('User cancelled photo picker');
-      }
-      else if (response.error) {
+      } else if (response.error) {
         console.log('ImagePicker Error: ', response.error);
-      }
-      else if (response.customButton) {
+      } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
-      }
-      else {
-        let source = { uri: response.uri };
-        this.uploadImages(response.uri)
+      } else {
+        const source = { uri: response.uri };
+        this.uploadImages(response.uri);
       }
     });
   }
 
-  uploadImages =(imgPath)=> {
-    let body = new FormData();
-    const ip_addr= URL.IMAGE_URL
-      body.append('file', {uri: imgPath, name: 'photo.png',type: 'image/png'});
-      body.append('Content-Type', 'image/png');
-      fetch('https://seedit-api.herokuapp.com/' + 'file/upload', {
-        method : 'POST',
-        body: body
-      }).then((response) => { 
-        return response.json() 
-        }).then((responseJson) => {
-        if(responseJson.status ===  'success'){
-          console.log(responseJson, 'responseJson')
-          let responseData = responseJson.upload.path
-          let post_id = responseJson.upload.id
+  uploadImages = imgPath => {
+    const body = new FormData();
+    const ip_addr = URL.IMAGE_URL;
+    body.append('file', { uri: imgPath, name: 'photo.png', type: 'image/png' });
+    body.append('Content-Type', 'image/png');
+    fetch('https://seedit-api.herokuapp.com/' + 'file/upload', {
+      method: 'POST',
+      body,
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        if (responseJson.status === 'success') {
+          console.log(responseJson, 'responseJson');
+          const responseData = responseJson.upload.path;
+          const post_id = responseJson.upload.id;
           this.setState({
-            image: ip_addr+responseData.split("/var/www/html/")[1],
-            img_Id : post_id
+            image: ip_addr + responseData.split('/var/www/html/')[1],
+            img_Id: post_id,
           });
-          //console.log(this.state.img_Id, 'this.state.image')
+          // console.log(this.state.img_Id, 'this.state.image')
         }
       })
-    .catch((error) => {
-      console.log(error, 'error')
-    })
-  }
+      .catch(error => {
+        console.log(error, 'error');
+      });
+  };
 
   render() {
-    const { user ,createPostRequestStatus , createPostErrorStatus} = this.props;
+    const { user, createPostRequestStatus, createPostErrorStatus } = this.props;
     const { props } = this;
     return (
       <View className="screen">
@@ -130,58 +125,62 @@ class CreatePost extends React.PureComponent {
                   </View>
                   <View className="f-column j-start mt10 ">
                     <View className="f-row">
-                      {this.state.userNameFlag ?
+                      {this.state.userNameFlag ? (
                         <Text className="black bold large t-center">
-                          {this.props.user ? idx(this.props.user, _ => _.userName): 'User name'}
+                          {this.props.user
+                            ? idx(this.props.user, _ => _.userName)
+                            : 'User name'}
                         </Text>
-                        : null
-                      }
+                      ) : null}
                     </View>
                     <Text className="black medium t-center">
-                        {this.props.user ? idx(this.props.user.address, _ => _.city) : 'Location'}
+                      {this.props.user
+                        ? idx(this.props.user.address, _ => _.city)
+                        : 'Location'}
                     </Text>
                   </View>
                   <View className="f-column pull-right mt10 f-both m20">
-                    <Text className="black medium t-center">
-                      Show Username
-                    </Text>
+                    <Text className="black medium t-center">Show Username</Text>
                     <Switch
                       value={this.state.userNameFlag}
                       onChange={this.ShowUserName}
                     />
                   </View>
                 </View>
-                <View className="dividerGrey"/>
-                <View className="dividerGrey"/>
+                <View className="dividerGrey" />
+                <View className="dividerGrey" />
               </View>
               <View className="m10 ">
                 <View className="f-center f-row">
                   <View>
                     <TextInput
-                      style={{ color: 'black', fontSize: 16, width : 250}}
+                      style={{ color: 'black', fontSize: 16, width: 250 }}
                       value={this.state.message}
                       placeholder="Type your idea here"
-                      placeholderTextColor='black'
+                      placeholderTextColor="black"
                       autoCapitalize="none"
                       underlineColorAndroid="transparent"
                       multiline
                       onChangeText={message => this.setState({ message })}
                     />
                   </View>
-                </View>  
+                </View>
               </View>
             </View>
           </View>
         </ScrollView>
-          <View className="dividerGrey"/>
-          <View className="dividerGrey"/>
-          <View className="dividerGrey"/>
+        <View className="dividerGrey" />
+        <View className="dividerGrey" />
+        <View className="dividerGrey" />
         <View className="m10 ">
           <View className="f-row f-both   w-1-0  space-between">
             <View className="p5">
               <Touchable onPress={this.goToLogin}>
                 <View className="f-row f-both m20">
-                  <Touchable className="p5" onPress={this.selectPhotoTapped.bind(this)}>
+                  <Touchable
+                    className="p5"
+                    onPress={this.selectPhotoTapped.bind(this)}
+                  >
                     <Image
                       className="mini_thumb m10"
                       source={require('../images/icons/camera.png')}
@@ -203,8 +202,8 @@ class CreatePost extends React.PureComponent {
 
 function mapStateToProps(state) {
   const token = state.auth.authToken;
-  const {user} = state.auth;
-  console.log(user,'*******************')
+  const { user } = state.auth;
+  console.log(user, '*******************');
   const { createPostRequestStatus, createPostErrorStatus } = state.post;
   return {
     token,

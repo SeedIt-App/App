@@ -13,7 +13,12 @@ import {
   ScrollView,
 } from '../common';
 import { TextInput } from 'react-native';
-import { AuthActions, UserActions ,FollowActions , PostActions } from '../../actions';
+import {
+  AuthActions,
+  UserActions,
+  FollowActions,
+  PostActions,
+} from '../../actions';
 import Toast from 'react-native-root-toast';
 
 class Profile extends React.PureComponent {
@@ -57,11 +62,15 @@ class Profile extends React.PureComponent {
   };
 
   renderTab = () => {
-    const {allFollowers ,allfollowings,allPosts,
+    const {
+      allFollowers,
+      allfollowings,
+      allPosts,
       getAllFollowersRequestStatus,
-      getAllFollowersErrorStatus ,
+      getAllFollowersErrorStatus,
       getAllUserFollowingsRequestStatus,
-      getAllUserFollowingsErrorStatu} = this.props;
+      getAllUserFollowingsErrorStatus,
+    } = this.props;
 
     if (this.state.activeFlag === 'liked') {
       return (
@@ -72,88 +81,94 @@ class Profile extends React.PureComponent {
     } else if (this.state.activeFlag === 'posted') {
       return (
         <View className="bg-transparent mt10 space-between">
-        {allPosts && allPosts.map(p => (
-          <View className="f-row p5 mr20">
-            <View className="f-row f-both m20">
-              <Image
-                className="med_thumb m10"
-                source={require('../images/avatars/Abbott.png')}
-                resizeMode="cover"
-              />
-            </View>
-            <View className="f-column mt10">
-              <View className="f-both">
-                <Text className="black bold large t-center">{p.text}ter</Text>
+          {allPosts &&
+            allPosts.map(p => (
+              <View className="f-row p5 mr20">
+                <View className="f-row f-both m20">
+                  <Image
+                    className="med_thumb m10"
+                    source={require('../images/avatars/Abbott.png')}
+                    resizeMode="cover"
+                  />
+                </View>
+                <View className="f-column mt10">
+                  <View className="f-both">
+                    <Text className="black bold large t-center">
+                      {p.text}ter
+                    </Text>
+                  </View>
+                </View>
+                <View className="f-row pull-right f-both m20">
+                  <Image
+                    className="normal_thumb m10"
+                    source={require('../images/icons/drop.jpg')}
+                    resizeMode="cover"
+                  />
+                </View>
               </View>
-            </View>
-            <View className="f-row pull-right f-both m20">
-              <Image
-                className="normal_thumb m10"
-                source={require('../images/icons/drop.jpg')}
-                resizeMode="cover"
-              />
-            </View>
-          </View>
-          ))
-        }
+            ))}
         </View>
       );
     } else if (this.state.activeFlag === 'followers') {
       return (
         <View className="bg-transparent mt10 space-between">
-        {allFollowers && allFollowers.map(p => (
-          <View className="f-row p5 mr20">
-            <View className="f-row f-both m20">
-              <Image
-                className="med_thumb m10"
-                source={require('../images/avatars/Abbott.png')}
-                resizeMode="cover"
-              />
-            </View>
-            <View className="f-column mt10">
-              <View className="f-both">
-                <Text className="black bold large t-center">{p.userName}</Text>
+          {allFollowers &&
+            allFollowers.map(p => (
+              <View className="f-row p5 mr20">
+                <View className="f-row f-both m20">
+                  <Image
+                    className="med_thumb m10"
+                    source={require('../images/avatars/Abbott.png')}
+                    resizeMode="cover"
+                  />
+                </View>
+                <View className="f-column mt10">
+                  <View className="f-both">
+                    <Text className="black bold large t-center">
+                      {p.userName}
+                    </Text>
+                  </View>
+                </View>
+                <View className="f-row pull-right f-both m20">
+                  <Image
+                    className="normal_thumb m10"
+                    source={require('../images/icons/drop.jpg')}
+                    resizeMode="cover"
+                  />
+                </View>
               </View>
-            </View>
-            <View className="f-row pull-right f-both m20">
-              <Image
-                className="normal_thumb m10"
-                source={require('../images/icons/drop.jpg')}
-                resizeMode="cover"
-              />
-            </View>
-          </View>
-          ))
-        }
+            ))}
         </View>
       );
     } else if (this.state.activeFlag === 'following') {
       return (
         <View className="bg-transparent mt10 space-between">
-        {allfollowings && allfollowings.map(f => (
-          <View className="f-row p5 mr20">
-            <View className="f-row f-both m20">
-              <Image
-                className="med_thumb m10"
-                source={require('../images/avatars/Abbott.png')}
-                resizeMode="cover"
-              />
-            </View>
-            <View className="f-column mt10">
-              <View className="f-both">
-                <Text className="black bold large t-center">{f.userName}</Text>
+          {allfollowings &&
+            allfollowings.map(f => (
+              <View className="f-row p5 mr20">
+                <View className="f-row f-both m20">
+                  <Image
+                    className="med_thumb m10"
+                    source={require('../images/avatars/Abbott.png')}
+                    resizeMode="cover"
+                  />
+                </View>
+                <View className="f-column mt10">
+                  <View className="f-both">
+                    <Text className="black bold large t-center">
+                      {f.userName}
+                    </Text>
+                  </View>
+                </View>
+                <View className="f-row pull-right f-both m20">
+                  <Image
+                    className="normal_thumb m10"
+                    source={require('../images/icons/drop.jpg')}
+                    resizeMode="cover"
+                  />
+                </View>
               </View>
-            </View>
-            <View className="f-row pull-right f-both m20">
-              <Image
-                className="normal_thumb m10"
-                source={require('../images/icons/drop.jpg')}
-                resizeMode="cover"
-              />
-            </View>
-          </View>
-          ))
-        }
+            ))}
         </View>
       );
     }
@@ -165,21 +180,22 @@ class Profile extends React.PureComponent {
       profileErrorStatus,
       luser,
       user,
-      allFollowers ,allfollowings,
+      allFollowers,
+      allfollowings,
       getAllFollowersRequestStatus,
-      getAllFollowersErrorStatus ,
+      getAllFollowersErrorStatus,
       getAllUserFollowingsRequestStatus,
-      getAllUserFollowingsErrorStatus
+      getAllUserFollowingsErrorStatus,
     } = this.props;
     console.log(this.props);
     let fullAddress = '';
 
     if (this.props.luser && this.props.luser.address) {
       fullAddress =
-          idx(this.props.luser.address, _ => _.city) + 
-        `${'' + ' '}${this.props.luser.address.state}` +
+        `${idx(this.props.luser.address, _ => _.city)
+        }${'' + ' '}${this.props.luser.address.state}` +
         `${'' + '\n '}${this.props.luser.address.country}` +
-        `${'' + ' '}${this.props.luser.address.zip}` + 
+        `${'' + ' '}${this.props.luser.address.zip}` +
         '';
     }
 
@@ -334,33 +350,41 @@ class Profile extends React.PureComponent {
 function mapStateToProps(state) {
   const { profileRequestStatus, profileErrorStatus, luser } = state.loggedUser;
   const { user } = state.auth;
-    const { followers ,followings,
-      getAllFollowersRequestStatus,
-      getAllFollowersErrorStatus ,
-      getAllUserFollowingsRequestStatus,
-      getAllUserFollowingsErrorStatus
-    } = state.follow;
-    const allFollowers = followers && followers.followers;
-        const allfollowings = followings && followings.followings
+  const {
+    followers,
+    followings,
+    getAllFollowersRequestStatus,
+    getAllFollowersErrorStatus,
+    getAllUserFollowingsRequestStatus,
+    getAllUserFollowingsErrorStatus,
+  } = state.follow;
+  const allFollowers = followers && followers.followers;
+  const allfollowings = followings && followings.followings;
 
-    const { getAllPosts ,
-      getPostsRequestStatus,
-      getPostsErrorStatus } = state.post;
-    const allPosts = getAllPosts && getAllPosts.posts;
+  const {
+    getAllPosts,
+    getPostsRequestStatus,
+    getPostsErrorStatus,
+  } = state.post;
+  const allPosts = getAllPosts && getAllPosts.posts;
   return {
     profileRequestStatus,
     profileErrorStatus,
     getAllFollowersRequestStatus,
-    getAllFollowersErrorStatus ,
+    getAllFollowersErrorStatus,
     getAllUserFollowingsRequestStatus,
     getAllUserFollowingsErrorStatus,
     luser,
     user,
     allPosts,
     allFollowers,
-    allfollowings
+    allfollowings,
   };
 }
 
-export default connect(mapStateToProps, { ...AuthActions, 
-  ...UserActions, ...FollowActions, ...PostActions })(Profile);
+export default connect(mapStateToProps, {
+  ...AuthActions,
+  ...UserActions,
+  ...FollowActions,
+  ...PostActions,
+})(Profile);

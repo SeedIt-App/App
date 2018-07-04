@@ -5,9 +5,9 @@ import { AuthActions, UserActions } from '../../actions';
 import { AsyncStorage } from 'react-native';
 
 class Footer extends React.PureComponent {
-  /*componentDidMount() {
+  /* componentDidMount() {
     this.props.profile();
-  }*/
+  } */
 
   goToLogin = () => this.props.navigation.navigate('Login');
   goToProfile = () => this.props.navigation.navigate('Profile');
@@ -15,41 +15,38 @@ class Footer extends React.PureComponent {
   goToFollow = () => this.props.navigation.navigate('Follow');
   goToTags = () => this.props.navigation.navigate('Tags');
   goToRedwood = () => this.props.navigation.navigate('Redwood');
-  
+
   render() {
     const { props } = this;
-    const {
-      user,
-      token,
-    } = this.props;
+    const { user, token } = this.props;
 
     return (
-      <View className="footer mb10">
+      <View className="footer">
         <View className="w-1-0 f-row f-both space-between m10">
-            <View className="p5">
-              <Touchable onPress={this.goToLogin}>
-                <View className="f-row f-both m20">
-                  <Image
-                    className="mini_thumb m10"
-                    source={require('../images/icons/Login.png')}
-                    resizeMode="cover"
-                  />
-                </View>
-              </Touchable>
-              <Text className="text">Login</Text>
-            </View>
-            <View className="p5">
-              <Touchable onPress={this.goToProfile}>
-                <View className="f-row f-both m20">
-                  <Image
-                    className="mini_thumb m10"
-                    source={require('../images/icons/Login.png')}
-                    resizeMode="cover"
-                  />
-                </View>
-              </Touchable>
-              <Text className="text">Profile</Text>
-            </View>
+          <View className="p5">
+            <Touchable onPress={this.goToLogin}>
+              <View className="f-row f-both m20">
+                <Image
+                  className="mini_thumb m10"
+                  source={require('../images/icons/Login.png')}
+                  resizeMode="cover"
+                />
+              </View>
+            </Touchable>
+            <Text className="text">Login</Text>
+          </View>
+          <View className="p5">
+            <Touchable onPress={this.goToProfile}>
+              <View className="f-row f-both m20">
+                <Image
+                  className="mini_thumb m10"
+                  source={require('../images/icons/Login.png')}
+                  resizeMode="cover"
+                />
+              </View>
+            </Touchable>
+            <Text className="text">Profile</Text>
+          </View>
 
           <View className="p5">
             <Touchable onPress={this.goToTags}>
@@ -105,12 +102,12 @@ class Footer extends React.PureComponent {
   }
 }
 
-/*function mapStateToProps(state) {
+/* function mapStateToProps(state) {
   const { profileRequestStatus, profileErrorStatus } = state.loggedUser;
   return {
     profileRequestStatus,
     profileErrorStatus,
   };
-}*/
+} */
 
 export default Footer;

@@ -7,54 +7,61 @@ import {
   Header,
   Image,
   Footer,
-  ScrollView
+  ScrollView,
+  Spinner,
+  Colors,
 } from '../common';
-import { AuthActions, NewsFeedActions,PostActions} from '../../actions';
+import { AuthActions, NewsFeedActions, PostActions } from '../../actions';
 import { TextInput } from 'react-native';
 import Toast from 'react-native-root-toast';
 import Accordion from 'react-native-collapsible/Accordion';
 import { View as NativeView } from 'react-native';
 
 class NewsFeed extends React.PureComponent {
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super(props);
 
     this.state = {
-      user : this.props.user
-    }
+      user: this.props.user,
+    };
+
+    this.goToAddComment = this.goToAddComment.bind(this) 
+
   }
 
   componentDidMount() {
     this.props.userNewsFeed();
     this.props.guestUserNewsFeed();
-    this.props.getPosts();
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.getAllFollowersErrorStatus) {
-      Toast.show(nextProps.getAllFollowersErrorStatus, {
+    if (nextProps.guestUserNewsFeedErrorStatus) {
+      Toast.show(nextProps.guestUserNewsFeedErrorStatus, {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
       });
     }
 
-    if (nextProps.getPostsErrorStatus) {
-      Toast.show(nextProps.getPostsErrorStatus, {
+    if (nextProps.userNewsFeedErrorStatus) {
+      Toast.show(nextProps.userNewsFeedErrorStatus, {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
       });
     }
   }
-  
+
   goToCreatePost = () => {
     this.props.navigation.navigate('CreatePost');
   };
 
-  goToAddComment = () => {
-    this.props.navigation.navigate('CreateComment');
+  goToAddComment = (section) => {
+    console.log(section)
+    this.props.navigation.navigate('CreateComment', {
+      itemId: 86
+    });
   };
 
-  renderHeader = section => (
+  renderHeader = (section, i) => (
     <NativeView>
       <View className="f-row p5 mr20">
         <View className="f-row f-both m20">
@@ -65,10 +72,8 @@ class NewsFeed extends React.PureComponent {
           />
         </View>
         <View className="f-column j-start mt10">
-          <View className="f-row">
-            <Text className="black bold large t-center">
-              {section.text}
-            </Text>
+            <Text className="black bold large t-center ">{section.postedBy.userName}</Text>
+            <Text className="black large t-center">{section.text}</Text>
             {this.state.user &&
               this.state.user.role === 'admin' && (
                 <Image
@@ -76,9 +81,7 @@ class NewsFeed extends React.PureComponent {
                   source={require('../images/icons/delete.jpg')}
                   resizeMode="cover"
                 />
-              )
-            }
-          </View>
+            )}
         </View>
         <View className="f-row pull-right f-both m20">
           <Image
@@ -89,13 +92,13 @@ class NewsFeed extends React.PureComponent {
         </View>
         <View className="dividerGrey" />
         <View className="dividerGrey" />
-      </View>  
+      </View>
     </NativeView>
   );
 
-  renderContent = section => (
-    <View >
-      <View className="f-row p5 mr20">
+  renderContent = (section, i) => (
+    <View>
+      <View className="f-row p5 mr20" >
         <View className=" f-row space-between w-1-1">
           <View>
             <Image
@@ -105,53 +108,62 @@ class NewsFeed extends React.PureComponent {
             />
           </View>
           <View>
-            <Touchable className="p5" onPress={this.goToAddComment}>
+            <Touchable className="p5" key={i} onPress={this.goToAddComment.bind(this, section)}>
               <Image
                 className="micro m10"
                 source={require('../images/icons/cm.png')}
                 resizeMode="cover"
               />
-            </Touchable>  
-          </View> 
+            </Touchable>
+          </View>
           <View>
             <Image
               className="normal_thumb m10 mb25"
               source={require('../images/icons/drop_grey.png')}
               resizeMode="cover"
             />
-          </View>  
+          </View>
         </View>
       </View>
     </View>
   );
 
   render() {
-    const { user ,getAllNewsFeed, allPosts, 
-      getAllFollowersErrorStatus, 
-      getAllFollowersRequestStatus } = this.props;
-      const { props } = this;
+    const {
+      user,
+      getAllNewsFeed,
+      userNewsFeedErrorStatus,
+      userNewsFeedRequestStatus,
+      guestUserNewsFeedErrorStatus,
+      guestUserNewsFeedRequestStatus
+    } = this.props;
+    const { props } = this;
     return (
       <View className="screen">
-        <Header title="NewsFeed" navigation={this.props.navigation} 
+        <Header
+          title="NewsFeed"
+          navigation={this.props.navigation}
           createPostRequest={this.goToCreatePost}
-          />
+        />
         <ScrollView>
           <View>
             <View className="f-column">
               <View className="bg-transparent mt10 space-between">
-              {getAllNewsFeed && getAllNewsFeed.length  > 0 ? 
-                <Accordion
-                  sections={allPosts}
-                  renderHeader={this.renderHeader}
-                  renderContent={this.renderContent}
-                  underlayColor="transparent"
-                /> 
-              : <View>
-                <Text className="black bold large t-center">
-                  There is no newsFeed !!
-                </Text>
-              </View>
-              }
+              {userNewsFeedRequestStatus === 'REQUESTING' 
+                || guestUserNewsFeedRequestStatus === 'REQUESTING' &&
+                 <Spinner/> }
+                {userNewsFeedRequestStatus === 'SUCCESS' 
+                || guestUserNewsFeedRequestStatus === 'SUCCESS' ||
+                  getAllNewsFeed && getAllNewsFeed.length > 0 ? (
+                  <Accordion
+                    sections={getAllNewsFeed}
+                    renderHeader={this.renderHeader}
+                    renderContent={this.renderContent}
+                    underlayColor="transparent"
+                  />
+                ) : (
+                    <Spinner/>
+                )}
               </View>
             </View>
           </View>
@@ -165,22 +177,19 @@ class NewsFeed extends React.PureComponent {
 function mapStateToProps(state) {
   const token = state.auth.authToken;
   const { user } = state.auth;
-  const { userNewsFeed ,
+  const {
+    userNewsFeed,
     userNewsFeedRequestStatus,
     userNewsFeedErrorStatus,
     guestUserNewsFeed,
     guestUserNewsFeedRequestStatus,
-    guestUserNewsFeedErrorStatus } = state.newsFeed;
-  const { getAllPosts,
-    getPostsRequestStatus,
-    getPostsErrorStatus } = state.post;
-  const allPosts = getAllPosts && getAllPosts.posts; 
+    guestUserNewsFeedErrorStatus,
+  } = state.newsFeed;
   let getAllNewsFeed = null;
-  if(userNewsFeed && userNewsFeed.length > 0 && token){
-    getAllNewsFeed = userNewsFeed.records
-  }
-  else if(guestUserNewsFeed && guestUserNewsFeed.length > 0){
-    getAllNewsFeed = guestUserNewsFeed.records
+  if (userNewsFeed && userNewsFeed.records.length > 0 && token) {
+    getAllNewsFeed = userNewsFeed.records;
+  } else if (guestUserNewsFeed && guestUserNewsFeed.records.length > 0) {
+    getAllNewsFeed = guestUserNewsFeed.records;
   }
   return {
     token,
@@ -188,9 +197,10 @@ function mapStateToProps(state) {
     getAllNewsFeed,
     guestUserNewsFeedRequestStatus,
     guestUserNewsFeedErrorStatus,
-    allPosts,
-    getPostsRequestStatus,
-    getPostsErrorStatus
   };
 }
-export default connect(mapStateToProps, { ...AuthActions,...NewsFeedActions, ...PostActions })(NewsFeed);
+export default connect(mapStateToProps, {
+  ...AuthActions,
+  ...NewsFeedActions,
+  ...PostActions,
+})(NewsFeed);

@@ -3,7 +3,6 @@ import { NewsFeedActions, AuthActions } from '../actions';
 import { GET } from '../api';
 import idx from 'idx';
 
-
 function* userNewsFeed(action) {
   yield put(NewsFeedActions.userNewsFeedRequest());
   try {
@@ -42,5 +41,7 @@ function* guestUserNewsFeed(action) {
 
 export default function* authSagas() {
   yield all([fork(takeLatest, NewsFeedActions.USER_NEWS_FEED, userNewsFeed)]);
-  yield all([fork(takeLatest, NewsFeedActions.GUEST_USER_NEWS_FEED, guestUserNewsFeed)]);
+  yield all([
+    fork(takeLatest, NewsFeedActions.GUEST_USER_NEWS_FEED, guestUserNewsFeed),
+  ]);
 }
