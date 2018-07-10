@@ -9,12 +9,16 @@ import {
   Footer,
   ScrollView,
   Switch,
+  BackgroundImage,
 } from '../common';
 import { AuthActions, PostActions } from '../../actions';
 import idx from 'idx';
 import { TextInput } from 'react-native';
 import Toast from 'react-native-root-toast';
 import ImagePicker from 'react-native-image-picker';
+import ImageResizer from 'react-native-image-resizer';
+import RNFetchBlob from 'react-native-fetch-blob';
+import axios from 'axios';
 
 class CreatePost extends React.PureComponent {
   constructor(props) {
@@ -22,6 +26,7 @@ class CreatePost extends React.PureComponent {
     this.state = {
       userNameFlag: false,
       message: '',
+      image: '',
     };
   }
 
@@ -42,7 +47,7 @@ class CreatePost extends React.PureComponent {
     if (this.state.message !== '') {
       const body = {
         text: this.state.message,
-        image: [],
+        image: [ this.state.image],
       };
       this.props.createPost(body);
     } else {
@@ -53,61 +58,61 @@ class CreatePost extends React.PureComponent {
     }
   };
 
-  selectPhotoTapped() {
-    const options = {
-      quality: 1.0,
-      maxWidth: 500,
-      maxHeight: 500,
-      storageOptions: {
-        skipBackup: true,
-      },
-    };
-
-    ImagePicker.showImagePicker(options, response => {
-      // console.log('Response = ', response);
+   openPicker = () => {
+    ImagePicker.showImagePicker(response => {
       if (response.didCancel) {
-        console.log('User cancelled photo picker');
+        console.log('User cancelled image picker');
       } else if (response.error) {
         console.log('ImagePicker Error: ', response.error);
-      } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
       } else {
-        const source = { uri: response.uri };
-        this.uploadImages(response.uri);
+        ImageResizer.createResizedImage(response.uri, 100, 100, 'PNG', 100, 0)
+          .then(({ uri, path }) => {
+            let source = uri;
+            this.uploadProfileImage(source);
+          })
+          .catch(err => {
+            console.log(err);
+            return Alert.alert(
+              'Unable to resize the photo',
+              'Check the console for full the error message',
+            );
+          });
       }
     });
-  }
+  };
 
-  uploadImages = imgPath => {
-    const body = new FormData();
-    const ip_addr = URL.IMAGE_URL;
-    body.append('file', { uri: imgPath, name: 'photo.png', type: 'image/png' });
-    body.append('Content-Type', 'image/png');
-    fetch('https://seedit-api.herokuapp.com/' + 'file/upload', {
-      method: 'POST',
-      body,
-    })
-      .then(response => response.json())
-      .then(responseJson => {
-        if (responseJson.status === 'success') {
-          console.log(responseJson, 'responseJson');
-          const responseData = responseJson.upload.path;
-          const post_id = responseJson.upload.id;
-          this.setState({
-            image: ip_addr + responseData.split('/var/www/html/')[1],
-            img_Id: post_id,
-          });
-          // console.log(this.state.img_Id, 'this.state.image')
-        }
-      })
-      .catch(error => {
-        console.log(error, 'error');
-      });
+  uploadProfileImage = imgPath => {
+    const fileToUpload = imgPath;
+    const fileName = fileToUpload.split('/').pop();
+    axios
+      .get(`/s3?fileName=${
+        fileName
+      }&fileType='image/jpeg'`)
+      .then(response => {
+        const { signedRequest, url } = response.data;
+        console.log({ signedRequest, url, fileName });
+        RNFetchBlob.fetch(
+          'PUT',
+          signedRequest,
+          {
+            'Content-Type': 'image',
+          },
+          RNFetchBlob.wrap(fileToUpload),
+        )
+        .then(response => {
+          const fileToUpload = url;
+          this.setState({ image: fileToUpload });
+        })
+        .catch(err => {
+          // error handling ..
+          console.log(err);
+        });
+    });
   };
 
   render() {
     const { user, createPostRequestStatus, createPostErrorStatus } = this.props;
-    const { props } = this;
+    const { picture } = this.props.user;
     return (
       <View className="screen">
         <Header title="Create a Post" back navigation={this.props.navigation} />
@@ -116,12 +121,20 @@ class CreatePost extends React.PureComponent {
             <View className="f-column bg-transparent  space-between">
               <View className="mt10">
                 <View className="f-row p5 mr20">
-                  <View className="f-row f-both m20">
-                    <Image
-                      className="med_thumb m10"
-                      source={require('../images/avatars/Abbott.png')}
-                      resizeMode="cover"
-                    />
+                  <View className="f-row f-both mr20 m20">
+                    {user && picture  ? (
+                      <Image
+                        className="normal_thumb"
+                        source={{ uri: idx(user, _ => _.picture) }}
+                        resizeMode="stretch"
+                      />
+                    ) : (
+                      <Image
+                        className="normal_thumb"
+                        source={require('../images/icons/user.png')}
+                        resizeMode="contain"
+                      />
+                    )}
                   </View>
                   <View className="f-column j-start mt10 ">
                     <View className="f-row">
@@ -165,6 +178,15 @@ class CreatePost extends React.PureComponent {
                     />
                   </View>
                 </View>
+                <View className="f-center">
+                  {this.state.image !=='' && (
+                    <Image
+                      className="normal_thumb"
+                      source={{ uri : this.state.image}} 
+                      resizeMode="contain"
+                    />
+                  )}
+                </View>
               </View>
             </View>
           </View>
@@ -173,13 +195,13 @@ class CreatePost extends React.PureComponent {
         <View className="dividerGrey" />
         <View className="dividerGrey" />
         <View className="m10 ">
-          <View className="f-row f-both   w-1-0  space-between">
+          <View className="f-row f-both w-1-0 space-between">
             <View className="p5">
               <Touchable onPress={this.goToLogin}>
                 <View className="f-row f-both m20">
                   <Touchable
                     className="p5"
-                    onPress={this.selectPhotoTapped.bind(this)}
+                    onPress={this.openPicker}
                   >
                     <Image
                       className="mini_thumb m10"

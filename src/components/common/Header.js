@@ -20,20 +20,6 @@ class Header extends React.PureComponent {
         refreshToken: this.props.token.refreshToken,
       };
       this.props.refreshToken(values);
-
-      /* if (nextProps.profileErrorStatus === 'jwt expired') {
-        const values = {
-          email: this.props.user.email,
-          refreshToken: this.props.token.refreshToken,
-        };
-        this.props.refreshToken(values);
-      }
-      if (nextProps.profileErrorStatus === 'jwt malformed') {
-        Toast.show('Please login to access all features', {
-          duration: Toast.durations.LONG,
-          position: Toast.positions.BOTTOM,
-        });
-      } */
     }
   }
 
@@ -74,7 +60,7 @@ class Header extends React.PureComponent {
             {(props.title === 'Tags' ||
               props.title === 'Followed' ||
               props.title === 'Levels') &&
-              (user === '' || token === '') && (
+              (token !== '') && (
                 <Touchable
                   className="pull-right"
                   onPress={() => this.props.createPostRequest()}
@@ -105,43 +91,6 @@ class Header extends React.PureComponent {
                 <Text className="complementary title m10">Save</Text>
               </Touchable>
             )}
-
-            {props.title === 'Newsfeed' && 
-              (user === '' || token === '' ) ? 
-                (
-                <Touchable
-                  className="pull-right"
-                  onPress={this.goToSocialSignUp}
-                  >
-                  <Text className="complementary title m10">Sign Up</Text>
-                </Touchable>
-                ) :
-                (<Touchable
-                  className="pull-right"
-                    onPress={this.goToNotification}
-                  >
-                  <Image
-                    className="mini1_thumb"
-                    source={require('../images/icons/alerts.png')}
-                  />
-                </Touchable>)  
-            }
-
-            {props.title === 'Newsfeed' &&
-              (user !== '' || token !== '' ) ?
-                (
-                <Touchable
-                    className="mr20"
-                    onPress={() => this.props.createPostRequest()}
-                  >
-                  <Image
-                    className="mini1_thumb"
-                    source={require('../images/icons/plus.png')}
-                  />
-                </Touchable>
-              )  : null
-            }
-
           </View>
         </View>
         <View className="dividerBlack" />
@@ -153,11 +102,10 @@ class Header extends React.PureComponent {
 function mapStateToProps(state) {
   const {
     user,
-    token,
     refreshTokenRequestStatus,
     refreshTokenErrorStatus,
   } = state.auth;
-
+  const token = state.auth.authToken;
   console.log(state, 'HeaderState');
   return {
     user,

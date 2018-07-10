@@ -13,8 +13,11 @@ import BackgroundImage from './BackgroundImage';
 import TextInput from './TextInput';
 import KeyboardAvoidingView from './KeyboardAvoidingView';
 import Header from './Header';
+import NewsFeedHeader from './NewsFeedHeader';
 import Footer from './Footer';
 import Switch from './Switch';
+import Prompt from './Prompt';
+import SelectInput from './SelectInput';
 
 export {
   KeyboardAvoidingView,
@@ -32,6 +35,9 @@ export {
   BackgroundImage,
   TextInput,
   Header,
+  NewsFeedHeader,
   Footer,
   Switch,
+  Prompt,
+  SelectInput
 };

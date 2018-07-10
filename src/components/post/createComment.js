@@ -22,7 +22,7 @@ class CreateComment extends React.PureComponent {
     this.state = {
       userNameFlag: false,
       message: '',
-      itemId : this.props.navigation.state.params.itemId
+      currentPostData : this.props.navigation.state.params.postData
     };
   }
 
@@ -42,7 +42,7 @@ class CreateComment extends React.PureComponent {
   addToComment = () => {
     if (this.state.message !== '') {
       const body = {
-        postId: '',
+        postId: this.state.currentPostData._id,
         text: this.state.message,
         image: [],
       };
@@ -156,6 +156,13 @@ class CreateComment extends React.PureComponent {
               <View className="m10 ">
                 <View className="f-center f-row">
                   <View>
+                    <TextInput
+                      style={{ color: 'black', fontSize: 16, flex :1 }}
+                      value={this.state.currentPostData.text}
+                      autoCapitalize="none"
+                      underlineColorAndroid="transparent"
+                      editable={false}
+                    />
                     <TextInput
                       style={{ color: 'black', fontSize: 16, width: 250 }}
                       value={this.state.message}

@@ -58,7 +58,7 @@ function* refreshToken(action) {
   }
 }
 
-function* doSignupByGoggle(action) {
+/*function* doSignupByGoggle(action) {
   yield put(AuthActions.googlesignupRequest());
   try {
     const googleLoginURL = '/auth/google';
@@ -74,29 +74,45 @@ function* doSignupByGoggle(action) {
     }
     yield put(AuthActions.googlesignupFailure(msgError));
   }
-}
+}*/
 
-/* function* forgotPassword(action) {
-  const { email } = action.payload;
+ function* forgotPassword(action) {
   yield put(AuthActions.forgotPasswordRequest());
   try {
-    const forgotPasswordUrl = `/users/password/forgot/${email}`;
-    yield call(GET, forgotPasswordUrl);
+    const { body } = action.payload;
+    const forgotPasswordUrl = '/auth/forgot';
+    const { response } = yield call(POST, forgotPasswordUrl, body);
     yield put(AuthActions.forgotPasswordSuccess());
   } catch (error) {
     let msgError = error;
     if (error.data) {
-      msgError = error.data.error.message;
+      msgError = error.data.message;
     }
     yield put(AuthActions.forgotPasswordFailure(msgError));
   }
-} */
+} 
+
+function* resetPassword(action) {
+  yield put(AuthActions.resetPasswordRequest());
+  try {
+    const body = action.payload;
+    const resetPasswordUrl = '/auth/reset';
+    const { response } = yield call(POST, resetPasswordUrl, body);
+    yield put(AuthActions.resetPasswordSuccess());
+  } catch (error) {
+    let msgError = error;
+    if (error.data) {
+      msgError = error.data.message;
+    }
+    yield put(AuthActions.resetPasswordFailure(msgError));
+  }
+} 
 
 export default function* authSagas() {
   yield all([fork(takeLatest, AuthActions.SIGNUP, doSignUp)]);
   yield all([fork(takeLatest, AuthActions.LOGIN, doLogin)]);
   yield all([fork(takeLatest, AuthActions.REFRESH_TOKEN, refreshToken)]);
-  yield all([fork(takeLatest, AuthActions.GOOGLESIGNUP, doSignupByGoggle)]);
-  /*    yield all([fork(takeLatest, AuthActions.FORGOT_PASSWORD, forgotPassword)]);
-*/
+  yield all([fork(takeLatest, AuthActions.RESET_PASSWORD, resetPassword)]);
+  yield all([fork(takeLatest, AuthActions.FORGOT_PASSWORD, forgotPassword)]);
+
 }

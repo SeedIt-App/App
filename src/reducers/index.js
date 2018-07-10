@@ -19,6 +19,7 @@ const appReducer = combineReducers({
   newsFeed: newsFeedReducer,
   post: postReducer,
   notifications: notificationReducer,
+  tags : tagsReducer,
 });
 
 const rootReducer = (state, action) => {

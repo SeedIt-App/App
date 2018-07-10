@@ -15,7 +15,7 @@ function* createPost(action) {
   } catch (error) {
     let msgError = error;
     if (error.data) {
-      msgError = error.data.error.message;
+      msgError = error.data.message;
     }
     yield put(PostActions.createPostFailure(msgError));
   }
@@ -26,7 +26,7 @@ function* getPosts(action) {
   yield put(PostActions.getPostsRequest());
   try {
     const getPostsURL =
-      '/posts?select=text,subscribers,comments,tags&filter[role]=user&order=createdAt&sort=desc&page=1&perPage=5';
+      '/posts?select=*&sort=asc';
     const { response } = yield call(GET, getPostsURL);
     console.log(response, 'pR');
     yield put(PostActions.getPostsSuccess({
@@ -46,9 +46,13 @@ function* getPosts(action) {
 function* updateWaterPost(action) {
   yield put(PostActions.updateWaterPostRequest());
   try {
-    const updateWaterURL = '/posts/${postId}/water';
-    const { response } = yield call(GET, updateWaterURL);
-    console.log(response, 'pR');
+    const {postId} = action.payload;
+    const updateWaterURL = `/posts/${postId}/water`;
+     const { response } = yield call(
+      PATCH,
+      updateWaterURL,
+      action.payload,
+    );
     yield put(PostActions.updateWaterPostSuccess({
       updateWaterToPost: response.data,
     }));
@@ -65,12 +69,17 @@ function* updateWaterPost(action) {
 // get water posts
 function* getWaterPosts(action) {
   yield put(PostActions.getWaterPostsRequest());
-  try {
-    const getWaterPostsUrl = '/posts/${postId}/water';
-    const { response } = yield call(GET, getWaterPostsUrl);
-    yield put(PostActions.getWaterPostsSuccess({
-      getWaterPosts: response.data,
-    }));
+  try { 
+    const waterPost = []   
+    const postsId = action.payload;
+    for( pId of postsId){
+      const getWaterPostsUrl = `/posts/${pId}/water`;
+      const { response } = yield call(GET, getWaterPostsUrl)
+      waterPost.push(response.data)
+    }  
+     yield put(PostActions.getWaterPostsSuccess({
+        waterPost
+      }));
   } catch (error) {
     let msgError = error;
     if (error.data) {
@@ -84,16 +93,14 @@ function* getWaterPosts(action) {
 function* addNewCommentToPost(action) {
   yield put(PostActions.addNewCommentToPostRequest());
   try {
-    const postId = action.payload;
-    const newCommentToPostsUrl = '/posts/${postId}/comment';
+    const {postId} = action.payload;
+    const newCommentToPostsUrl = `/posts/${postId}/comment`;
     const { response } = yield call(
       PATCH,
       newCommentToPostsUrl,
       action.payload,
     );
-    yield put(PostActions.addNewCommentToPostSuccess({
-      newCommentToPosts: response.data,
-    }));
+    yield put(PostActions.addNewCommentToPostSuccess());
   } catch (error) {
     let msgError = error;
     if (error.data) {

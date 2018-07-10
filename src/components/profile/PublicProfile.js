@@ -21,26 +21,19 @@ import {
 } from '../../actions';
 import Toast from 'react-native-root-toast';
 
-class Profile extends React.PureComponent {
+class PublicProfile extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       activeFlag: 'posted',
       activeFlagBorderColor: 'white',
       activeFlagTextColor: '#3CCDFD',
-      allLikePost : []
+      UserData : this.props.navigation.state.params.publicUser
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.profileErrorStatus) {
-      Toast.show(this.props.profileErrorStatus, {
-        duration: Toast.durations.LONG,
-        position: Toast.positions.BOTTOM,
-      });
-    }
-
-    if (this.props.token === '') {
+    if (this.props.user !== '') {
       if (nextProps.profileErrorStatus === 'jwt expired') {
         Toast.show('Please login to get your profile', {
           duration: Toast.durations.LONG,
@@ -49,39 +42,12 @@ class Profile extends React.PureComponent {
         this.props.navigation.navigate('Login');
       }
     }
-
-    if(nextProps.getPostsRequestStatus ==='SUCCESS'){
-     if(nextProps.allPosts && nextProps.allPosts.length > 0){
-        nextProps.allPosts.forEach(p => {
-          if(p.waters.length > 0){
-            this.state.allLikePost.push(p.waters);
-            if(this.state.allLikePost.length > 0){
-              this.state.allLikePost.forEach(p => {
-                this.props.getSingleUser(p)
-              })
-            }
-          }
-        });
-      } 
-    }
-
   }
 
   componentDidMount() {
-    this.props.profile();
     this.props.getPosts();
     this.props.getAllFollowers();
     this.props.getAllUserFollowings();
-  }
-
-  goToEditProfile = () => {
-    this.props.navigation.navigate('EditProfile');
-  };
-
-  goToPublicProfile = (user) => {
-    this.props.navigation.navigate('PublicProfile', {
-      publicUser: user
-    });
   }
 
   renderTab = () => {
@@ -93,42 +59,12 @@ class Profile extends React.PureComponent {
       getAllFollowersErrorStatus,
       getAllUserFollowingsRequestStatus,
       getAllUserFollowingsErrorStatus,
-      getPostsRequestStatus,
-      singleUser,
-      getSingleUserRequestStatus,
     } = this.props;
 
     if (this.state.activeFlag === 'liked') {
       return (
-        <View className="bg-transparent mt10 space-between">
-          {singleUser &&
-            singleUser.map((user , i ) => (
-              <View className="f-row p5 mr20">
-                <View className="f-row f-both m20">
-                  <Touchable className="p5" key={i} onPress={this.goToPublicProfile.bind(this, user)}>
-                    <Image
-                      className="med_thumb m10"
-                      source={require('../images/avatars/Abbott.png')}
-                      resizeMode="cover"
-                    />
-                  </Touchable>  
-                </View>
-                <View className="f-column mt10">
-                  <View className="f-both">
-                    <Text className="black large t-left">
-                      {user.userName} {"\n"} {user.email}
-                    </Text>
-                  </View>
-                </View>
-                <View className="f-row pull-right f-both m20">
-                  <Image
-                    className="normal_thumb m10"
-                    source={require('../images/icons/drop.jpg')}
-                    resizeMode="cover"
-                  />
-                </View>
-              </View>
-            ))}
+        <View className="f-row f-both mt20">
+          <Text className="black bold medium t-left">liked</Text>
         </View>
       );
     } else if (this.state.activeFlag === 'posted') {
@@ -175,9 +111,9 @@ class Profile extends React.PureComponent {
                     resizeMode="cover"
                   />
                 </View>
-                <View className="f-column  mt10">
+                <View className="f-column mt10">
                   <View className="f-both">
-                    <Text className="black large t-left">
+                    <Text className="black bold large t-left">
                       {p.userName}
                     </Text>
                   </View>
@@ -208,7 +144,7 @@ class Profile extends React.PureComponent {
                 </View>
                 <View className="f-column mt10">
                   <View className="f-both">
-                    <Text className="black large t-left">
+                    <Text className="black bold large t-left">
                       {f.userName}
                     </Text>
                   </View>
@@ -229,40 +165,22 @@ class Profile extends React.PureComponent {
 
   render() {
     const {
-      profileRequestStatus,
-      profileErrorStatus,
-      luser,
       user,
-      token,
       allFollowers,
       allfollowings,
       getAllFollowersRequestStatus,
       getAllFollowersErrorStatus,
       getAllUserFollowingsRequestStatus,
       getAllUserFollowingsErrorStatus,
-      getSingleUser,
-      getSingleUserRequestStatus,
-      getSingleUserErrorStatus,
     } = this.props;
     console.log(this.props);
-    let fullAddress = '';
-
-    if (this.props.luser && this.props.luser.address) {
-      fullAddress =
-        `${idx(this.props.luser.address, _ => _.city)
-        }${'' + ' '}${this.props.luser.address.state}` +
-        `${'' + '\n '}${this.props.luser.address.country}` +
-        `${'' + ' '}${this.props.luser.address.zip}` +
-        '';
-    }
-
+   
     return (
       <KeyboardAvoidingView>
         <View className="screen">
           <Header
-            title="Profile"
+            title="Public Profile" 
             navigation={this.props.navigation}
-            openRequest={this.goToEditProfile}
           />
           <View className="f-column">
             <View className="bg-transparent f-row mt10 space-between">
@@ -270,31 +188,32 @@ class Profile extends React.PureComponent {
                 <View>
                   <Image
                     className="med_thumb_view"
-                    source={require('../images/icons/user.png')}
+                    source={require('../images/avatars/Abbott.png')}
                   />
                 </View>
                 <View className="mh25">
                   <Text className="darkGrey bold medium">
-                    {(luser &&
-                      luser.firstName &&
-                      `${luser.firstName} ${luser.lastName}`) ||
+                    {(this.state.UserData &&
+                      `${this.state.UserData.firstName} ${this.state.UserData.lastName}`) ||
                       'Full Name'}
                   </Text>
                   <Text className="darkGrey medium">
-                    {(luser && luser.userName && luser.userName) || 'UserName'}
+                    {(this.state.UserData && this.state.UserData.userName ) || 'UserName'}
                   </Text>
                   <Text className="darkGrey medium">
-                    {luser && luser.address && fullAddress === 'undefined'
-                      ? 'Address'
-                      : 'Address'}
+                    {this.state.UserData && this.state.UserData.address &&
+                      this.state.UserData.address.city || 'Address'}
                   </Text>
                 </View>
+              </View>
+              <View className=" mt10">
+                <Text className="blue bold large">Follow</Text>
               </View>
             </View>
             <View className="bg-transparent f-row mt10 space-between">
               <View className="mh25 mt10">
                 <Text className="darkGrey medium">
-                  {(luser && luser.bio) || 'Bio'}
+                  {(this.state.UserData && this.state.UserData.bio) || 'Bio'}
                 </Text>
               </View>
             </View>
@@ -402,11 +321,7 @@ class Profile extends React.PureComponent {
 }
 
 function mapStateToProps(state) {
-  const { profileRequestStatus, profileErrorStatus, luser,
-    singleUser, getSingleUserRequestStatus, getSingleUserErrorStatus } = state.loggedUser;
   const { user } = state.auth;
-  const token = state.auth.authToken;
-
   const {
     followers,
     followings,
@@ -423,21 +338,12 @@ function mapStateToProps(state) {
     getPostsErrorStatus,
   } = state.post;
   const allPosts = getAllPosts && getAllPosts.posts;
- 
   return {
-    profileRequestStatus,
-    profileErrorStatus,
     getAllFollowersRequestStatus,
     getAllFollowersErrorStatus,
     getAllUserFollowingsRequestStatus,
     getAllUserFollowingsErrorStatus,
-    getPostsRequestStatus,
-    singleUser,
-    getSingleUserRequestStatus,
-    getSingleUserErrorStatus,
-    luser,
     user,
-    token,
     allPosts,
     allFollowers,
     allfollowings,
@@ -449,4 +355,4 @@ export default connect(mapStateToProps, {
   ...UserActions,
   ...FollowActions,
   ...PostActions,
-})(Profile);
+})(PublicProfile);

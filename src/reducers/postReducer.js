@@ -7,7 +7,6 @@ const initialState = {
   getAllPosts: null,
   getWaterPosts: null,
   updateWaterToPost: null,
-  newCommentToPosts: null,
   allCommentsList: null,
   replyToThePostComment: null,
   getAllReplyOfComment: null,
@@ -47,7 +46,7 @@ export default function (state = initialState, action) {
       state = ip.setIn(state, ['createdPosts'], createPosts);
       return ip.setIn(state, ['createPostRequestStatus'], requestStatus[2]);
 
-    // get all posts
+  // get all posts
     case PostActions.GET_POSTS_REQUEST:
       return ip.setIn(state, ['getPostsRequestStatus'], requestStatus[0]);
 
@@ -60,7 +59,7 @@ export default function (state = initialState, action) {
       state = ip.setIn(state, ['getAllPosts'], getAllPosts);
       return ip.setIn(state, ['getPostsRequestStatus'], requestStatus[2]);
 
-    // get water posts
+  // get water posts
     case PostActions.GET_WATER_POSTS_REQUEST:
       return ip.setIn(state, ['getWaterPostsRequestStatus'], requestStatus[0]);
 
@@ -69,11 +68,11 @@ export default function (state = initialState, action) {
       return ip.setIn(state, ['getWaterPostsRequestStatus'], requestStatus[1]);
 
     case PostActions.GET_WATER_POSTS_SUCCESS:
-      const { getWaterPosts } = action.payload;
-      state = ip.setIn(state, ['getWaterPosts'], getWaterPosts);
+      const { waterPost } = action.payload
+      state = ip.setIn(state, ['getWaterPosts'], waters);
       return ip.setIn(state, ['getWaterPostsRequestStatus'], requestStatus[2]);
 
-    // update(patch) water post
+  // update(patch) water post
     case PostActions.UPDATE_WATER_POST_REQUEST:
       return ip.setIn(
         state,
@@ -98,7 +97,7 @@ export default function (state = initialState, action) {
         requestStatus[2],
       );
 
-    // add new comment to post
+  // add new comment to post
     case PostActions.ADD_NEW_COMMENT_TO_POST_REQUEST:
       return ip.setIn(
         state,
@@ -119,9 +118,7 @@ export default function (state = initialState, action) {
       );
 
     case PostActions.ADD_NEW_COMMENT_TO_POST_SUCCESS:
-      const { newCommentToPosts } = action.payload;
-      state = ip.setIn(state, ['newCommentToPosts'], newCommentToPosts);
-      return ip.setIn(
+      state =  ip.setIn(
         state,
         ['addNewCommentToPostRequestStatus'],
         requestStatus[2],

@@ -36,8 +36,8 @@ export default function (state = initialState, action) {
       return ip.setIn(state, ['getAllTagsListRequestStatus'], requestStatus[1]);
 
     case TagsActions.GET_ALL_TAGS_LIST_SUCCESS:
-      const { getAllTags } = action.payload;
-      state = ip.setIn(state, ['getAllTags'], getAllTags);
+      const { getAllTagsLists } = action.payload;
+      state = ip.setIn(state, ['getAllTags'], getAllTagsLists);
       return ip.setIn(state, ['getAllTagsListRequestStatus'], requestStatus[2]);
 
     // State for Get create new tag

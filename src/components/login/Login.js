@@ -10,6 +10,7 @@ import {
   Colors,
   KeyboardAvoidingView,
   ScrollView,
+  Prompt,
 } from '../common';
 import { TextInput } from 'react-native';
 import { AuthActions } from '../../actions';
@@ -74,11 +75,30 @@ class Login extends React.PureComponent {
       });
     } else {
       this.props.login(loginValues);
+      if (this.props.loginRequestStatus === 'SUCCESS') {
+        Toast.show('Successfully Logged in !!', {
+          duration: Toast.durations.LONG,
+          position: Toast.positions.BOTTOM,
+        });
+      }  
     }
   };
 
   toggleSwitch = () => {
     this.setState({ showPassword: !this.state.showPassword });
+  };
+
+  toggleEmailPrompt = () => {
+    this.setState({ emailPromptVisible: !this.state.emailPromptVisible });
+  }
+
+
+  forgotPassword = emailId => {
+    const body = {
+      email  :emailId
+    }
+    this.props.forgotPassword({ body });
+    this.toggleEmailPrompt();
   };
 
   render() {
@@ -143,7 +163,9 @@ class Login extends React.PureComponent {
                       </Touchable>
                     </View>
                   </View>
-                  <Text className="normal white">Forgot Password ?</Text>
+                   <Touchable onPress={this.toggleEmailPrompt}>
+                      <Text className="normal white">Forgot Password ?</Text>
+                    </Touchable>
                 </View>
                 <View className="f-center  mt20 mv20">
                   <Touchable className="submitField m20" onPress={this.Login}>
@@ -156,6 +178,14 @@ class Login extends React.PureComponent {
                     </Touchable>
                   </View>
                 </View>
+
+              <Prompt
+                title="Email Id"
+                placeholder="Enter your registered email id"
+                visible={this.state.emailPromptVisible}
+                onCancel={this.toggleEmailPrompt}
+                onSubmit={this.forgotPassword}
+              />
               </ScrollView>
             </View>
           </BackgroundImage>

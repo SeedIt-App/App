@@ -47,11 +47,27 @@ export const refreshTokenSuccess = createAction(REFRESH_TOKEN_SUCCESS);
 export const refreshTokenFailure = createAction(REFRESH_TOKEN_FAILURE);
 
 // Forgot Password
-/* export const forgotPassword = createAction(FORGOT_PASSWORD);
+export const FORGOT_PASSWORD = 'AUTH/FORGOT_PASSWORD';
+export const FORGOT_PASSWORD_REQUEST = 'AUTH/FORGOT_PASSWORD_REQUEST';
+export const FORGOT_PASSWORD_FAILURE = 'AUTH/FORGOT_PASSWORD_FAILURE';
+export const FORGOT_PASSWORD_SUCCESS = 'AUTH/FORGOT_PASSWORD_SUCCESS';
+
+export const forgotPassword = createAction(FORGOT_PASSWORD);
 export const forgotPasswordRequest = createAction(FORGOT_PASSWORD_REQUEST);
 export const forgotPasswordFailure = createAction(FORGOT_PASSWORD_FAILURE);
 export const forgotPasswordSuccess = createAction(FORGOT_PASSWORD_SUCCESS);
-*/
+
+// reset Forgot Password
+export const RESET_PASSWORD = 'AUTH/RESET_PASSWORD';
+export const RESET_PASSWORD_REQUEST = 'AUTH/RESET_PASSWORD_REQUEST';
+export const RESET_PASSWORD_FAILURE = 'AUTH/RESET_PASSWORD_FAILURE';
+export const RESET_PASSWORD_SUCCESS = 'AUTH/RESET_PASSWORD_SUCCESS';
+
+export const resetPassword = createAction(RESET_PASSWORD);
+export const resetPasswordRequest = createAction(RESET_PASSWORD_REQUEST);
+export const resetPasswordFailure = createAction(RESET_PASSWORD_FAILURE);
+export const resetPasswordSuccess = createAction(RESET_PASSWORD_SUCCESS);
+
 // SetAuthUser
 export const SET_AUTH_USER = 'AUTH/SET_AUTH_USER';
 export const setAuthUser = createAction(SET_AUTH_USER);

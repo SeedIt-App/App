@@ -59,6 +59,9 @@ const textStyle = StyleSheet.create({
   blue: {
     color: Colors.headerBg
   },
+  lgBlue : {
+    color : Colors.lgBlue
+  },
   error: {
     color: Colors.error,
     fontSize: 12

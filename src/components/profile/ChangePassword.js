@@ -12,6 +12,8 @@ import {
   ScrollView,
 } from '../common';
 import { TextInput } from 'react-native';
+import { AuthActions } from '../../actions';
+import Toast from 'react-native-root-toast';
 
 class ChangePassword extends React.PureComponent {
   constructor(props) {
@@ -22,8 +24,26 @@ class ChangePassword extends React.PureComponent {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.resetPasswordErrorStatus) {
+      Toast.show(nextProps.resetPasswordErrorStatus, {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM,
+      });
+    }
+  }
+
+  changePassword = () => {
+    const body = {
+      resetToken: this.props.user.resetToken,
+      newPassword: this.state.newPwd
+    }
+    this.props.resetPassword(body)
+  }
+
   render() {
     const { props } = this;
+    const { user,resetPasswordRequestStatus } = this.props;
     return (
       <KeyboardAvoidingView>
         <View className="screen">
@@ -35,7 +55,7 @@ class ChangePassword extends React.PureComponent {
           <ScrollView>
             <View className="f-column mt20">
               <View className="f-center mt25">
-                <View className="bgWhite f-row editField j-start m5">
+                <View className="bgWhite f-row w-1-0 changePwdEditField j-start m5">
                   <Text className="blue small m10 bold ">Old Password :</Text>
                   <TextInput
                     style={{ color: 'grey', fontSize: 16, width: 280 }}
@@ -52,7 +72,7 @@ class ChangePassword extends React.PureComponent {
                     </Touchable>
                   </View>
                 </View>
-                <View className="bgWhite f-row editField j-start m5">
+                <View className="bgWhite f-row w-1-0 changePwdEditField j-start m5">
                   <Text className="blue small m10 bold">New Password :</Text>
                   <TextInput
                     style={{ color: 'grey', fontSize: 16, width: 280 }}
@@ -70,12 +90,20 @@ class ChangePassword extends React.PureComponent {
                   </View>
                 </View>
               </View>
-
+              <View className="mt5">
+                <Text className="darkGrey t-center bold small m5">Tip : Use atleast 6 characters and one number</Text>
+              </View>
               <View className="f-center j-end f-both mt25 mb15">
-                <Touchable className="submitFieldPwd m20" onPress={() => {}}>
+                <Touchable className="submitFieldPwd m20" onPress={this.changePassword}>
                   <Text className="complementary bold medium m10">Submit</Text>
                 </Touchable>
               </View>
+              {
+                resetPasswordRequestStatus === 'SUCCESS' &&
+                (<View className="mt5">
+                  <Text className="blue small m10 bold">New Password Saved</Text>
+                </View>)
+              }
             </View>
           </ScrollView>
         </View>
@@ -84,4 +112,16 @@ class ChangePassword extends React.PureComponent {
   }
 }
 
-export default connect()(ChangePassword);
+function mapStateToProps(state) {
+  const { user  } = state.auth;
+  return {
+    user,
+    resetPasswordRequestStatus : state.auth.resetPasswordRequestStatus,
+    resetPasswordErrorStatus : state.auth.resetPasswordErrorStatus,
+  };
+}
+
+export default connect(mapStateToProps, {
+  ...AuthActions
+})(ChangePassword);
+

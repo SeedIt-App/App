@@ -45,6 +45,16 @@ class Redwood extends React.PureComponent {
         position: Toast.positions.BOTTOM,
       });
     }
+
+    if (this.props.token === '') {
+      if (nextProps.getPostsErrorStatus === 'jwt expired') {
+        Toast.show('Please login to get your redwood', {
+          duration: Toast.durations.LONG,
+          position: Toast.positions.BOTTOM,
+        });
+        this.props.navigation.navigate('Login');
+      }
+    }
   }
 
   goToCreatePost = () => {
@@ -60,22 +70,14 @@ class Redwood extends React.PureComponent {
   renderTab = allPosts => {
     if (this.state.activeFlag === 'sapling') {
       return (
-        <View className="bg-transparent mt10 space-between">
-          {allPosts &&
-            allPosts.length > 0 && (
-              <Accordion
-                sections={allPosts}
-                renderHeader={this.renderHeader}
-                renderContent={this.renderContent}
-                underlayColor="transparent"
-              />
-            )}
+        <View className="bg-transparent  mb20 mt10 space-between">
+          <Text className="f-both t-center bold medium">There is no sapling</Text>
         </View>
       );
     } else if (this.state.activeFlag === 'seed') {
       return (
-        <View className="bg-transparent mt10 space-between">
-          {allPosts &&
+        <View className="bg-transparent mt10  mb20 space-between">
+         {allPosts &&
             allPosts.length > 0 && (
               <Accordion
                 sections={allPosts}
@@ -88,30 +90,14 @@ class Redwood extends React.PureComponent {
       );
     } else if (this.state.activeFlag === 'tree') {
       return (
-        <View className="bg-transparent mt10 space-between">
-          {allPosts &&
-            allPosts.length > 0 && (
-              <Accordion
-                sections={allPosts}
-                renderHeader={this.renderHeader}
-                renderContent={this.renderContent}
-                underlayColor="transparent"
-              />
-            )}
+        <View className="bg-transparent mt10  mb20 space-between">
+          <Text className="f-both t-center bold medium">There is no tree</Text>
         </View>
       );
     } else if (this.state.activeFlag === 'redwood') {
       return (
-        <View className="bg-transparent mt10 space-between">
-          {allPosts &&
-            allPosts.length > 0 && (
-              <Accordion
-                sections={allPosts}
-                renderHeader={this.renderHeader}
-                renderContent={this.renderContent}
-                underlayColor="transparent"
-              />
-            )}
+        <View className="bg-transparent mt10  mb20 space-between">
+          <Text className="f-both t-center bold medium">There is no redwood</Text>
         </View>
       );
     }
@@ -119,6 +105,7 @@ class Redwood extends React.PureComponent {
 
   renderHeader = section => (
     <NativeView>
+    <ScrollView>
       <View className="f-row p5 mr20">
         <View className="f-row f-both m20">
           <Image
@@ -127,17 +114,17 @@ class Redwood extends React.PureComponent {
             resizeMode="cover"
           />
         </View>
-        <View className="f-column j-start mt10">
+        <View className="f-column w-2-1 j-start mt10">
           <View className="f-row">
-            <Text className="black bold large t-center">{section.text}</Text>
+            <Text className="black  large t-left">{section.text}</Text>
             {this.state.user &&
               this.state.user.role === 'admin' && (
-                <Image
-                  className="micro1_thumb m5"
-                  source={require('../images/icons/delete.jpg')}
-                  resizeMode="cover"
-                />
-              )}
+              <Image
+                className="micro1_thumb m5"
+                source={require('../images/icons/delete.jpg')}
+                resizeMode="cover"
+              />
+            )}
           </View>
         </View>
         <View className="f-row pull-right f-both m20">
@@ -150,11 +137,12 @@ class Redwood extends React.PureComponent {
         <View className="dividerGrey" />
         <View className="dividerGrey" />
       </View>
+    </ScrollView>  
     </NativeView>
   );
 
   renderContent = section => (
-    <View key={index}>
+    <View >
       <View className="f-row p5 mr20">
         <View className=" f-row space-between w-1-1">
           <View>

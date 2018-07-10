@@ -7,9 +7,8 @@ import idx from 'idx';
 function* getAllTagsList(action) {
   yield put(TagsActions.getAllTagsListRequest());
   try {
-    const user = yield select(getUser);
     const getAllTagsListURL =
-      '/tags?select=tag,tagBy,followers&order=createdAt&sort=desc&page=1&perPage=5';
+      '/tags?select=*&sort=asc';
     const { response } = yield call(GET, getAllTagsListURL);
     yield put(TagsActions.getAllTagsListSuccess({
       getAllTagsLists: response.data,
@@ -17,7 +16,7 @@ function* getAllTagsList(action) {
   } catch (error) {
     let msgError = error;
     if (error.data) {
-      msgError = error.data.error.message;
+      msgError = error.data.message;
     }
     yield put(TagsActions.getAllTagsListFailure(msgError));
   }

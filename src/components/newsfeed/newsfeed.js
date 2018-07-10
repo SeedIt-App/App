@@ -4,7 +4,7 @@ import {
   Text,
   View,
   Touchable,
-  Header,
+  NewsFeedHeader,
   Image,
   Footer,
   ScrollView,
@@ -25,7 +25,7 @@ class NewsFeed extends React.PureComponent {
       user: this.props.user,
     };
 
-    this.goToAddComment = this.goToAddComment.bind(this) 
+    this.updateWaterToPost = this.updateWaterToPost.bind(this) 
 
   }
 
@@ -48,122 +48,98 @@ class NewsFeed extends React.PureComponent {
         position: Toast.positions.BOTTOM,
       });
     }
+
+    if (this.props.token === '') {
+      if (nextProps.userNewsFeedErrorStatus === 'jwt expired') {
+        Toast.show('Please login to get your newsFeed', {
+          duration: Toast.durations.LONG,
+          position: Toast.positions.BOTTOM,
+        });
+        this.props.navigation.navigate('Login');
+      }
+    }
   }
 
   goToCreatePost = () => {
     this.props.navigation.navigate('CreatePost');
   };
 
-  goToAddComment = (section) => {
-    console.log(section)
-    this.props.navigation.navigate('CreateComment', {
-      itemId: 86
-    });
+  updateWaterToPost = (value) => {
+    const body = {
+        postId: value._id
+      };
+    this.props.updateWaterPost(body);
   };
-
-  renderHeader = (section, i) => (
-    <NativeView>
-      <View className="f-row p5 mr20">
-        <View className="f-row f-both m20">
-          <Image
-            className="med_thumb m10"
-            source={require('../images/avatars/Abbott.png')}
-            resizeMode="cover"
-          />
-        </View>
-        <View className="f-column j-start mt10">
-            <Text className="black bold large t-center ">{section.postedBy.userName}</Text>
-            <Text className="black large t-center">{section.text}</Text>
-            {this.state.user &&
-              this.state.user.role === 'admin' && (
-                <Image
-                  className="micro_thumb m5"
-                  source={require('../images/icons/delete.jpg')}
-                  resizeMode="cover"
-                />
-            )}
-        </View>
-        <View className="f-row pull-right f-both m20">
-          <Image
-            className="normal_thumb m10"
-            source={require('../images/icons/drop.jpg')}
-            resizeMode="cover"
-          />
-        </View>
-        <View className="dividerGrey" />
-        <View className="dividerGrey" />
-      </View>
-    </NativeView>
-  );
-
-  renderContent = (section, i) => (
-    <View>
-      <View className="f-row p5 mr20" >
-        <View className=" f-row space-between w-1-1">
-          <View>
-            <Image
-              className="micro1_thumb m10"
-              source={require('../images/icons/share.png')}
-              resizeMode="cover"
-            />
-          </View>
-          <View>
-            <Touchable className="p5" key={i} onPress={this.goToAddComment.bind(this, section)}>
-              <Image
-                className="micro m10"
-                source={require('../images/icons/cm.png')}
-                resizeMode="cover"
-              />
-            </Touchable>
-          </View>
-          <View>
-            <Image
-              className="normal_thumb m10 mb25"
-              source={require('../images/icons/drop_grey.png')}
-              resizeMode="cover"
-            />
-          </View>
-        </View>
-      </View>
-    </View>
-  );
 
   render() {
     const {
       user,
       getAllNewsFeed,
-      userNewsFeedErrorStatus,
       userNewsFeedRequestStatus,
+      userNewsFeedErrorStatus,
       guestUserNewsFeedErrorStatus,
       guestUserNewsFeedRequestStatus
     } = this.props;
-    const { props } = this;
     return (
       <View className="screen">
-        <Header
+        <NewsFeedHeader
           title="NewsFeed"
           navigation={this.props.navigation}
           createPostRequest={this.goToCreatePost}
         />
         <ScrollView>
-          <View>
+          <View class="p5">
             <View className="f-column">
               <View className="bg-transparent mt10 space-between">
-              {userNewsFeedRequestStatus === 'REQUESTING' 
+                {userNewsFeedRequestStatus === 'REQUESTING' 
                 || guestUserNewsFeedRequestStatus === 'REQUESTING' &&
-                 <Spinner/> }
+                  <View className="p15 mt30">
+                    <Spinner large />
+                  </View> }
                 {userNewsFeedRequestStatus === 'SUCCESS' 
                 || guestUserNewsFeedRequestStatus === 'SUCCESS' ||
                   getAllNewsFeed && getAllNewsFeed.length > 0 ? (
-                  <Accordion
-                    sections={getAllNewsFeed}
-                    renderHeader={this.renderHeader}
-                    renderContent={this.renderContent}
-                    underlayColor="transparent"
-                  />
+                  getAllNewsFeed.map((value, i) => (
+                    <View className="f-row p5 mr20">
+                      <View className="f-row f-both m20">
+                        <Image
+                          className="med_thumb m10"
+                          source={require('../images/avatars/Abbott.png')}
+                          resizeMode="cover"
+                        />
+                      </View>
+                      <View className="f-column j-start w-2-1 mt10">
+                        <Text className="black bold large t-left">{value.postedBy.userName}</Text>
+                        <View className="f-row">
+                          <Text className="black large t-left ">{value.text}</Text>
+                          {this.state.user &&
+                            this.state.user.role === 'admin' && (
+                              <Image
+                                className="micro_thumb m5"
+                                source={require('../images/icons/delete.jpg')}
+                                resizeMode="cover"
+                              />
+                            )}
+                        </View>
+                      </View>
+                      <View className="f-row pull-right f-both m20">
+                         <Touchable className="p5" key={i} onPress={this.updateWaterToPost.bind(this, value)}>
+                          <Image
+                            className="normal_thumb m10"
+                            source={require('../images/icons/drop.jpg')}
+                            resizeMode="cover"
+                          />
+                        </Touchable>  
+                      </View>
+                      <View className="dividerGrey" />
+                      <View className="dividerGrey" />
+                    </View>
+                  ))  
                 ) : (
-                    <Spinner/>
+                    null
                 )}
+                <View className="dividerGrey" />
+                <View className="dividerGrey" />
               </View>
             </View>
           </View>
@@ -195,6 +171,8 @@ function mapStateToProps(state) {
     token,
     user,
     getAllNewsFeed,
+    userNewsFeedRequestStatus,
+    userNewsFeedErrorStatus,
     guestUserNewsFeedRequestStatus,
     guestUserNewsFeedErrorStatus,
   };

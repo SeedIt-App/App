@@ -8,17 +8,57 @@ import {
   Image,
   Footer,
   ScrollView,
+  Spinner,
 } from '../common';
-import { AuthActions } from '../../actions';
+import { AuthActions, TagsActions } from '../../actions';
+import { TextInput } from 'react-native';
+import Toast from 'react-native-root-toast';
+import Accordion from 'react-native-collapsible/Accordion';
+import { View as NativeView } from 'react-native';
 
 class Tags extends React.PureComponent {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      user: this.props.user,
+    };
+  }
+
+  componentDidMount() {
+    this.props.getAllTagsList();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.getAllTagsListErrorStatus) {
+      Toast.show(nextProps.getAllTagsListErrorStatus, {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM,
+      });
+    }
+
+    if (this.props.user !== '') {
+      if (nextProps.profileErrorStatus === 'jwt expired') {
+        Toast.show('Please login to get your tags', {
+          duration: Toast.durations.LONG,
+          position: Toast.positions.BOTTOM,
+        });
+        this.props.navigation.navigate('Login');
+      }
+    }
+  }
+
   goToCreatePost = () => {
     this.props.navigation.navigate('CreatePost');
   };
 
   render() {
-    const { user } = this.props;
-    const { props } = this;
+    const {
+      user,
+      getAllTags,
+      getAllTagsListRequestStatus,
+      getAllTagsListErrorStatus
+    } = this.props;
     return (
       <View className="screen">
         <Header
@@ -27,109 +67,23 @@ class Tags extends React.PureComponent {
           createPostRequest={this.goToCreatePost}
         />
         <ScrollView>
-          <View>
-            <View className="f-column">
-              <View className="bg-transparent mt10 space-between">
-                <View className="f-row p5 mr20">
-                  <View className="f-row f-both m20">
-                    <Image
-                      className="med_thumb m10"
-                      source={require('../images/avatars/Abbott.png')}
-                      resizeMode="cover"
-                    />
-                  </View>
-                  <View className="f-column j-start mt10">
-                    <View className="f-row">
-                      <Text className="black bold large t-center">
-                        Cookie moster
-                      </Text>
-                      {user &&
-                        user.role === 'admin' && (
-                          <Image
-                            className="micro_thumb m5"
-                            source={require('../images/icons/delete.jpg')}
-                            resizeMode="cover"
-                          />
-                        )}
+          <View className="f-column">
+            <View className="bg-transparent f-both mt5 space-between">
+              {getAllTagsListRequestStatus === 'REQUESTING' &&
+                <View className="p15 mt30">
+                  <Spinner large />
+                </View> }
+              {getAllTagsListRequestStatus === 'SUCCESS' ||
+                getAllTags && getAllTags.tags.length > 0 ? (
+                getAllTags.tags.map((value) => (
+                  <View className="f-row p5 f-middle w-1-1 shadowBox">
+                    <View className="f-column mt10">
+                      <Text className="dblue bold large t-left"># {value.tag}</Text>
+                      <View className="dividerGrey" />
                     </View>
-                    <Text className="black medium t-center">Cookiemoster</Text>
                   </View>
-                  <View className="f-row pull-right f-both m20">
-                    <Image
-                      className="normal_thumb m10"
-                      source={require('../images/icons/drop.jpg')}
-                      resizeMode="cover"
-                    />
-                  </View>
-                </View>
-                <View className="dividerGrey" />
-                <View className="f-row p5 mr20">
-                  <View className="f-row f-both m20">
-                    <Image
-                      className="med_thumb m10"
-                      source={require('../images/avatars/Abbott.png')}
-                      resizeMode="cover"
-                    />
-                  </View>
-                  <View className="f-column j-start mt10">
-                    <View className="f-row">
-                      <Text className="black bold large t-center">
-                        Cookie moster
-                      </Text>
-                      {user &&
-                        user.role === 'admin' && (
-                          <Image
-                            className="micro_thumb m5"
-                            source={require('../images/icons/delete.jpg')}
-                            resizeMode="cover"
-                          />
-                        )}
-                    </View>
-                    <Text className="black medium t-center">Cookiemoster</Text>
-                  </View>
-                  <View className="f-row pull-right f-both m20">
-                    <Image
-                      className="normal_thumb m10"
-                      source={require('../images/icons/drop.jpg')}
-                      resizeMode="cover"
-                    />
-                  </View>
-                </View>
-                <View className="dividerGrey" />
-                <View className="f-row p5 mr20">
-                  <View className="f-row f-both m20">
-                    <Image
-                      className="med_thumb m10"
-                      source={require('../images/avatars/Abbott.png')}
-                      resizeMode="cover"
-                    />
-                  </View>
-                  <View className="f-column j-start mt10">
-                    <View className="f-row">
-                      <Text className="black bold large t-center">
-                        Cookie moster
-                      </Text>
-                      {user &&
-                        user.role === 'admin' && (
-                          <Image
-                            className="micro_thumb m5"
-                            source={require('../images/icons/delete.jpg')}
-                            resizeMode="cover"
-                          />
-                        )}
-                    </View>
-                    <Text className="black medium t-center">Cookiemoster</Text>
-                  </View>
-                  <View className="f-row pull-right f-both m20">
-                    <Image
-                      className="normal_thumb m10"
-                      source={require('../images/icons/drop.jpg')}
-                      resizeMode="cover"
-                    />
-                  </View>
-                </View>
-                <View className="dividerGrey" />
-              </View>
+                ))  
+              ) : null}
             </View>
           </View>
         </ScrollView>
@@ -141,10 +95,21 @@ class Tags extends React.PureComponent {
 
 function mapStateToProps(state) {
   const token = state.auth.authToken;
-  const user = state.user;
+  const { user } = state.auth;
+  const {
+    getAllTags,
+    getAllTagsListRequestStatus,
+    getAllTagsListErrorStatus
+  } = state.tags;
   return {
     token,
     user,
+    getAllTags,
+    getAllTagsListRequestStatus,
+    getAllTagsListErrorStatus
   };
 }
-export default connect(mapStateToProps, { ...AuthActions })(Tags);
+export default connect(mapStateToProps, {
+  ...AuthActions,
+  ...TagsActions
+})(Tags);

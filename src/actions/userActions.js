@@ -1,15 +1,27 @@
 import { createAction } from 'redux-actions';
 
-// State for Get Single User
-/* export const GETSINGLEUSER = "LUSER/GETSINGLEUSER";
-export const GETSINGLEUSER_REQUEST = "LUSER/GETSINGLEUSER_REQUEST";
-export const GETSINGLEUSER_SUCCESS = "LUSER/GETSINGLEUSER_SUCCESS";
-export const GETSINGLEUSER_FAILURE = "LUSER/GETSINGLEUSER_FAILURE";
+// State for Get single User
 
-export const getSingleUser = createAction(GETSINGLEUSER);
-export const getSingleUserRequest = createAction(GETSINGLEUSER_REQUEST);
-export const getSingleUserSuccess = createAction(GETSINGLEUSER_SUCCESS);
-export const getSingleUserFailure = createAction(GETSINGLEUSER_FAILURE); */
+export const GET_SINGLE_USER = 'LUSER/GET_SINGLE_USER';
+export const GET_SINGLE_USER_REQUEST = 'LUSER/GET_SINGLE_USER_REQUEST';
+export const GET_SINGLE_USER_SUCCESS = 'LUSER/GET_SINGLE_USER_SUCCESS';
+export const GET_SINGLE_USER_FAILURE = 'LUSER/GET_SINGLE_USER_FAILURE';
+
+export const getSingleUser = createAction(GET_SINGLE_USER);
+export const getSingleUserRequest = createAction(GET_SINGLE_USER_REQUEST);
+export const getSingleUserSuccess = createAction(GET_SINGLE_USER_SUCCESS);
+export const getSingleUserFailure = createAction(GET_SINGLE_USER_FAILURE);
+
+// State for Get all User
+export const GET_ALL_USER = "LUSER/GET_ALL_USER";
+export const GET_ALL_USER_REQUEST = "LUSER/GET_ALL_USER_REQUEST";
+export const GET_ALL_USER_SUCCESS = "LUSER/GET_ALL_USER_SUCCESS";
+export const GET_ALL_USER_FAILURE = "LUSER/GET_ALL_USER_FAILURE";
+
+export const getAllUser = createAction(GET_ALL_USER);
+export const getAllUserRequest = createAction(GET_ALL_USER_REQUEST);
+export const getAllUserSuccess = createAction(GET_ALL_USER_SUCCESS);
+export const getAllUserFailure = createAction(GET_ALL_USER_FAILURE); 
 
 // State for PROFILE process
 

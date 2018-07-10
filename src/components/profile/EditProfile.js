@@ -20,8 +20,6 @@ import ImagePicker from 'react-native-image-picker';
 import ImageResizer from 'react-native-image-resizer';
 // import axios from 'axios';
 
-const ip_addr = 'https://seedit-api.herokuapp.com/';
-
 class EditProfile extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -38,7 +36,6 @@ class EditProfile extends React.PureComponent {
       country: '',
       fullAddress: '',
       profileImageUrl: '',
-      image: '',
     };
   }
 
@@ -62,11 +59,11 @@ class EditProfile extends React.PureComponent {
   }
 
   componentDidMount() {
-    if (this.props.luser.address) {
+    if (this.props.luser && this.props.luser.address) {
       this.setState({
         fullAddress:
-          this.props.luser.address.city`${'' + ' '} 
-       ${this.props.luser.address.state}` || 'state',
+          this.props.luser.address.city +' ' + ' '+ this.props.luser.address.state
+          || '',
       });
     }
     if (this.props.luser) {
@@ -84,58 +81,7 @@ class EditProfile extends React.PureComponent {
       });
     }
   }
-
-  /* openPicker = () => {
-    ImagePicker.showImagePicker((response) => {
-      console.log('Response = ', response);
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePickerManager Error: ', response.error);
-      } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
-      } else { //never trigger this branch of statement in my case
-        console.log(response.data);
-        const source = { uri: response.uri, isStatic: true };
-        console.log(response.uri);
-        this.setState({
-          image: source,
-        });
-        console.log(response.uri, "response.uri")
-        this.uploadImages(response.uri)
-      }
-    });
-  };
-*/
-  /* uploadImages =(imgPath)=> {
-    let body = new FormData();
-      body.append('file', {uri: imgPath, name: 'photo.png',type: 'image/png'});
-      body.append('user_id', 1);
-      body.append('Content-Type', 'image/png');
-
-      fetch('https://seedit-api.herokuapp.com/api/v1/' + 'file/upload', {
-        method : 'POST',
-        body: body
-      }).then((response) => {
-        return response.json() })
-        .then((responseJson) => {
-          if(responseJson.status ===  'success'){
-            console.log(responseJson, 'responseJson')
-            let responseData = responseJson.upload.path
-            let user_id = responseJson.upload.id
-            this.setState({
-              image: ip_addr+responseData.split("/var/www/html/")[1],
-              img_Id : user_id
-            });
-            console.log(this.state.img_Id, 'this.state.image')
-          }
-        })
-
-    .catch((error) => {
-      console.log(error, 'error')
-    })
-  }
-*/
+  
   editProfile = () => {
     const nameArr = this.state.fullName;
     const addressArr = this.state.fullAddress;
@@ -197,7 +143,7 @@ class EditProfile extends React.PureComponent {
             saveProfile={this.editProfile}
           />
           <ScrollView>
-            <View className="f-column">
+            <View className="f-column p5">
               <View className="f-center mt15">
                 <Touchable className=" mb20">
                   {this.state.image ? (
@@ -216,7 +162,7 @@ class EditProfile extends React.PureComponent {
                 </Touchable>
               </View>
               <View className="f-center mt10">
-                <View className="bgWhite f-row editField j-start m5">
+                <View className="bgWhite f-row w-2-1 editField j-start m5">
                   <Text className="blue medium m10 bold ">Name :</Text>
                   <TextInput
                     style={{ color: 'grey', fontSize: 16 }}
@@ -226,7 +172,7 @@ class EditProfile extends React.PureComponent {
                     onChangeText={fullName => this.setState({ fullName })}
                   />
                 </View>
-                <View className="bgWhite f-row editField j-start m5">
+                <View className="bgWhite f-row w-2-1 editField j-start m5">
                   <Text className="blue medium m10 bold ">Username :</Text>
                   <TextInput
                     style={{ color: 'grey', fontSize: 16 }}
@@ -236,7 +182,7 @@ class EditProfile extends React.PureComponent {
                     onChangeText={userName => this.setState({ userName })}
                   />
                 </View>
-                <View className="bgWhite f-row editField j-start m5">
+                <View className="bgWhite f-row w-2-1 editField j-start m5">
                   <Text className="blue medium m10 bold ">Country :</Text>
                   <TextInput
                     style={{ color: 'grey', fontSize: 16 }}
@@ -246,7 +192,7 @@ class EditProfile extends React.PureComponent {
                     onChangeText={country => this.setState({ country })}
                   />
                 </View>
-                <View className="bgWhite f-row editField j-start m5">
+                <View className="bgWhite f-row w-2-1 editField j-start m5">
                   <Text className="blue medium m10 bold ">City,State :</Text>
                   <TextInput
                     style={{ color: 'grey', fontSize: 16 }}
@@ -261,7 +207,7 @@ class EditProfile extends React.PureComponent {
                     onChangeText={fullAddress => this.setState({ fullAddress })}
                   />
                 </View>
-                <View className="bgWhite textArea f-row j-start m5">
+                <View className="bgWhite w-2-1 textArea f-row j-start m5">
                   <Text className="blue medium m10 bold">Bio:</Text>
                   <TextInput
                     style={{ color: 'grey', fontSize: 16 }}

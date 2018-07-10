@@ -512,8 +512,13 @@ export default StyleSheet.create({
   },
   editField: {
     height: 40,
-    width: 280,
     borderColor: Colors.headerBg,
+    borderWidth: 1,
+  },
+
+  changePwdEditField: {
+    height: 40,
+    borderColor: Colors.vlblue,
     borderWidth: 1,
   },
   formInputField: {
@@ -524,7 +529,6 @@ export default StyleSheet.create({
     borderColor: Colors.headerBg,
     borderWidth: 1,
     height: 60,
-    width: 280,
   },
   textField: {
     height: 60,
@@ -541,6 +545,7 @@ export default StyleSheet.create({
   showPassword: {
     height: 40,
     width: 70,
+    marginTop : -5,
     backgroundColor: Colors.vlblue,
   },
   showPasswordAuth: {
@@ -595,4 +600,13 @@ export default StyleSheet.create({
     height: 68,
     alignItems: 'center',
   },
+  shadowBox : {
+    paddingTop : 10,
+    paddingLeft : 20,
+    paddingRight : 20,
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor : 'transparent',
+    backgroundColor : Colors.lgGrey
+  }
 });
