@@ -41,7 +41,7 @@ class Notifications extends React.PureComponent {
               {notificationStatus === 'REQUESTING' &&
                 !allNotification && <Spinner />}
               {notificationStatus === 'SUCCESS' &&
-                allNotification.length < 0 && (
+                allNotification.length === 0 && (
                 <View className="flex f-both p10">
                   <Text className="black bold">There are no notifications for you.</Text>
                 </View>
@@ -49,24 +49,13 @@ class Notifications extends React.PureComponent {
               {notificationStatus === 'SUCCESS' &&
                 allNotification.length > 0 && 
                 allNotification.map(value => (
-                  <View className=" f-both p10 w-1-1">
-                  <Touchable
-                    style={{
-                      width : 300,
-                      paddingTop : 5,
-                      paddingBottom : 5,
-                      paddingLeft : 20,
-                      paddingRight : 20,
-                      borderWidth: 1,
-                      borderRadius: 40,
-                      borderColor : 'transparent',
-                      backgroundColor : '#EAEAEA'
-                    }}
-                  >
-                    <Text className="black bold">
-                      {value.message}
-                    </Text>
-                  </Touchable>  
+                  <View className="f-column p5 f-both j-start w-1-1 mt10">                  
+                    <Touchable>
+                      <Text className="black bold">
+                        {value.message}
+                      </Text>
+                    </Touchable>
+                    <View className="dividerGrey" />
                   </View>
                 ))  
               }

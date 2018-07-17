@@ -27,7 +27,7 @@ class SignUp extends React.PureComponent {
       email: '',
       phoneNo: '',
       pwd: '',
-      gender: ['Male', 'Female', 'Other'],
+      gender: ['male', 'female', 'other'],
       confirmPwd: '',
       selectedGender: '',
       showPassword: true,
@@ -68,41 +68,20 @@ class SignUp extends React.PureComponent {
     }
   }
 
-  selectGender = () => {
-    this.setState({ selectedGender: 'female' });
+  selectGender = (g) => {
+    this.setState({ selectedGender: g });
     console.log(this.state.selectedGender);
   };
 
-/*  validateText = (username) => {
-    var re = /^[a-zA-Z]\D{4,20}$/;
-    return re.test(username);
-  };
-
-  validatePhNumber = (phnumber)=>{
-    var re = /^[0-9]{0,10}$/;
-    return re.test(phnumber);
-  };
-
-  validatePassword = (password)=>{
-    var re = /^([A-Za-z0-9]){6,20}$/
-    return re.test(password);
-  };
-
-  handleUserName =(username) =>{
-   if (!this.validateText(username)) {
-      Toast.show('Field length must be at least 4 characters long', {
-        duration: Toast.durations.LONG,
-        position: Toast.positions.BOTTOM,
-      });
-    } else {
-      this.setState({username : username })
-    }  
-  };*/
-
-
   SignUp = () => {
+    let validateUserName = /^[a-zA-Z]{4,16}$/;
+    let validatePassword  = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{6,}/;
+    let validateText = /^[a-zA-Z]\D{2,20}$/;
+    let validatePhNumber = /^[0-9]{0,10}$/;
+    let validateEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
     const userData = {
-      firstName: this.state.firstName,
+      firstName: this.state.firstname,
       lastName: this.state.lastname,
       userName: this.state.username,
       email: this.state.email,
@@ -111,18 +90,56 @@ class SignUp extends React.PureComponent {
       gender: this.state.selectedGender,
       birthDate: this.state.date,
     };
-    if(this.state.firstName ==="" ||this.state.lastname ==="" ||
+    if(this.state.firstname ==="" || this.state.lastname ==="" ||
         this.state.username ==="" ||this.state.email ==="" ||
-        this.state.pwd ==="" ||this.state.phoneNo ==="" ||
-        this.state.selectedGender ==="" ||this.state.selectedGender ==="")
-    {
+        this.state.pwd ==="" || this.state.phoneNo ==="" ||
+        this.state.selectedGender ==="" )
+      {
       Toast.show("Fields is not allowed to be empty", {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
       });
     }
     else {
-      this.props.signup(userData);
+      if(!validateText.test(parseInt(this.state.firstname)) && !validateText.test(this.state.lastname)){
+        Toast.show("Please provide valid name", {
+          duration: Toast.durations.LONG,
+          position: Toast.positions.BOTTOM,
+        });
+      }
+      else if(!validateUserName.test(this.state.username)){
+        Toast.show("Please provide valid username with minimun 4 and maximum 16 charecters", {
+          duration: Toast.durations.LONG,
+          position: Toast.positions.BOTTOM,
+        });
+      }
+      else if(!validatePassword.test(this.state.pwd)){
+        Toast.show("Please provide valid password with minimun 6 characters", {
+          duration: Toast.durations.LONG,
+          position: Toast.positions.BOTTOM,
+        });
+      }
+      else if(this.state.pwd !== this.state.confirmPwd){
+        Toast.show("Please provide valid password and confirm password", {
+          duration: Toast.durations.LONG,
+          position: Toast.positions.BOTTOM,
+        });
+      }
+      else if(!validateEmail.test(this.state.email)){
+        Toast.show("Please provide valid email minimum six characters, at least one uppercase letter, one lowercase letter, one number and one special character", {
+          duration: Toast.durations.LONG,
+          position: Toast.positions.BOTTOM,
+        });
+      }
+      else if(!validatePhNumber.test(this.state.phoneNo)){
+        Toast.show("Please provide valid phone number", {
+          duration: Toast.durations.LONG,
+          position: Toast.positions.BOTTOM,
+        });
+      }
+      else{
+        this.props.signup(userData);
+      }
     }
   };
 
@@ -283,12 +300,18 @@ class SignUp extends React.PureComponent {
                       <View className="whiteBottomBorder" />
                     </View>
                     <View className="f-row">
-                      {this.state.gender.map(g => (
+                      {this.state.gender.map((g,i) => (
+                        this.state.selectedGender === g ?
+                          <View className="f-row">
+                          <Touchable  key={i} 
+                            onPress={this.selectGender.bind(this, g)}>
+                            <Text className="complementary bold m10">{g}</Text>
+                          </Touchable>
+                        </View>
+                        :
                         <View className="f-row">
-                          <Touchable
-                            className="m20"
-                            onPress={this.selectGender}
-                          >
+                          <Touchable  key={i} 
+                            onPress={this.selectGender.bind(this, g)}>
                             <Text className="complementary m10">{g}</Text>
                           </Touchable>
                         </View>

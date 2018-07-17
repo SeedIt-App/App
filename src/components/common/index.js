@@ -18,6 +18,7 @@ import Footer from './Footer';
 import Switch from './Switch';
 import Prompt from './Prompt';
 import SelectInput from './SelectInput';
+import Overlay from './Overlay';
 
 export {
   KeyboardAvoidingView,
@@ -39,5 +40,6 @@ export {
   Footer,
   Switch,
   Prompt,
-  SelectInput
+  SelectInput,
+  Overlay
 };

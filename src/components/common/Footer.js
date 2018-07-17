@@ -25,20 +25,20 @@ class Footer extends React.PureComponent {
         <View className="w-1-0 f-row f-both space-between m10">
           {
             token === '' ?
+              <View className="p5">
+                <Touchable onPress={this.goToLogin}>
+                  <View className="f-row f-both m20">
+                  <Image
+                    className="mini_thumb m10"
+                    source={require('../images/icons/Login.png')}
+                    resizeMode="cover"
+                    />
+                  </View>
+                </Touchable>
+                <Text className="text">Login</Text>
+              </View>
+            : 
             <View className="p5">
-              <Touchable onPress={this.goToLogin}>
-                <View className="f-row f-both m20">
-                <Image
-                  className="mini_thumb m10"
-                  source={require('../images/icons/Login.png')}
-                  resizeMode="cover"
-                  />
-                </View>
-              </Touchable>
-              <Text className="text">Login</Text>
-            </View>
-            :
-             <View className="p5">
               <Touchable onPress={this.goToProfile}>
                 <View className="f-row f-both m20">
                 <Image
@@ -51,7 +51,19 @@ class Footer extends React.PureComponent {
               <Text className="text">Profile</Text>
             </View>
           }
-
+          <View className="p5">
+                <Touchable onPress={this.goToLogin}>
+                  <View className="f-row f-both m20">
+                  <Image
+                    className="mini_thumb m10"
+                    source={require('../images/icons/Login.png')}
+                    resizeMode="cover"
+                    />
+                  </View>
+                </Touchable>
+                <Text className="text">Login</Text>
+              </View>
+            
           <View className="p5">
             <Touchable onPress={this.goToTags}>
               <View className="f-row f-both m20">

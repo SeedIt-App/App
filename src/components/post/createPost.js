@@ -37,6 +37,12 @@ class CreatePost extends React.PureComponent {
         position: Toast.positions.BOTTOM,
       });
     }
+    if (nextProps.createPostRequestStatus === "SUCCESS") {
+      Toast.show("Successfully posted", {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM,
+      });
+    }
   }
 
   ShowUserName = () => {
@@ -95,13 +101,14 @@ class CreatePost extends React.PureComponent {
           'PUT',
           signedRequest,
           {
-            'Content-Type': 'image',
+            'Content-Type': 'image/jpeg',
           },
           RNFetchBlob.wrap(fileToUpload),
         )
         .then(response => {
           const fileToUpload = url;
           this.setState({ image: fileToUpload });
+          console.log(this.state.image,'image')
         })
         .catch(err => {
           // error handling ..
@@ -118,9 +125,9 @@ class CreatePost extends React.PureComponent {
         <Header title="Create a Post" back navigation={this.props.navigation} />
         <ScrollView>
           <View>
-            <View className="f-column bg-transparent  space-between">
+            <View className="f-column bg-transparent space-between">
               <View className="mt10">
-                <View className="f-row p5 mr20">
+                <View className="f-row p5 mr20 mb25">
                   <View className="f-row f-both mr20 m20">
                     {user && picture  ? (
                       <Image
@@ -160,8 +167,7 @@ class CreatePost extends React.PureComponent {
                     />
                   </View>
                 </View>
-                <View className="dividerGrey" />
-                <View className="dividerGrey" />
+                <View className="dividerGrey " />
               </View>
               <View className="m10 ">
                 <View className="f-center f-row">
@@ -178,12 +184,12 @@ class CreatePost extends React.PureComponent {
                     />
                   </View>
                 </View>
-                <View className="f-center">
+                <View className="f-center f-row">
                   {this.state.image !=='' && (
                     <Image
-                      className="normal_thumb"
+                      className="big_thumb"
                       source={{ uri : this.state.image}} 
-                      resizeMode="contain"
+                      resizeMode="cover"
                     />
                   )}
                 </View>
@@ -191,8 +197,6 @@ class CreatePost extends React.PureComponent {
             </View>
           </View>
         </ScrollView>
-        <View className="dividerGrey" />
-        <View className="dividerGrey" />
         <View className="dividerGrey" />
         <View className="m10 ">
           <View className="f-row f-both w-1-0 space-between">
@@ -230,6 +234,8 @@ function mapStateToProps(state) {
   return {
     token,
     user,
+    createPostRequestStatus,
+    createPostErrorStatus
   };
 }
 export default connect(mapStateToProps, { ...AuthActions, ...PostActions })(CreatePost);

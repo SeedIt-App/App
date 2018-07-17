@@ -16,14 +16,26 @@ import Toast from 'react-native-root-toast';
 import Accordion from 'react-native-collapsible/Accordion';
 import { View as NativeView } from 'react-native';
 import ModalSelector from 'react-native-modal-selector';
-import Modal from "react-native-modal";
 
-class Follow extends React.PureComponent {
+  const statusOptions =[
+    {
+      key: 'Share on Facebook',
+      label: 'Share on Facebook',
+      value: 'Share on Facebook'
+    },
+    {
+      key: 'Share on Twitter',
+      label: 'Share on Twitter',
+      value: 'Share on Twitter'
+    }
+  ]
+
+class SingleTag extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       user: this.props.user,
-      modalVisible: false,
+      currentTagData : this.props.navigation.state.params.tagData
     };
   }
 
@@ -66,9 +78,12 @@ class Follow extends React.PureComponent {
     this.props.updateWaterPost(body);
   };
 
-  modelVisibleToggle = () => {
-    this.setState({ modalVisible: !this.state.modalVisible });
-  };
+  /*  <View className="mt10">
+    <ModalSelector
+      data={statusOptions}
+      initValue=""
+    />
+  </View>*/
 
   renderHeader = (section , i) => (
     <NativeView>
@@ -86,11 +101,7 @@ class Follow extends React.PureComponent {
             <Text className="black large t-left">{section.text}</Text>
           </View>
           <View className="f-row ">
-            { section.tags && section.tags.length > 0 &&
-              section.tags.map(t => (
-                <Text className="lgBlue bold large t-left">{" "}#{t.tag}</Text>
-              ))
-            }
+            <Text className="lgBlue bold large t-left">{" "}#{this.state.currentTagData.tag}</Text>
           </View>  
             {this.state.user &&
               this.state.user.role === 'admin' && (
@@ -111,6 +122,7 @@ class Follow extends React.PureComponent {
           </Touchable>  
         </View>
         <View className="dividerGrey" />
+        <View className="dividerGrey" />
       </View>
     </NativeView>
   );
@@ -120,36 +132,11 @@ class Follow extends React.PureComponent {
       <View className=" f-row space-between w-1-1">
         <View className="f-row" >
           <View>
-            <Touchable onPress={this.modelVisibleToggle}>
-              <View>
-                <Image
-                  className="micro1_thumb m10"
-                  source={require('../images/icons/share.png')}
-                  resizeMode="cover"
-                />
-                <Modal isVisible={this.state.modalVisible}
-                  backdropColor={"grey"}
-                  backdropOpacity={.1}>
-                  <View className="overlay f-column f-both">
-                    <View className=" f-row f-both m10">
-                      <Text className="lgBlue bold large_sm t-center">Share on Facebook</Text>
-                    </View>
-                    <View className="dividerGrey" />
-                    <View className=" f-row f-both m10">
-                      <Text className="lgBlue bold large_sm t-center">Share on Twitter</Text>
-                    </View>  
-                  </View>
-                  <View className="overlayCancel">
-                    <View className="wh-1-1 f-row f-both m10">
-                      <Touchable className="p5" onPress={this.modelVisibleToggle}>
-                        <Text className="lgBlue bold large_sm t-center">Cancel</Text>
-                      </Touchable>
-                    </View>  
-                  </View>
-                </Modal>
-              </View>
-            </Touchable>
-          
+            <Image
+              className="micro1_thumb m10"
+              source={require('../images/icons/share.png')}
+              resizeMode="cover"
+            />
           </View>
         </View>
         <View className="f-row">
@@ -184,34 +171,39 @@ class Follow extends React.PureComponent {
       allPosts,
       getAllFollowersErrorStatus,
       getAllFollowersRequestStatus,
-      getPostsRequestStatus,
     } = this.props;
     const { props } = this;
+
+    const allPostsData = [];
+    if(allPosts){
+      allPosts.forEach(p => {
+        p.tags.forEach(t => {
+          if(this.state.currentTagData.tag === t.tag ){
+            allPostsData.push(p)
+          }
+        })
+      })
+    }
+
     return (
       <View className="screen">
         <Header
-          title="Followed"
-          navigation={this.props.navigation}
+          title={ '#'+ this.state.currentTagData.tag}
+          back navigation={this.props.navigation}
           createPostRequest={this.goToCreatePost}
         />
         <ScrollView>
           <View>
             <View className="f-column">
               <View className="bg-transparent mt10 space-between">
-                {allPosts &&
-                  allPosts.length > 0 && (
+                {allPostsData &&
+                  allPostsData.length > 0 && (
                     <Accordion
-                      sections={allPosts}
+                      sections={allPostsData}
                       renderHeader={this.renderHeader}
                       renderContent={this.renderContent}
                       underlayColor="transparent"
                     />
-                  )}
-                  {getPostsRequestStatus === 'SUCCESS' &&
-                    allPosts.length === 0 && (
-                    <View className="flex f-both p10">
-                      <Text className="black bold">There are no posts</Text>
-                    </View>
                   )}
               </View>
             </View>
@@ -252,4 +244,4 @@ export default connect(mapStateToProps, {
   ...AuthActions,
   ...FollowActions,
   ...PostActions,
-})(Follow);
+})(SingleTag);

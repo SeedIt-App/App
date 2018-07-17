@@ -1,14 +1,14 @@
-import { combineReducers } from 'redux';
-import { AuthActions } from '../actions';
-import signupReducer from './signupReducer';
-import authReducer from './authReducer';
-import loginReducer from './loginReducer';
-import userReducer from './userReducer';
-import followReducer from './followReducer';
-import newsFeedReducer from './newsFeedReducer';
-import postReducer from './postReducer';
-import tagsReducer from './tagsReducer';
-import notificationReducer from './notificationReducer';
+import { combineReducers } from "redux";
+import { AuthActions } from "../actions";
+import signupReducer from "./signupReducer";
+import authReducer from "./authReducer";
+import loginReducer from "./loginReducer";
+import userReducer from "./userReducer";
+import followReducer from "./followReducer";
+import newsFeedReducer from "./newsFeedReducer";
+import postReducer from "./postReducer";
+import tagsReducer from "./tagsReducer";
+import notificationReducer from "./notificationReducer";
 
 const appReducer = combineReducers({
   signup: signupReducer,
@@ -19,7 +19,7 @@ const appReducer = combineReducers({
   newsFeed: newsFeedReducer,
   post: postReducer,
   notifications: notificationReducer,
-  tags : tagsReducer,
+  tags: tagsReducer
 });
 
 const rootReducer = (state, action) => {

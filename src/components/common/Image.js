@@ -17,6 +17,10 @@ const imageStyles = StyleSheet.create({
     width: 10,
     backgroundColor: Colors.white,
   },
+  sm_thumb : {
+    height: 10,
+    width: 10,
+  },
   micro: {
     height: 15,
     width: 15,

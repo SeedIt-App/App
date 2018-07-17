@@ -29,7 +29,7 @@ class EditProfile extends React.PureComponent {
       userName: '',
       address: '',
       city: '',
-      state: '',
+      states: '',
       bio: '',
       badges: [],
       fullName: '',
@@ -59,25 +59,18 @@ class EditProfile extends React.PureComponent {
   }
 
   componentDidMount() {
-    if (this.props.luser && this.props.luser.address) {
+    if (this.props.luser && this.props.luser.address && (this.props.luser.address.city || this.props.luser.address.state)) {
       this.setState({
-        fullAddress:
-          this.props.luser.address.city +' ' + ' '+ this.props.luser.address.state
-          || '',
+        fullAddress:(this.props.luser.address.city +' ' + this.props.luser.address.state) || ''
       });
     }
     if (this.props.luser) {
       this.setState({
         userName: this.props.luser.userName || '',
-        country: this.props.luser.address
-          ? this.props.luser.address.country
-          : '',
+        country: this.props.luser.address && this.props.luser.address.country || '',
         bio: this.props.luser.bio || '',
         badges: this.props.luser.badges || [],
-        fullName:
-          this.props.luser.firstName ||
-          `${'' + ' '}${this.props.luser.lastName}` ||
-          '',
+        fullName:(this.props.luser.firstName  + ' ' + this.props.luser.lastName) || '',
       });
     }
   }
@@ -85,44 +78,23 @@ class EditProfile extends React.PureComponent {
   editProfile = () => {
     const nameArr = this.state.fullName;
     const addressArr = this.state.fullAddress;
-    this.setState({
-      firstName: nameArr
-        .split(' ')
-        .slice(0, -1)
-        .join(' '),
-      lastName: nameArr
-        .split(' ')
-        .slice(-1)
-        .join(' '),
-      city: addressArr
-        .split(' ')
-        .slice(0, -1)
-        .join(' '),
-      state: addressArr
-        .split(' ')
-        .slice(-1)
-        .join(' '),
-    });
+    
+    let firstName = nameArr.split(' ').slice(0, -1).join(' ');
+    let lastName = nameArr.split(' ').slice(-1).join(' ');
+    let city = addressArr.split(' ').slice(0, -1).join(' ');
+    let states = addressArr.split(' ').slice(-1).join(' ');
 
     const values = {
-      firstName: this.state.firstName || this.props.luser.firstName,
-      lastName: this.state.lastName || this.props.luser.lastName,
+      id : this.props.luser._id,
+      firstName: firstName || this.props.luser.firstName,
+      lastName: lastName || this.props.luser.lastName,
       userName: this.state.userName || this.props.luser.userName,
-      bio: this.state.bio || this.props.luser.bio,
+      bio: this.state.bio  || this.props.luser.bio,
       address: {
-        city:
-          this.state.city || this.props.luser.address
-            ? this.props.luser.address.city
-            : '',
-        state:
-          this.state.state || this.props.luser.address
-            ? this.props.luser.address.state
-            : '',
-        country:
-          this.state.country || this.props.luser.address
-            ? this.props.luser.address.country
-            : '',
-      },
+        city : city,
+        state : states,
+        country: this.state.country
+      }
     };
     this.props.editProfile(values);
   };
@@ -196,12 +168,7 @@ class EditProfile extends React.PureComponent {
                   <Text className="blue medium m10 bold ">City,State :</Text>
                   <TextInput
                     style={{ color: 'grey', fontSize: 16 }}
-                    value={
-                      this.state.fullAddress &&
-                      this.state.fullAddress === 'undefined'
-                        ? ''
-                        : ''
-                    }
+                    value={this.state.fullAddress}
                     autoCapitalize="none"
                     underlineColorAndroid="transparent"
                     onChangeText={fullAddress => this.setState({ fullAddress })}
@@ -264,7 +231,7 @@ function mapStateToProps(state) {
     editProfileErrorStatus,
     editProfileRequestStatus,
   } = state.loggedUser;
-  console.log(state, 'EditProfile');
+
   return {
     profileRequestStatus,
     profileErrorStatus,

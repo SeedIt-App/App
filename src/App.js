@@ -17,6 +17,7 @@ import Follow from './components/follow/follow';
 import Tags from './components/tags/tags';
 import Redwood from './components/redwood/redwood';
 import Notifications from './components/notification/Notification';
+import SingleTag from './components/tags/singleTag';
 
 const AppNavigator = StackNavigator({
   SplashScreen: {
@@ -81,6 +82,13 @@ const AppNavigator = StackNavigator({
 
   Tags: {
     screen: Tags,
+    navigationOptions: () => ({
+      header: null,
+    }),
+  },
+
+  SingleTag: {
+    screen: SingleTag,
     navigationOptions: () => ({
       header: null,
     }),

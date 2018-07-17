@@ -1,22 +1,23 @@
-import { put, call, all, fork, takeLatest, select } from 'redux-saga/effects';
-import { UserActions, AuthActions } from '../actions';
-import { GET, POST, PUT, PATCH } from '../api';
-import idx from 'idx';
+import { put, call, all, fork, takeLatest, select } from "redux-saga/effects";
+import { UserActions, AuthActions } from "../actions";
+import { GET, POST, PUT, PATCH } from "../api";
+import idx from "idx";
 
- function* getSingleUser(action) {
+function* getSingleUser(action) {
   yield put(UserActions.getSingleUserRequest());
   try {
-    const singleUserData = []   
+    const singleUserData = [];
     const usersID = action.payload;
-    for( uId of usersID){
+    for (uId of usersID) {
       const singleUserURL = `/users/${uId}`;
       const { response } = yield call(GET, singleUserURL);
-      singleUserData.push(response.data)
-      yield put(UserActions.getSingleUserSuccess({
-        singleUserData
-      }));
-    }  
-   
+      singleUserData.push(response.data);
+      yield put(
+        UserActions.getSingleUserSuccess({
+          singleUserData
+        })
+      );
+    }
   } catch (error) {
     let msgError = error;
     if (error.data) {
@@ -24,16 +25,18 @@ import idx from 'idx';
     }
     yield put(UserActions.getSingleUserFailure(msgError));
   }
-} 
+}
 
 function* getAllUser(action) {
   yield put(UserActions.getAllUserRequest());
   try {
     const getAllUserURL = "/users?select=*&filter[role]=user&sort=asc";
     const { response } = yield call(GET, getAllUserURL);
-    yield put(UserActions.getAllUserSuccess({
-      allUsers : response.data,
-    }));
+    yield put(
+      UserActions.getAllUserSuccess({
+        allUsers: response.data
+      })
+    );
   } catch (error) {
     let msgError = error;
     if (error.data) {
@@ -41,17 +44,19 @@ function* getAllUser(action) {
     }
     yield put(UserActions.getAllUserFailure(msgError));
   }
-} 
+}
 
 function* profile(action) {
   yield put(UserActions.profileRequest());
   try {
-    const userprofileURL = '/users/profile';
+    const userprofileURL = "/users/profile";
     const { response } = yield call(GET, userprofileURL);
-    console.log(response, 'pR');
-    yield put(UserActions.profileSuccess({
-      luser: response.data,
-    }));
+    console.log(response, "pR");
+    yield put(
+      UserActions.profileSuccess({
+        luser: response.data
+      })
+    );
   } catch (error) {
     console.log(error);
     let msgError = error;
@@ -65,14 +70,15 @@ function* profile(action) {
 function* editProfile(action) {
   yield put(UserActions.editProfileRequest());
   try {
-    const updateProfileUrl = '/users/5acb0eeeb449b100206408ad';
+    const userId = action.payload.id
+    const updateProfileUrl = `/users/${userId}`;
+    delete action.payload.id;
     const { response } = yield call(PATCH, updateProfileUrl, action.payload);
-    yield put(UserActions.editProfileSuccess({
-      updatedUser: response.data,
-    }));
-    /* yield put(AuthActions.updateAuthUser({
-      user:
-    })); */
+    yield put(
+      UserActions.editProfileSuccess({
+        updatedUser: response.data
+      })
+    );
   } catch (error) {
     let msgError = error;
     if (error.data) {

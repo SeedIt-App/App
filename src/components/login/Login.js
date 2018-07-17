@@ -64,6 +64,7 @@ class Login extends React.PureComponent {
   }
 
   Login = () => {
+    let validateEmailOrUserName = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))|[a-zA-Z]{2,}$/;
     const loginValues = {
       usernameOrEmail: this.state.username,
       password: this.state.password,
@@ -73,14 +74,17 @@ class Login extends React.PureComponent {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
       });
-    } else {
-      this.props.login(loginValues);
-      if (this.props.loginRequestStatus === 'SUCCESS') {
-        Toast.show('Successfully Logged in !!', {
+    }
+    else {
+      if(!validateEmailOrUserName.test(this.state.username)){
+        Toast.show('Please provide valid email Or Username', {
           duration: Toast.durations.LONG,
           position: Toast.positions.BOTTOM,
         });
-      }  
+      }
+      else{
+        this.props.login(loginValues);
+      }
     }
   };
 
@@ -178,14 +182,13 @@ class Login extends React.PureComponent {
                     </Touchable>
                   </View>
                 </View>
-
-              <Prompt
-                title="Email Id"
-                placeholder="Enter your registered email id"
-                visible={this.state.emailPromptVisible}
-                onCancel={this.toggleEmailPrompt}
-                onSubmit={this.forgotPassword}
-              />
+                <Prompt
+                  title="Email Id"
+                  placeholder="Enter your registered email id"
+                  visible={this.state.emailPromptVisible}
+                  onCancel={this.toggleEmailPrompt}
+                  onSubmit={this.forgotPassword}
+                />
               </ScrollView>
             </View>
           </BackgroundImage>

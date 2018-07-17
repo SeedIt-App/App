@@ -3,7 +3,6 @@ import { FollowActions } from '../actions';
 
 const requestStatus = ['REQUESTING', 'FAILED', 'SUCCESS'];
 const initialState = {
-  followOthrUser: null,
   followers: null,
   followings: null,
   followAnotherUserRequestStatus: null,
@@ -33,8 +32,6 @@ export default function (state = initialState, action) {
       );
 
     case FollowActions.FOLLOW_ANOTHER_USER_SUCCESS:
-      const { followOUser } = action.payload;
-      state = ip.setIn(state, ['followOthrUser'], followOUser);
       return ip.setIn(
         state,
         ['followAnotherUserRequestStatus'],

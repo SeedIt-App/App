@@ -33,21 +33,35 @@ class Profile extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.profileErrorStatus) {
-      Toast.show(this.props.profileErrorStatus, {
+
+    if (nextProps.profileErrorStatus === 'jwt expired' 
+      || nextProps.profileErrorStatus === 'jwt malformed') {
+      Toast.show('Please login to get your profile', {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM,
+      });
+      this.props.navigation.navigate('Login');
+    }
+    else {
+      Toast.show(nextProps.profileErrorStatus, {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
       });
     }
 
-    if (this.props.token === '') {
-      if (nextProps.profileErrorStatus === 'jwt expired') {
-        Toast.show('Please login to get your profile', {
-          duration: Toast.durations.LONG,
-          position: Toast.positions.BOTTOM,
-        });
-        this.props.navigation.navigate('Login');
-      }
+    if (nextProps.getPostsErrorStatus === 'jwt expired' 
+      || nextProps.getPostsErrorStatus === 'jwt malformed') {
+      Toast.show('Please login to get your profile', {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM,
+      });
+      this.props.navigation.navigate('Login');
+    }
+    else {
+      Toast.show(nextProps.getPostsErrorStatus, {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM,
+      });
     }
 
     if(nextProps.getPostsRequestStatus ==='SUCCESS'){
@@ -64,7 +78,6 @@ class Profile extends React.PureComponent {
         });
       } 
     }
-
   }
 
   componentDidMount() {
@@ -89,6 +102,7 @@ class Profile extends React.PureComponent {
       allFollowers,
       allfollowings,
       allPosts,
+      getPostsErrorStatus,
       getAllFollowersRequestStatus,
       getAllFollowersErrorStatus,
       getAllUserFollowingsRequestStatus,
@@ -105,20 +119,20 @@ class Profile extends React.PureComponent {
             singleUser.map((user , i ) => (
               <View className="f-row p5 mr20">
                 <View className="f-row f-both m20">
-                  <Touchable className="p5" key={i} onPress={this.goToPublicProfile.bind(this, user)}>
-                    <Image
-                      className="med_thumb m10"
-                      source={require('../images/avatars/Abbott.png')}
-                      resizeMode="cover"
-                    />
-                  </Touchable>  
+                  <Image
+                    className="med_thumb m10"
+                    source={require('../images/avatars/Abbott.png')}
+                    resizeMode="cover"
+                  />
                 </View>
                 <View className="f-column mt10">
-                  <View className="f-both">
-                    <Text className="black large t-left">
-                      {user.userName} {"\n"} {user.email}
-                    </Text>
-                  </View>
+                  <Touchable className="p5" key={i} onPress={this.goToPublicProfile.bind(this, user)}>
+                    <View className="f-both">
+                      <Text className="black large t-left">
+                        {user.userName} {"\n"} {user.email}
+                      </Text>
+                    </View>
+                  </Touchable>  
                 </View>
                 <View className="f-row pull-right f-both m20">
                   <Image
@@ -129,12 +143,20 @@ class Profile extends React.PureComponent {
                 </View>
               </View>
             ))}
+            {
+              singleUser === null && 
+             ( <View>
+                <Text className="f-both darkGrey t-center bold medium">
+                  There is no liked posts
+                </Text>
+              </View> )   
+            }
         </View>
       );
     } else if (this.state.activeFlag === 'posted') {
       return (
         <View className="bg-transparent mt10 space-between">
-          {allPosts &&
+          {allPosts && allPosts.length > 0 && 
             allPosts.map(p => (
               <View className="f-row p5 mr20">
                 <View className="f-row f-both m20">
@@ -147,7 +169,7 @@ class Profile extends React.PureComponent {
                 <View className="f-column w-2-1 mt10">
                   <View className="f-both">
                     <Text className="black large t-left">
-                      {p.text}
+                      {p.text} 
                     </Text>
                   </View>
                 </View>
@@ -160,13 +182,20 @@ class Profile extends React.PureComponent {
                 </View>
               </View>
             ))}
+             {allPosts && allPosts.length === 0 && 
+             ( <View>
+                <Text className="f-both darkGrey t-center bold medium">
+                  There is no followers
+                </Text>
+              </View> )   
+            }
         </View>
       );
     } else if (this.state.activeFlag === 'followers') {
       return (
         <View className="bg-transparent mt10 space-between">
-          {allFollowers &&
-            allFollowers.map(p => (
+          {allFollowers && allFollowers.length > 0 &&
+            allFollowers.map((user, i) => (
               <View className="f-row p5 mr20">
                 <View className="f-row f-both m20">
                   <Image
@@ -176,11 +205,13 @@ class Profile extends React.PureComponent {
                   />
                 </View>
                 <View className="f-column  mt10">
-                  <View className="f-both">
-                    <Text className="black large t-left">
-                      {p.userName}
-                    </Text>
-                  </View>
+                  <Touchable className="p5" key={i} onPress={this.goToPublicProfile.bind(this, user)}>
+                    <View className="f-both">
+                      <Text className="black large t-left">
+                        {user.userName} {"\n"} {user.email}
+                      </Text>
+                    </View>
+                  </Touchable> 
                 </View>
                 <View className="f-row pull-right f-both m20">
                   <Image
@@ -191,13 +222,20 @@ class Profile extends React.PureComponent {
                 </View>
               </View>
             ))}
+            {allFollowers && allFollowers.length === 0 && 
+             ( <View>
+                <Text className="f-both darkGrey t-center bold medium">
+                  There is no followers
+                </Text>
+              </View> )   
+            }
         </View>
       );
     } else if (this.state.activeFlag === 'following') {
       return (
         <View className="bg-transparent mt10 space-between">
-          {allfollowings &&
-            allfollowings.map(f => (
+          {allfollowings && allfollowings.length > 0 &&
+            allfollowings.map((user, i )=> (
               <View className="f-row p5 mr20">
                 <View className="f-row f-both m20">
                   <Image
@@ -207,11 +245,13 @@ class Profile extends React.PureComponent {
                   />
                 </View>
                 <View className="f-column mt10">
-                  <View className="f-both">
-                    <Text className="black large t-left">
-                      {f.userName}
-                    </Text>
-                  </View>
+                  <Touchable className="p5" key={i} onPress={this.goToPublicProfile.bind(this, user)}>
+                    <View className="f-both">
+                      <Text className="black large t-left">
+                        {user.userName} {"\n"} {user.email}
+                      </Text>
+                    </View>
+                  </Touchable>  
                 </View>
                 <View className="f-row pull-right f-both m20">
                   <Image
@@ -222,6 +262,13 @@ class Profile extends React.PureComponent {
                 </View>
               </View>
             ))}
+            {allfollowings && allfollowings.length === 0 && 
+             ( <View>
+                <Text className="f-both darkGrey t-center bold medium">
+                  There is no followers
+                </Text>
+              </View> )   
+            }
         </View>
       );
     }
@@ -231,6 +278,7 @@ class Profile extends React.PureComponent {
     const {
       profileRequestStatus,
       profileErrorStatus,
+      getPostsErrorStatus,
       luser,
       user,
       token,
@@ -432,6 +480,7 @@ function mapStateToProps(state) {
     getAllUserFollowingsRequestStatus,
     getAllUserFollowingsErrorStatus,
     getPostsRequestStatus,
+    getPostsErrorStatus,
     singleUser,
     getSingleUserRequestStatus,
     getSingleUserErrorStatus,

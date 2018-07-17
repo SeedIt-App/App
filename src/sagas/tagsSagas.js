@@ -1,18 +1,19 @@
-import { put, call, all, fork, takeLatest, select } from 'redux-saga/effects';
-import { TagsActions, AuthActions } from '../actions';
-import { GET, POST, PUT, PATCH } from '../api';
-import idx from 'idx';
+import { put, call, all, fork, takeLatest, select } from "redux-saga/effects";
+import { TagsActions, AuthActions } from "../actions";
+import { GET, POST, PUT, PATCH } from "../api";
+import idx from "idx";
 
 // State for get all tags list
 function* getAllTagsList(action) {
   yield put(TagsActions.getAllTagsListRequest());
   try {
-    const getAllTagsListURL =
-      '/tags?select=*&sort=asc';
+    const getAllTagsListURL = "/tags?select=*&sort=asc";
     const { response } = yield call(GET, getAllTagsListURL);
-    yield put(TagsActions.getAllTagsListSuccess({
-      getAllTagsLists: response.data,
-    }));
+    yield put(
+      TagsActions.getAllTagsListSuccess({
+        getAllTagsLists: response.data
+      })
+    );
   } catch (error) {
     let msgError = error;
     if (error.data) {
@@ -26,12 +27,14 @@ function* getAllTagsList(action) {
 function* createNewTag(action) {
   yield put(TagsActions.createNewTagRequest());
   try {
-    const createNewTagURL = '/tags';
+    const createNewTagURL = "/tags";
     const { response } = yield call(POST, createNewTagURL, action.payload);
-    console.log(response, 'pR');
-    yield put(TagsActions.createNewTagSuccess({
-      getAllPosts: response.data,
-    }));
+    console.log(response, "pR");
+    yield put(
+      TagsActions.createNewTagSuccess({
+        getAllPosts: response.data
+      })
+    );
   } catch (error) {
     console.log(error);
     let msgError = error;
@@ -46,11 +49,13 @@ function* createNewTag(action) {
 function* getSingleTag(action) {
   yield put(TagsActions.getSingleTagRequest());
   try {
-    const getSingleTagURL = '/tags/${tagId}';
+    const getSingleTagURL = "/tags/${tagId}";
     const { response } = yield call(GET, getSingleTagURL);
-    yield put(TagsActions.getSingleTagSuccess({
-      getAllTags: response.data,
-    }));
+    yield put(
+      TagsActions.getSingleTagSuccess({
+        getAllTags: response.data
+      })
+    );
   } catch (error) {
     console.log(error);
     let msgError = error;
@@ -65,11 +70,13 @@ function* getSingleTag(action) {
 function* updateTagName(action) {
   yield put(TagsActions.updateTagNameRequest());
   try {
-    const updateTagNameUrl = '/tags/${tagId}';
+    const updateTagNameUrl = "/tags/${tagId}";
     const { response } = yield call(GET, updateTagNameUrl);
-    yield put(TagsActions.updateTagNameSuccess({
-      updateTagName: response.data,
-    }));
+    yield put(
+      TagsActions.updateTagNameSuccess({
+        updateTagName: response.data
+      })
+    );
   } catch (error) {
     let msgError = error;
     if (error.data) {
@@ -83,7 +90,7 @@ function* updateTagName(action) {
 function* deleteTag(action) {
   yield put(TagsActions.deleteTagRequest());
   try {
-    const deleteTagUrl = '/tags/${tagId}';
+    const deleteTagUrl = "/tags/${tagId}";
     const { response } = yield call(DELETE, deleteTagUrl);
     yield put(TagsActions.deleteTagSuccess());
   } catch (error) {
@@ -99,7 +106,7 @@ function* deleteTag(action) {
 function* followTag(action) {
   yield put(TagsActions.followTagRequest());
   try {
-    const followTagUrl = '/tags/${tagId}/follow';
+    const followTagUrl = "/tags/${tagId}/follow";
     const { response } = yield call(PATCH, followTagUrl);
     yield put(TagsActions.followTagSuccess());
   } catch (error) {
@@ -115,15 +122,17 @@ function* followTag(action) {
 function* getAllFollowersTag(action) {
   yield put(TagsActions.getAllFollowersTagRequest());
   try {
-    const getAllFollowersTagURL = '/posts/${postId}/comment/${commentId}';
+    const getAllFollowersTagURL = "/posts/${postId}/comment/${commentId}";
     const { response } = yield call(
       PATCH,
       getAllFollowersTagURL,
-      action.payload,
+      action.payload
     );
-    yield put(TagsActions.getAllFollowersTagSuccess({
-      followTag: response.data,
-    }));
+    yield put(
+      TagsActions.getAllFollowersTagSuccess({
+        followTag: response.data
+      })
+    );
   } catch (error) {
     console.log(error);
     let msgError = error;
@@ -142,6 +151,6 @@ export default function* authSagas() {
   yield all([fork(takeLatest, TagsActions.DELETE_TAG, deleteTag)]);
   yield all([fork(takeLatest, TagsActions.FOLLOW_TAG, followTag)]);
   yield all([
-    fork(takeLatest, TagsActions.GET_ALL_FOLLOWERS_TAG, getAllFollowersTag),
+    fork(takeLatest, TagsActions.GET_ALL_FOLLOWERS_TAG, getAllFollowersTag)
   ]);
 }

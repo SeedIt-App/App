@@ -34,11 +34,29 @@ class ChangePassword extends React.PureComponent {
   }
 
   changePassword = () => {
+
+    let validatePassword  = /^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$/;
     const body = {
       resetToken: this.props.user.resetToken,
       newPassword: this.state.newPwd
     }
-    this.props.resetPassword(body)
+    if (this.state.oldPwd === '' || this.state.newPwd == '') {
+      Toast.show('Fields is not allowed to be empty', {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM,
+      });
+    }
+    else {
+      if(!validatePassword.test(this.state.newPwd)){
+        Toast.show('Please provide valid new password', {
+          duration: Toast.durations.LONG,
+          position: Toast.positions.BOTTOM,
+        });
+      }
+      else{
+        this.props.resetPassword(body)
+      }
+    }
   }
 
   render() {

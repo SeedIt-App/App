@@ -364,6 +364,7 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.transparent,
   },
+  
   'wh-1-1': {
     height: '100%',
     width: '100%',
@@ -475,8 +476,8 @@ export default StyleSheet.create({
   },
   dividerGrey: {
     alignSelf: 'stretch',
-    height: 0.5,
-    backgroundColor: Colors.lgGrey,
+    height: 0.6,
+    backgroundColor: '#808080',
   },
   'abs-cover': {
     position: 'absolute',
@@ -600,13 +601,49 @@ export default StyleSheet.create({
     height: 68,
     alignItems: 'center',
   },
-  shadowBox : {
-    paddingTop : 10,
-    paddingLeft : 20,
-    paddingRight : 20,
-    borderWidth: 1,
+  overlay : {
+    position: 'absolute',
+    flex: 0.1,
+    left: 0,
+    right: 0,
+    bottom: 80,
+    backgroundColor: Colors.white,
     borderRadius: 10,
+    borderColor: Colors.white,
+    borderWidth: 1,
+    flexDirection: 'row',
+    height: 120,
+    alignItems: 'center',
+  },
+  overlayCancel : {
+    position: 'absolute',
+    flex: 0.1,
+    left: 0,
+    right: 0,
+    bottom: 10,
+    backgroundColor: Colors.white,
+    borderRadius: 10,
+    borderColor: Colors.white,
+    borderWidth: 1,
+    flexDirection: 'row',
+    height: 60,
+    alignItems: 'center',
+  },
+  shadowBox : {
+    paddingTop : 8,
+    paddingLeft : 8,
+    paddingRight : 8,
+    paddingBottom : 8,
     borderColor : 'transparent',
     backgroundColor : Colors.lgGrey
+  },
+  search_input : {
+    paddingTop : 5,
+    paddingLeft : 5,
+    paddingRight : 5,
+    backgroundColor : Colors.white,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: Colors.white
   }
 });

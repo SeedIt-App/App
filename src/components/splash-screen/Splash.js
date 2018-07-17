@@ -14,9 +14,7 @@ class Splash extends React.PureComponent {
               <Text className="heading complementary bold">Seed It</Text>
             </View>
             <View className="f-center">
-              <Touchable className="mv15" onPress={() => {}}>
-                <Image source={require("../images/logo.png")} />
-              </Touchable>
+              <Image source={require("../images/logo.png")} />
             </View>
             <View className="f-center">
               <Text className="heading bold complementary">

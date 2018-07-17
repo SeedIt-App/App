@@ -27,8 +27,14 @@ class CreateComment extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.createPostErrorStatus) {
-      Toast.show(nextProps.createPostErrorStatus, {
+    if (nextProps.addNewCommentToPostErrorStatus) {
+      Toast.show(nextProps.addNewCommentToPostErrorStatus, {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM,
+      });
+    }
+    if (nextProps.addNewCommentToPostRequestStatus === "SUCCESS") {
+      Toast.show("Successfully added new comment on the post", {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
       });
@@ -108,7 +114,9 @@ class CreateComment extends React.PureComponent {
   };
 
   render() {
-    const { user, createPostRequestStatus, createPostErrorStatus } = this.props;
+    const { user, 
+    addNewCommentToPostRequestStatus, 
+    addNewCommentToPostErrorStatus } = this.props;
     const { props } = this;
     console.log(this.props.navigation.state.params,'this.props.navigation.state.params')
     return (
@@ -156,17 +164,18 @@ class CreateComment extends React.PureComponent {
               <View className="m10 ">
                 <View className="f-center f-row">
                   <View>
-                    <TextInput
-                      style={{ color: 'black', fontSize: 16, flex :1 }}
-                      value={this.state.currentPostData.text}
-                      autoCapitalize="none"
-                      underlineColorAndroid="transparent"
-                      editable={false}
-                    />
+                    <Text className="black bold large t-center ">{this.state.currentPostData.text}</Text>
+                    { this.state.currentPostData && 
+                      this.state.currentPostData.comments &&
+                      this.state.currentPostData.comments.length > 0 &&
+                      this.state.currentPostData.comments.map(value => (
+                        <Text className="black bold medium t-left">{value.text}{'\n'} {' - '}{value.commentBy.userName}</Text>
+                      ))
+                    }
                     <TextInput
                       style={{ color: 'black', fontSize: 16, width: 250 }}
                       value={this.state.message}
-                      placeholder="Type your idea here"
+                      placeholder="Type your comment here"
                       placeholderTextColor="black"
                       autoCapitalize="none"
                       underlineColorAndroid="transparent"
@@ -214,10 +223,12 @@ function mapStateToProps(state) {
   const token = state.auth.authToken;
   const { user } = state.auth;
   console.log(user, '*******************');
-  const { createPostRequestStatus, createPostErrorStatus } = state.post;
+  const { addNewCommentToPostRequestStatus, addNewCommentToPostErrorStatus } = state.post;
   return {
     token,
     user,
+    addNewCommentToPostRequestStatus, 
+    addNewCommentToPostErrorStatus
   };
 }
 export default connect(mapStateToProps, { ...AuthActions, ...PostActions })(CreateComment);

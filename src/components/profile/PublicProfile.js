@@ -33,21 +33,44 @@ class PublicProfile extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.user !== '') {
-      if (nextProps.profileErrorStatus === 'jwt expired') {
-        Toast.show('Please login to get your profile', {
-          duration: Toast.durations.LONG,
-          position: Toast.positions.BOTTOM,
-        });
-        this.props.navigation.navigate('Login');
-      }
+   /* if (nextProps.followAnotherUserErrorStatus === 'jwt expired' || 'jwt malformed') {
+      Toast.show('Please login to get your profile', {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM,
+      });
+      this.props.navigation.navigate('Login');
+    }
+    else{
+      Toast.show(nextProps.followAnotherUserErrorStatus, {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM,
+      }); 
+    }*/
+
+    if (nextProps.followAnotherUserErrorStatus) {
+      Toast.show(nextProps.followAnotherUserErrorStatus, {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM,
+      });
+    }
+
+    if (nextProps.followAnotherUserRequestStatus === 'SUCCESS') {
+      Toast.show(nextProps.followAnotherUserRequestStatus, {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM,
+      });
     }
   }
 
   componentDidMount() {
-    this.props.getPosts();
-    this.props.getAllFollowers();
-    this.props.getAllUserFollowings();
+    const email = this.state.UserData.email || this.state.UserData.userName 
+    this.props.getPosts(email);
+    this.props.getAllFollowers(email);
+    this.props.getAllUserFollowings(email);
+  }
+
+  followAnotherUser = (id) => {
+    this.props.followAnotherUser(id)
   }
 
   renderTab = () => {
@@ -59,13 +82,17 @@ class PublicProfile extends React.PureComponent {
       getAllFollowersErrorStatus,
       getAllUserFollowingsRequestStatus,
       getAllUserFollowingsErrorStatus,
+      followAnotherUserRequestStatus,
+      followAnotherUserErrorStatus,
     } = this.props;
 
     if (this.state.activeFlag === 'liked') {
       return (
-        <View className="f-row f-both mt20">
-          <Text className="black bold medium t-left">liked</Text>
-        </View>
+        ( <View>
+          <Text className="f-both darkGrey t-center bold medium">
+            There is no liked posts
+          </Text>
+        </View> ) 
       );
     } else if (this.state.activeFlag === 'posted') {
       return (
@@ -96,6 +123,14 @@ class PublicProfile extends React.PureComponent {
                 </View>
               </View>
             ))}
+            {
+              allPosts && allPosts.length === 0 && 
+             ( <View>
+                <Text className="f-both darkGrey t-center bold medium">
+                  There is no posts
+                </Text>
+              </View> )   
+            }
         </View>
       );
     } else if (this.state.activeFlag === 'followers') {
@@ -114,7 +149,7 @@ class PublicProfile extends React.PureComponent {
                 <View className="f-column mt10">
                   <View className="f-both">
                     <Text className="black bold large t-left">
-                      {p.userName}
+                      {p.userName} { "\n"} {p.email}
                     </Text>
                   </View>
                 </View>
@@ -127,6 +162,14 @@ class PublicProfile extends React.PureComponent {
                 </View>
               </View>
             ))}
+            {
+              allFollowers && allFollowers.length === 0 && 
+              ( <View>
+                <Text className="f-both darkGrey t-center bold medium">
+                  There is no followers
+                </Text>
+              </View> )   
+            }
         </View>
       );
     } else if (this.state.activeFlag === 'following') {
@@ -145,7 +188,7 @@ class PublicProfile extends React.PureComponent {
                 <View className="f-column mt10">
                   <View className="f-both">
                     <Text className="black bold large t-left">
-                      {f.userName}
+                      {f.userName} { "\n"} {f.email}
                     </Text>
                   </View>
                 </View>
@@ -158,6 +201,14 @@ class PublicProfile extends React.PureComponent {
                 </View>
               </View>
             ))}
+            {
+              allfollowings && allfollowings.length === 0 && 
+             ( <View>
+                <Text className="f-both darkGrey t-center bold medium">
+                  There is no followings
+                </Text>
+              </View> )   
+            }
         </View>
       );
     }
@@ -172,6 +223,8 @@ class PublicProfile extends React.PureComponent {
       getAllFollowersErrorStatus,
       getAllUserFollowingsRequestStatus,
       getAllUserFollowingsErrorStatus,
+      followAnotherUserRequestStatus,
+      followAnotherUserErrorStatus
     } = this.props;
     console.log(this.props);
    
@@ -207,7 +260,9 @@ class PublicProfile extends React.PureComponent {
                 </View>
               </View>
               <View className=" mt10">
-                <Text className="blue bold large">Follow</Text>
+                <Touchable className="p5"  onPress={this.followAnotherUser.bind(this, this.state.UserData._id)}>
+                  <Text className="blue bold large">Follow</Text>
+                </Touchable>  
               </View>
             </View>
             <View className="bg-transparent f-row mt10 space-between">
@@ -329,6 +384,8 @@ function mapStateToProps(state) {
     getAllFollowersErrorStatus,
     getAllUserFollowingsRequestStatus,
     getAllUserFollowingsErrorStatus,
+    followAnotherUserRequestStatus,
+    followAnotherUserErrorStatus,
   } = state.follow;
   const allFollowers = followers && followers.followers;
   const allfollowings = followings && followings.followings;
@@ -343,6 +400,8 @@ function mapStateToProps(state) {
     getAllFollowersErrorStatus,
     getAllUserFollowingsRequestStatus,
     getAllUserFollowingsErrorStatus,
+    followAnotherUserRequestStatus,
+    followAnotherUserErrorStatus,
     user,
     allPosts,
     allFollowers,
