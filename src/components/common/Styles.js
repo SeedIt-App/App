@@ -122,7 +122,7 @@ const margins = {
     marginTop: 50,
   },
   marginTop10: {
-    marginTop: -7,
+    marginTop: -10,
   },
   marginTop15: {
     marginTop: -15,
@@ -307,6 +307,9 @@ const flex = {
   flex: {
     flexGrow: 1,
   },
+  flexWrap : {
+    flexWrap: 'wrap',
+  },
   'f-row': {
     flexDirection: 'row',
   },
@@ -408,6 +411,9 @@ export default StyleSheet.create({
   'h-1-5': {
     height: '20%',
   },
+  h20 : {
+    height: 20,
+  },
   h38: {
     height: 36,
   },
@@ -477,7 +483,7 @@ export default StyleSheet.create({
   dividerGrey: {
     alignSelf: 'stretch',
     height: 0.6,
-    backgroundColor: '#808080',
+    backgroundColor: "#DCDCDC",
   },
   'abs-cover': {
     position: 'absolute',
@@ -544,13 +550,13 @@ export default StyleSheet.create({
     shadowOpacity: 1.0,
   },
   showPassword: {
-    height: 40,
+    height: 50,
     width: 70,
     marginTop : -5,
     backgroundColor: Colors.vlblue,
   },
   showPasswordAuth: {
-    height: 40,
+    height: 50,
     width: 70,
     backgroundColor: '#D8F6F7',
   },

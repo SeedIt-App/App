@@ -80,7 +80,7 @@ const textStyle = StyleSheet.create({
     fontSize: 17
   },
   large_sm: {
-    fontSize: 21
+    fontSize: 20
   },
   x_large: {
     fontSize: 25

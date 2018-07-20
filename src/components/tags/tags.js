@@ -42,12 +42,24 @@ class Tags extends React.PureComponent {
       });
       this.props.navigation.navigate("Login");
     }
-    else {
+    if(nextProps.getPostsErrorStatus ){
       Toast.show(nextProps.getPostsErrorStatus, {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM
       });
-    }  
+    }
+    if(nextProps.updateWaterPostRequestStatus ==='SUCCESS'){
+      Toast.show(nextProps.updateWaterToPost, {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM
+      });
+    }
+    if(nextProps.updateWaterPostErrorStatus){
+      Toast.show(nextProps.updateWaterPostErrorStatus, {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM
+      });
+    }
   }
 
   goToCreatePost = () => {
@@ -94,15 +106,27 @@ class Tags extends React.PureComponent {
           <View className="f-column">
             <Text className="black large t-left">{section.text}</Text>
           </View>
-          <View className="f-row flex w-1-2 mr30">
-            { section.tags && section.tags.length > 0 &&
-              section.tags.map((value,i) => (
-                <Touchable key={i} onPress={this.goToSingleTag.bind(this, value)}>
-                  <Text className="lgBlue bold large t-left">{" "}#{value.tag}</Text>
-                </Touchable>   
-              ))
-            }
-          </View>  
+          <View className="f-column">
+            <View className="f-row flexWrap">
+              { section.tags && section.tags.length > 0 &&
+                section.tags.map((value,i) => (
+                  <Touchable className="touchableMin" key={i} onPress={this.goToSingleTag.bind(this, value)}>
+                    <Text className="lgBlue bold large t-left">{" "}#{value.tag}</Text>
+                  </Touchable>   
+                ))
+              }
+            </View>
+          </View>
+          <View className="f-row flex w-1-2">
+            { section.images && section.images.length > 0 && section.images[0] !== 'image1.png' &&
+            section.images.map(v => (
+              <Image
+                className="x_l_thumb m5" 
+                source={{uri : section.images[0]}}
+                resizeMode="cover"
+              />
+            ))}
+          </View>
             {this.state.user &&
               this.state.user.role === 'admin' && (
                 <Image
@@ -122,18 +146,17 @@ class Tags extends React.PureComponent {
           </Touchable>  
         </View>
         <View className="dividerGrey" />
-        <View className="dividerGrey" />
       </View>
     </NativeView>
   );
 
-  renderContent = (section, i) => (
+ renderContent = (section, i) => (
     <View className="f-row p5 mr20" >
-      <View className=" f-row space-between w-1-1">
+      <View className=" f-row f-both space-between w-1-1">
         <View className="f-row" >
           <View>
             <Touchable onPress={this.modelVisibleToggle}>
-              <View>
+              <View className="mb5">
                 <Image
                   className="micro1_thumb m10"
                   source={require('../images/icons/share.png')}
@@ -164,22 +187,26 @@ class Tags extends React.PureComponent {
           
           </View>
         </View>
-        <View className="f-row">
-          <Touchable className="p5" key={i} onPress={this.goToAddComment.bind(this, section)}>
-            <Image
-              className="micro m10"
-              source={require('../images/icons/cm.png')}
-              resizeMode="cover"
-            />
-          </Touchable>
+        <View className="f-row mb5">
+          <View slassName="mb10">
+            <Touchable className="p5" key={i} onPress={this.goToAddComment.bind(this, section)}>
+              <Image
+                className="micro m10"
+                source={require('../images/icons/cm.png')}
+                resizeMode="cover"
+              />
+            </Touchable>
+          </View>
+          <View className="marginTop10">  
             { section.comments && section.comments.length > 0 &&
               (<Text className="mt20 darkgrey bold small t-center"> ({section.comments.length} )</Text>)
             }
-        </View>
+          </View>
+        </View>  
         <View className="marginTop15">
           <Touchable className="p5" key={i} onPress={this.updateWaterToPost.bind(this, section)}>
             <Image
-              className="normal_thumb m10 mb20"
+              className="normal_thumb m10"
               source={require('../images/icons/drop_grey.png')}
               resizeMode="cover"
             />
@@ -195,6 +222,9 @@ class Tags extends React.PureComponent {
       allPosts,
       getPostsRequestStatus,
       getPostsErrorStatus,
+      updateWaterPostRequestStatus,
+      updateWaterPostErrorStatus,
+      updateWaterToPost,
     } = this.props;
     const { props } = this;
     return (
@@ -217,6 +247,10 @@ class Tags extends React.PureComponent {
                       underlayColor="transparent"
                     />
                   )}
+                  { getPostsRequestStatus === 'REQUESTING' &&
+                    <View className="p15 mt30">
+                      <Spinner large />
+                    </View> }
                   {getPostsRequestStatus === 'SUCCESS' &&
                     allPosts && allPosts.length === 0 && (
                     <View className="flex f-both p10">
@@ -240,6 +274,9 @@ function mapStateToProps(state) {
     getAllPosts,
     getPostsRequestStatus,
     getPostsErrorStatus,
+    updateWaterPostRequestStatus,
+    updateWaterPostErrorStatus,
+    updateWaterToPost,
   } = state.post;
   const allPosts = getAllPosts && getAllPosts.posts;
   return {
@@ -248,6 +285,9 @@ function mapStateToProps(state) {
     allPosts,
     getPostsRequestStatus,
     getPostsErrorStatus,
+    updateWaterPostRequestStatus,
+    updateWaterPostErrorStatus,
+    updateWaterToPost
   };
 }
 export default connect(mapStateToProps, {

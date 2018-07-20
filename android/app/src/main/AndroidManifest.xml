@@ -38,7 +38,7 @@
         android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
         android:theme="@style/com_facebook_activity_theme"
         android:label="@string/app_name" />
-     
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="407f4788a0c2a477ca381bafd46fcdaaffe4f848" />

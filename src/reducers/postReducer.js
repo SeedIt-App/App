@@ -89,8 +89,8 @@ export default function(state = initialState, action) {
       );
 
     case PostActions.UPDATE_WATER_POST_SUCCESS:
-      const { updateWaterToPost } = action.payload;
-      state = ip.setIn(state, ["updateWaterToPost"], updateWaterToPost);
+      const { message } = action.payload.updateWaterToPost;
+      state = ip.setIn(state, ["updateWaterToPost"], message);
       return ip.setIn(
         state,
         ["updateWaterPostRequestStatus"],

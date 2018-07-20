@@ -53,7 +53,7 @@ class CreatePost extends React.PureComponent {
     if (this.state.message !== '') {
       const body = {
         text: this.state.message,
-        image: [ this.state.image],
+        images: [ this.state.image],
       };
       this.props.createPost(body);
     } else {
@@ -64,17 +64,17 @@ class CreatePost extends React.PureComponent {
     }
   };
 
-   openPicker = () => {
+  openPicker = () => {
     ImagePicker.showImagePicker(response => {
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
         console.log('ImagePicker Error: ', response.error);
       } else {
-        ImageResizer.createResizedImage(response.uri, 100, 100, 'PNG', 100, 0)
+        ImageResizer.createResizedImage(response.uri, 100, 100, 'JPEG', 100, 0)
           .then(({ uri, path }) => {
-            let source = uri;
-            this.uploadProfileImage(source);
+            const source = { uri };
+            this.uploadProfileImage(source.uri);
           })
           .catch(err => {
             console.log(err);
@@ -88,6 +88,8 @@ class CreatePost extends React.PureComponent {
   };
 
   uploadProfileImage = imgPath => {
+    const body = new FormData();
+    body.append('file', { uri: imgPath });
     const fileToUpload = imgPath;
     const fileName = fileToUpload.split('/').pop();
     axios
@@ -105,16 +107,15 @@ class CreatePost extends React.PureComponent {
           },
           RNFetchBlob.wrap(fileToUpload),
         )
-        .then(response => {
-          const fileToUpload = url;
-          this.setState({ image: fileToUpload });
-          console.log(this.state.image,'image')
-        })
-        .catch(err => {
-          // error handling ..
-          console.log(err);
-        });
-    });
+          .then(response => {
+            const fileToUpload = url;
+            this.setState({ image: fileToUpload });
+          })
+          .catch(err => {
+            // error handling ..
+            console.log(err);
+          });
+      });
   };
 
   render() {
@@ -187,7 +188,7 @@ class CreatePost extends React.PureComponent {
                 <View className="f-center f-row">
                   {this.state.image !=='' && (
                     <Image
-                      className="big_thumb"
+                      className="x_large_thumb"
                       source={{ uri : this.state.image}} 
                       resizeMode="cover"
                     />
@@ -229,7 +230,6 @@ class CreatePost extends React.PureComponent {
 function mapStateToProps(state) {
   const token = state.auth.authToken;
   const { user } = state.auth;
-  console.log(user, '*******************');
   const { createPostRequestStatus, createPostErrorStatus } = state.post;
   return {
     token,

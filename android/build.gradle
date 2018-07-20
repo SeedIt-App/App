@@ -4,7 +4,9 @@ buildscript {
     repositories {
         jcenter()
         maven { url 'https://maven.fabric.io/public' }
-        google()
+        google()    
+        mavenCentral()
+
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.1'
@@ -19,7 +21,8 @@ allprojects {
     repositories {
         // Add jitpack repository (added by react-native-spinkit)
         maven { url "https://jitpack.io" }
-        mavenLocal()
+        //mavenLocal()
+        mavenCentral()
         jcenter()
         google()
         maven {

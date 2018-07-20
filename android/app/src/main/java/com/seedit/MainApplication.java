@@ -2,10 +2,9 @@ package com.seedit;
 
 import android.app.Application;
 
-//import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.Crashlytics;
 import com.facebook.react.ReactApplication;
 import com.geektime.rnonesignalandroid.ReactNativeOneSignalPackage;
-import com.jamesisaac.rnbackgroundtask.BackgroundTaskPackage;
 import com.transistorsoft.rnbackgroundfetch.RNBackgroundFetchPackage;
 import com.brentvatne.react.ReactVideoPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -17,23 +16,23 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-//import com.facebook.CallbackManager;
-//import com.facebook.FacebookSdk;
-// import com.facebook.reactnative.androidsdk.FBSDKPackage;
-//import com.facebook.appevents.AppEventsLogger;
-//import com.facebook.react.modules.storage.ReactDatabaseSupplier;
-//import io.fabric.sdk.android.Fabric;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookSdk;
+/*// import com.facebook.reactnative.androidsdk.FBSDKPackage;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.react.modules.storage.ReactDatabaseSupplier;
+import io.fabric.sdk.android.Fabric;*/
 import java.util.Arrays;
 import java.util.List;
 
 public class MainApplication extends Application implements ReactApplication {
   
-  /*private static CallbackManager mCallbackManager = CallbackManager.Factory.create();
+ /* private static CallbackManager mCallbackManager = CallbackManager.Factory.create();
 
   protected static CallbackManager getCallbackManager() {
     return mCallbackManager;
-  }
-*/
+  }*/
+
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
     @Override
     public boolean getUseDeveloperSupport() {
@@ -45,7 +44,6 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
             new ReactNativeOneSignalPackage(),
-            new BackgroundTaskPackage(),
             new RNBackgroundFetchPackage(),
             new ReactVideoPackage(),
             new VectorIconsPackage(),
@@ -70,13 +68,13 @@ public class MainApplication extends Application implements ReactApplication {
    @Override
   public void onCreate() {
     super.onCreate();
-    //Fabric.with(this, new Crashlytics());
-    SoLoader.init(this, /* native exopackage */ false);
-    /*long size = 80L * 1024L * 1024L; // 50 MB 
-    com.facebook.react.modules.storage.ReactDatabaseSupplier.getInstance(getApplicationContext()).setMaximumSize(size);
-    FacebookSdk.sdkInitialize(getApplicationContext());
+//    Fabric.with(this, new Crashlytics());
+    SoLoader.init(getApplicationContext(), /* native exopackage */ false);
+    //long size = 80L * 1024L * 1024L; // 50 MB
+//    com.facebook.react.modules.storage.ReactDatabaseSupplier.getInstance(getApplicationContext()).setMaximumSize(size);
+//    FacebookSdk.sdkInitialize(getApplicationContext());
     // If you want to use AppEventsLogger to log events.
-    AppEventsLogger.activateApp(this);
-    BackgroundTaskPackage.useContext(this);*/
+    //AppEventsLogger.activateApp(this);
+   // BackgroundTaskPackage.useContext(this);
   }
 }

@@ -29,6 +29,10 @@ const imageStyles = StyleSheet.create({
     height: 24,
     width: 24,
   },
+  miniTh : {
+    height: 9,
+    width: 12,
+  },
   mini_thumb: {
     height: 25,
     width: 25,
@@ -69,6 +73,7 @@ const imageStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.transparent,
   },
+
   muiltiImageThumb: {
     height: 40,
     width: 40,
@@ -83,6 +88,10 @@ const imageStyles = StyleSheet.create({
   x_large_thumb: {
     height: 100,
     width: 100,
+  },
+  x_l_thumb: {
+    height: 100,
+    width: 180,
   },
 });
 

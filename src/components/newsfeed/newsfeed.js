@@ -18,17 +18,6 @@ import Toast from 'react-native-root-toast';
 import Accordion from 'react-native-collapsible/Accordion';
 import { View as NativeView } from 'react-native';
 
-var adresses = [
-  {
-    street: "1 Martin Place",
-      city: "Sydney",
-    country: "Australia"
-    },{
-    street: "1 Martin Street",
-      city: "Sydney",
-    country: "Australia"
-  }
-];
 
 var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
@@ -55,21 +44,6 @@ class NewsFeed extends React.PureComponent {
         position: Toast.positions.BOTTOM,
       });
     }
-
-    /*if (nextProps.userNewsFeedErrorStatus) {
-      Toast.show(nextProps.userNewsFeedErrorStatus, {
-        duration: Toast.durations.LONG,
-        position: Toast.positions.BOTTOM,
-      });
-    }
-
-    if (nextProps.userNewsFeedErrorStatus === 'jwt expired') {
-      Toast.show('Please login to get your newsFeed', {
-        duration: Toast.durations.LONG,
-        position: Toast.positions.BOTTOM,
-      });
-      this.props.navigation.navigate('Login');
-    }*/
   }
 
   goToCreatePost = () => {
@@ -78,8 +52,8 @@ class NewsFeed extends React.PureComponent {
 
   updateWaterToPost = (value) => {
     const body = {
-        postId: value._id
-      };
+      postId: value._id
+    };
     this.props.updateWaterPost(body);
   };
 
@@ -90,11 +64,73 @@ class NewsFeed extends React.PureComponent {
     this.setState({searchPosts: searchPosts});
   };
 
-  renderAdress = (value) => {
+  renderAdress = (searchPosts, i) => {
+     const {
+      user
+    } = this.props;
     return (
-      <View>
-        <Text className="black large t-left">{value.text}</Text>
-      </View>
+      <ScrollView>
+        <View class="p5">
+          <View className="f-column">
+            <View className="bg-transparent mt10 space-between">
+              <View className="f-row p5 mr20">
+                <View className="f-row f-both m20">
+                  <Image
+                    className="med_thumb m10"
+                    source={require('../images/avatars/Abbott.png')}
+                    resizeMode="cover"
+                  />
+                </View>
+                <View className="f-column j-start w-2-1 mt10">
+                  <Text className="black bold large t-left">{searchPosts.postedBy.userName}</Text>
+                  <View className="f-column">
+                    <Text className="black large t-left">{searchPosts.text}</Text>
+                    {this.state.user &&
+                      this.state.user.role === 'admin' && (
+                        <Image
+                          className="micro_thumb m5"
+                          source={require('../images/icons/delete.jpg')}
+                          resizeMode="cover"
+                        />
+                      )}
+                  </View>
+
+                  <View className="f-column">
+                    { 
+                      searchPosts.tags && searchPosts.tags.length > 0 &&
+                        searchPosts.tags.map(t => (
+                          <View className="f-row flex w-1-2 mr30">
+                            <Text className="lgBlue bold large t-left">{" "}#{t.tag}</Text>
+                          </View>
+                        ))
+                    }
+                    { searchPosts.images && searchPosts.images.length > 0 && searchPosts.images[0] !== 'image1.png' &&
+                        searchPosts.images.map(value => (
+                          <View className="f-row flex w-1-2 mr30">
+                            <Image
+                              className="x_l_thumb m5"
+                              source={{uri : value}}
+                              resizeMode="cover"
+                            />
+                          </View>
+                        ))
+                    }
+                  </View>  
+                </View>
+                <View className="f-row pull-right f-both m20">
+                   <Touchable className="p5" key={i} onPress={this.updateWaterToPost.bind(this, searchPosts)}>
+                    <Image
+                      className="normal_thumb m10"
+                      source={require('../images/icons/drop.jpg')}
+                      resizeMode="cover"
+                    />
+                  </Touchable>  
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </ScrollView>
     )
   }
 
@@ -135,70 +171,84 @@ class NewsFeed extends React.PureComponent {
             dataSource={ds.cloneWithRows(this.state.searchPosts)}
             renderRow={this.renderAdress} 
           />
-
-        <ScrollView>
+         {this.state.searchPosts.length === 0 &&
+           <ScrollView>
           <View class="p5">
-            <View className="f-column">
-              <View className="bg-transparent mt10 space-between">
-                { userNewsFeedRequestStatus === 'REQUESTING' 
-                  || guestUserNewsFeedRequestStatus === 'REQUESTING' &&
-                  <View className="p15 mt30">
-                    <Spinner large />
-                  </View> }
-                { userNewsFeedRequestStatus === 'SUCCESS' 
-                  || guestUserNewsFeedRequestStatus === 'SUCCESS' ||
-                  getAllNewsFeed && getAllNewsFeed.length > 0 ? (
-                  getAllNewsFeed.map((value, i) => (
-                    <View className="f-row p5 mr20">
-                      <View className="f-row f-both m20">
-                        <Image
-                          className="med_thumb m10"
-                          source={require('../images/avatars/Abbott.png')}
-                          resizeMode="cover"
-                        />
+          <View className="f-column">
+            <View className="bg-transparent mt10 space-between">
+              { userNewsFeedRequestStatus === 'REQUESTING' 
+                || guestUserNewsFeedRequestStatus === 'REQUESTING' &&
+                <View className="p15 mt30">
+                  <Spinner large />
+                </View> }
+              { userNewsFeedRequestStatus === 'SUCCESS' 
+                || guestUserNewsFeedRequestStatus === 'SUCCESS' ||
+                getAllNewsFeed && getAllNewsFeed.length > 0 ? (
+                getAllNewsFeed.map((value, i) => (
+                  <View className="f-row p5 mr20">
+                    <View className="f-row f-both m20">
+                      <Image
+                        className="med_thumb m10"
+                        source={require('../images/avatars/Abbott.png')}
+                        resizeMode="cover"
+                      />
+                    </View>
+                    <View className="f-column j-start w-2-1 mt10">
+                      <Text className="black bold large t-left">{value.postedBy.userName}</Text>
+                      <View className="f-column">
+                        <Text className="black large t-left">{value.text}</Text>
+                        {this.state.user &&
+                          this.state.user.role === 'admin' && (
+                            <Image
+                              className="micro_thumb m5"
+                              source={require('../images/icons/delete.jpg')}
+                              resizeMode="cover"
+                            />
+                          )}
                       </View>
-                      <View className="f-column j-start w-2-1 mt10">
-                        <Text className="black bold large t-left">{value.postedBy.userName}</Text>
-                        <View className="f-column">
-                          <Text className="black large t-left">{value.text}</Text>
-                          {this.state.user &&
-                            this.state.user.role === 'admin' && (
+
+                      <View className="f-column">
+                        <View className="f-row flex w-1-2 mr30">
+                          { value.tags && value.tags.length > 0 &&
+                            value.tags.map((v,i) => (
+                              <Text className="lgBlue bold large t-left">{" "}#{v.tag}</Text>
+                            ))
+                          }
+                        </View>
+                        <View className="f-row flex w-1-2 mr30">
+                          { value.images && value.images.length > 0 && value.images[0] !== 'image1.png' &&
+                            value.images.map(v => (
                               <Image
-                                className="micro_thumb m5"
-                                source={require('../images/icons/delete.jpg')}
+                                className="x_l_thumb m5"
+                                source={{uri : v}}
                                 resizeMode="cover"
                               />
-                            )}
-                        </View>
-                        <View className="f-row">
-                         { value.tags && value.tags.length > 0 &&
-                            value.tags.map(t => (
-                              <Text className="lgBlue bold large t-left">{" "}#{t.tag}</Text>
                             ))
                           }
                         </View>  
-                      </View>
-                      <View className="f-row pull-right f-both m20">
-                         <Touchable className="p5" key={i} onPress={this.updateWaterToPost.bind(this, value)}>
-                          <Image
-                            className="normal_thumb m10"
-                            source={require('../images/icons/drop.jpg')}
-                            resizeMode="cover"
-                          />
-                        </Touchable>  
-                      </View>
-                      <View className="dividerGrey" />
+                      </View>  
                     </View>
-                  ))  
-                ) : (
-                  null
-                )}
-                <View className="dividerGrey" />
-                <View className="dividerGrey" />
-              </View>
+                    <View className="f-row pull-right f-both m20">
+                       <Touchable className="p5" key={i} onPress={this.updateWaterToPost.bind(this, value)}>
+                        <Image
+                          className="normal_thumb m10"
+                          source={require('../images/icons/drop.jpg')}
+                          resizeMode="cover"
+                        />
+                      </Touchable>  
+                    </View>
+                  </View>
+                ))  
+              ) : (
+                <View className="p15 mt30">
+                  <Spinner large />
+                </View>
+              )}
             </View>
           </View>
-        </ScrollView>
+        </View>
+      </ScrollView>
+         }
         <Footer navigation={this.props.navigation} />
       </View>
     );

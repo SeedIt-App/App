@@ -42,14 +42,14 @@ class Profile extends React.PureComponent {
       });
       this.props.navigation.navigate('Login');
     }
-    else {
+    else if(nextProps.profileErrorStatus) {
       Toast.show(nextProps.profileErrorStatus, {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
       });
     }
 
-    if (nextProps.getPostsErrorStatus === 'jwt expired' 
+    else if (nextProps.getPostsErrorStatus === 'jwt expired' 
       || nextProps.getPostsErrorStatus === 'jwt malformed') {
       Toast.show('Please login to get your profile', {
         duration: Toast.durations.LONG,
@@ -57,14 +57,14 @@ class Profile extends React.PureComponent {
       });
       this.props.navigation.navigate('Login');
     }
-    else {
+    else if(nextProps.getPostsErrorStatus) {
       Toast.show(nextProps.getPostsErrorStatus, {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
       });
     }
 
-    if(nextProps.getPostsRequestStatus ==='SUCCESS'){
+    else if(nextProps.getPostsRequestStatus ==='SUCCESS'){
      if(nextProps.allPosts && nextProps.allPosts.length > 0){
         nextProps.allPosts.forEach(p => {
           if(p.waters.length > 0){
@@ -77,6 +77,9 @@ class Profile extends React.PureComponent {
           }
         });
       } 
+    }
+    else {
+      null
     }
   }
 
@@ -364,8 +367,8 @@ class Profile extends React.PureComponent {
             </View>
           </View>
           <View className="f-row mt10 p5">
-            <View className="f-row bg-header w-1-1 space-between">
-              <View className="mh10 p5">
+            <View className="f-row h50 bg-header w-1-1 space-between">
+              <View className="mh10 f-both p5">
                 <Touchable
                   style={{
                     backgroundColor: 'transparent',
@@ -382,7 +385,7 @@ class Profile extends React.PureComponent {
                   <Text className="white medium">Posted</Text>
                 </Touchable>
               </View>
-              <View className="mh10 p5">
+              <View className="mh10 f-both p5">
                 <Touchable
                   style={{
                     backgroundColor: 'transparent',
@@ -401,7 +404,7 @@ class Profile extends React.PureComponent {
                   <Text className="white medium">Liked</Text>
                 </Touchable>
               </View>
-              <View className="mh10 p5">
+              <View className="mh10 f-both p5">
                 <Touchable
                   style={{
                     backgroundColor: 'transparent',
@@ -420,7 +423,7 @@ class Profile extends React.PureComponent {
                   <Text className="white medium">Followers</Text>
                 </Touchable>
               </View>
-              <View className="mh10 p5">
+              <View className="mh10 f-both p5">
                 <Touchable
                   style={{
                     backgroundColor: 'transparent',

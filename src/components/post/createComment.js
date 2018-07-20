@@ -14,7 +14,9 @@ import { AuthActions, PostActions } from '../../actions';
 import { TextInput } from 'react-native';
 import Toast from 'react-native-root-toast';
 import ImagePicker from 'react-native-image-picker';
-import idx from 'idx';
+import ImageResizer from 'react-native-image-resizer';
+import RNFetchBlob from 'react-native-fetch-blob';
+import axios from 'axios';import idx from 'idx';
 
 class CreateComment extends React.PureComponent {
   constructor(props) {
@@ -33,12 +35,6 @@ class CreateComment extends React.PureComponent {
         position: Toast.positions.BOTTOM,
       });
     }
-    if (nextProps.addNewCommentToPostRequestStatus === "SUCCESS") {
-      Toast.show("Successfully added new comment on the post", {
-        duration: Toast.durations.LONG,
-        position: Toast.positions.BOTTOM,
-      });
-    }
   }
 
   ShowUserName = () => {
@@ -50,9 +46,15 @@ class CreateComment extends React.PureComponent {
       const body = {
         postId: this.state.currentPostData._id,
         text: this.state.message,
-        image: [],
+        images: [this.state.image]
       };
       this.props.addNewCommentToPost(body);
+        if (this.props.addNewCommentToPostRequestStatus === "SUCCESS") {
+        Toast.show("Comment added to the post", {
+          duration: Toast.durations.LONG,
+          position: Toast.positions.BOTTOM,
+        });
+      }
     } else {
       Toast.show('Please write the text for comment', {
         duration: Toast.durations.LONG,
@@ -61,55 +63,57 @@ class CreateComment extends React.PureComponent {
     }
   };
 
-  selectPhotoTapped() {
-    const options = {
-      quality: 1.0,
-      maxWidth: 500,
-      maxHeight: 500,
-      storageOptions: {
-        skipBackup: true,
-      },
-    };
-
-    ImagePicker.showImagePicker(options, response => {
-      // console.log('Response = ', response);
+  openPicker = () => {
+    ImagePicker.showImagePicker(response => {
       if (response.didCancel) {
-        console.log('User cancelled photo picker');
+        console.log('User cancelled image picker');
       } else if (response.error) {
         console.log('ImagePicker Error: ', response.error);
-      } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
       } else {
-        const source = { uri: response.uri };
-        this.uploadImages(response.uri);
+        ImageResizer.createResizedImage(response.uri, 100, 100, 'JPEG', 100, 0)
+          .then(({ uri, path }) => {
+            const source = { uri };
+            this.uploadProfileImage(source.uri);
+          })
+          .catch(err => {
+            console.log(err);
+            return Alert.alert(
+              'Unable to resize the photo',
+              'Check the console for full the error message',
+            );
+          });
       }
     });
-  }
+  };
 
-  uploadImages = imgPath => {
+  uploadProfileImage = imgPath => {
     const body = new FormData();
-    const ip_addr = URL.IMAGE_URL;
-    body.append('file', { uri: imgPath, name: 'photo.png', type: 'image/png' });
-    body.append('Content-Type', 'image/png');
-    fetch('https://seedit-api.herokuapp.com/' + 'file/upload', {
-      method: 'POST',
-      body,
-    })
-      .then(response => response.json())
-      .then(responseJson => {
-        if (responseJson.status === 'success') {
-          console.log(responseJson, 'responseJson');
-          const responseData = responseJson.upload.path;
-          const post_id = responseJson.upload.id;
-          this.setState({
-            image: ip_addr + responseData.split('/var/www/html/')[1],
-            img_Id: post_id,
+    body.append('file', { uri: imgPath });
+    const fileToUpload = imgPath;
+    const fileName = fileToUpload.split('/').pop();
+    axios
+      .get(`/s3?fileName=${
+        fileName
+      }&fileType='image/jpeg'`)
+      .then(response => {
+        const { signedRequest, url } = response.data;
+        console.log({ signedRequest, url, fileName });
+        RNFetchBlob.fetch(
+          'PUT',
+          signedRequest,
+          {
+            'Content-Type': 'image/jpeg',
+          },
+          RNFetchBlob.wrap(fileToUpload),
+        )
+          .then(response => {
+            const fileToUpload = url;
+            this.setState({ image: fileToUpload });
+          })
+          .catch(err => {
+            // error handling ..
+            console.log(err);
           });
-          // console.log(this.state.img_Id, 'this.state.image')
-        }
-      })
-      .catch(error => {
-        console.log(error, 'error');
       });
   };
 
@@ -184,6 +188,15 @@ class CreateComment extends React.PureComponent {
                     />
                   </View>
                 </View>
+                 <View className="f-center f-row">
+                  {this.state.image !=='' && (
+                    <Image
+                      className="x_large_thumb"
+                      source={{ uri : this.state.image}} 
+                      resizeMode="cover"
+                    />
+                  )}
+                </View>
               </View>
             </View>
           </View>
@@ -198,7 +211,7 @@ class CreateComment extends React.PureComponent {
                 <View className="f-row f-both m20">
                   <Touchable
                     className="p5"
-                    onPress={this.selectPhotoTapped.bind(this)}
+                    onPress={this.openPicker}
                   >
                     <Image
                       className="mini_thumb m10"
@@ -222,7 +235,6 @@ class CreateComment extends React.PureComponent {
 function mapStateToProps(state) {
   const token = state.auth.authToken;
   const { user } = state.auth;
-  console.log(user, '*******************');
   const { addNewCommentToPostRequestStatus, addNewCommentToPostErrorStatus } = state.post;
   return {
     token,

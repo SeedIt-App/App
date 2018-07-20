@@ -44,8 +44,8 @@ class EditProfile extends React.PureComponent {
   };
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.editProfileErrorStatus) {
-      Toast.show(this.props.editProfileErrorStatus, {
+    if (nextProps.editProfileErrorStatus) {
+      Toast.show(nextProps.editProfileErrorStatus, {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
       });

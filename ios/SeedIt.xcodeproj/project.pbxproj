@@ -485,7 +485,6 @@
 		80AC045B507F4852822570A0 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; name = "Roboto-Regular.ttf"; path = "../src/fonts/Roboto/Roboto-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		99FA62C3FE644B4BAE406654 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; name = "Roboto-Thin.ttf"; path = "../src/fonts/Roboto/Roboto-Thin.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		B337905922F54706835EDB24 /* Roboto-ThinItalic.ttf */ = {isa = PBXFileReference; name = "Roboto-ThinItalic.ttf"; path = "../src/fonts/Roboto/Roboto-ThinItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		4A555B48CCC940038C6E19B0 /* OAuthManager.xcodeproj */ = {isa = PBXFileReference; name = "OAuthManager.xcodeproj"; path = "../node_modules/react-native-oauth/ios/OAuthManager.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		96C164E9C72C41538231A7E1 /* libOAuthManager.a */ = {isa = PBXFileReference; name = "libOAuthManager.a"; path = "libOAuthManager.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
@@ -747,7 +746,6 @@
 				B919969AAFEF4EDF91CDA681 /* RCTOneSignal.xcodeproj */,
 				08D33C01B4FC49CC98A55D9E /* RNVectorIcons.xcodeproj */,
 				908682D5B3FF435FA1598CEE /* RCTVideo.xcodeproj */,
-				4A555B48CCC940038C6E19B0 /* OAuthManager.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1596,7 +1594,6 @@
 					"$(SRCROOT)/../node_modules/react-native-onesignal/ios/RCTOneSignal/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-video/ios",
-					"$(SRCROOT)/../node_modules/react-native-oauth/ios/OAuthManager/**",
 				);
 				INFOPLIST_FILE = SeedItTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1639,7 +1636,6 @@
 					"$(SRCROOT)/../node_modules/react-native-onesignal/ios/RCTOneSignal/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-video/ios",
-					"$(SRCROOT)/../node_modules/react-native-oauth/ios/OAuthManager/**",
 				);
 				INFOPLIST_FILE = SeedItTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1683,7 +1679,6 @@
 					"$(SRCROOT)/../node_modules/react-native-onesignal/ios/RCTOneSignal/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-video/ios",
-					"$(SRCROOT)/../node_modules/react-native-oauth/ios/OAuthManager/**",
 				);
 				INFOPLIST_FILE = SeedIt/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1713,7 +1708,6 @@
 					"$(SRCROOT)/../node_modules/react-native-onesignal/ios/RCTOneSignal/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-video/ios",
-					"$(SRCROOT)/../node_modules/react-native-oauth/ios/OAuthManager/**",
 				);
 				INFOPLIST_FILE = SeedIt/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1750,7 +1744,6 @@
 					"$(SRCROOT)/../node_modules/react-native-onesignal/ios/RCTOneSignal/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-video/ios",
-					"$(SRCROOT)/../node_modules/react-native-oauth/ios/OAuthManager/**",
 				);
 				INFOPLIST_FILE = "SeedIt-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1802,7 +1795,6 @@
 					"$(SRCROOT)/../node_modules/react-native-onesignal/ios/RCTOneSignal/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-video/ios",
-					"$(SRCROOT)/../node_modules/react-native-oauth/ios/OAuthManager/**",
 				);
 				INFOPLIST_FILE = "SeedIt-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

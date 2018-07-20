@@ -33,19 +33,6 @@ class PublicProfile extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-   /* if (nextProps.followAnotherUserErrorStatus === 'jwt expired' || 'jwt malformed') {
-      Toast.show('Please login to get your profile', {
-        duration: Toast.durations.LONG,
-        position: Toast.positions.BOTTOM,
-      });
-      this.props.navigation.navigate('Login');
-    }
-    else{
-      Toast.show(nextProps.followAnotherUserErrorStatus, {
-        duration: Toast.durations.LONG,
-        position: Toast.positions.BOTTOM,
-      }); 
-    }*/
 
     if (nextProps.followAnotherUserErrorStatus) {
       Toast.show(nextProps.followAnotherUserErrorStatus, {

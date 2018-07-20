@@ -7,7 +7,7 @@ import {
   Header,
   Image,
   Footer,
-  ScrollView
+  ScrollView,Spinner
 } from "../common";
 import { AuthActions, PostActions } from "../../actions";
 import { TextInput } from "react-native";
@@ -42,12 +42,15 @@ class Redwood extends React.PureComponent {
       });
       this.props.navigation.navigate("Login");
     }
-    else {
+    else if(nextProps.getPostsErrorStatus){
       Toast.show(nextProps.getPostsErrorStatus, {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM
       });
-    } 
+    }   
+    else {
+      null
+    }
   }
 
   goToCreatePost = () => {
@@ -97,12 +100,18 @@ class Redwood extends React.PureComponent {
                 underlayColor="transparent"
               />
             )}
+            { getPostsRequestStatus === 'REQUESTING' &&
+              <View className="p15 mt30">
+                <Spinner large />
+              </View> 
+            }
             {getPostsRequestStatus === 'SUCCESS' &&
               allPosts.length === 0 && (
               <View className="flex f-both p10">
                 <Text className="black bold">There are no posts</Text>
               </View>
             )}
+
         </View>
       );
     } else if (this.state.activeFlag === "tree") {
@@ -137,12 +146,24 @@ class Redwood extends React.PureComponent {
           <View className="f-column">
             <Text className="black large t-left">{section.text}</Text>
           </View>
-          <View className="f-row ">
-            { section.tags && section.tags.length > 0 &&
-              section.tags.map(t => (
-                <Text className="lgBlue bold large t-left">{" "}#{t.tag}</Text>
-              ))
-            }
+          <View className="f-column">
+            <View className="f-row flexWrap">
+              { section.tags && section.tags.length > 0 &&
+                section.tags.map((value,i) => (
+                  <Text className="lgBlue bold large t-left">{" "}#{value.tag}</Text>
+                ))
+              }
+            </View>
+          </View>
+          <View className="f-row flex w-1-2">
+            { section.images && section.images.length > 0 && section.images[0] !== 'image1.png' &&
+            section.images.map(v => (
+              <Image
+                className="x_l_thumb m5" 
+                source={{uri : section.images[0]}}
+                resizeMode="cover"
+              />
+            ))}
           </View>  
             {this.state.user &&
               this.state.user.role === 'admin' && (
@@ -169,11 +190,11 @@ class Redwood extends React.PureComponent {
 
  renderContent = (section, i) => (
     <View className="f-row p5 mr20" >
-      <View className=" f-row space-between w-1-1">
+      <View className=" f-row f-both space-between w-1-1">
         <View className="f-row" >
           <View>
             <Touchable onPress={this.modelVisibleToggle}>
-              <View>
+              <View className="mb5">
                 <Image
                   className="micro1_thumb m10"
                   source={require('../images/icons/share.png')}
@@ -204,22 +225,26 @@ class Redwood extends React.PureComponent {
           
           </View>
         </View>
-        <View className="f-row">
-          <Touchable className="p5" key={i} onPress={this.goToAddComment.bind(this, section)}>
-            <Image
-              className="micro m10"
-              source={require('../images/icons/cm.png')}
-              resizeMode="cover"
-            />
-          </Touchable>
+        <View className="f-row mb5">
+          <View slassName="mb10">
+            <Touchable className="p5" key={i} onPress={this.goToAddComment.bind(this, section)}>
+              <Image
+                className="micro m10"
+                source={require('../images/icons/cm.png')}
+                resizeMode="cover"
+              />
+            </Touchable>
+          </View>
+          <View className="marginTop10">  
             { section.comments && section.comments.length > 0 &&
               (<Text className="mt20 darkgrey bold small t-center"> ({section.comments.length} )</Text>)
             }
-        </View>
+          </View>
+        </View>  
         <View className="marginTop15">
           <Touchable className="p5" key={i} onPress={this.updateWaterToPost.bind(this, section)}>
             <Image
-              className="normal_thumb m10 mb20"
+              className="normal_thumb m10"
               source={require('../images/icons/drop_grey.png')}
               resizeMode="cover"
             />
@@ -319,7 +344,7 @@ class Redwood extends React.PureComponent {
                         <View>
                           <Image
                             className="micro1_thumb m5"
-                            source={require("../images/icons/Redwood_Tree.png")}
+                            source={require("../images/icons/rt.png")}
                             resizeMode="cover"
                           />
                           <Text className="black medium">Tree</Text>

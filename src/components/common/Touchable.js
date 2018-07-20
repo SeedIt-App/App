@@ -6,7 +6,7 @@ import Styles from "./Styles";
 
 const touchableStyles = StyleSheet.create({
   touchable: {
-    minHeight: 44,
+    minHeight: 22,
     minWidth: 44,
     alignItems: "center",
     justifyContent: "center"

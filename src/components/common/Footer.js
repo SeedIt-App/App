@@ -5,9 +5,6 @@ import { AuthActions, UserActions } from '../../actions';
 import { AsyncStorage } from 'react-native';
 
 class Footer extends React.PureComponent {
-  /* componentDidMount() {
-    this.props.profile();
-  } */
 
   goToLogin = () => this.props.navigation.navigate('Login');
   goToProfile = () => this.props.navigation.navigate('Profile');
@@ -51,18 +48,6 @@ class Footer extends React.PureComponent {
               <Text className="text">Profile</Text>
             </View>
           }
-          <View className="p5">
-                <Touchable onPress={this.goToLogin}>
-                  <View className="f-row f-both m20">
-                  <Image
-                    className="mini_thumb m10"
-                    source={require('../images/icons/Login.png')}
-                    resizeMode="cover"
-                    />
-                  </View>
-                </Touchable>
-                <Text className="text">Login</Text>
-              </View>
             
           <View className="p5">
             <Touchable onPress={this.goToTags}>
