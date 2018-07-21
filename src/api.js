@@ -73,7 +73,7 @@ export function DELETE(location, body) {
 
 axios.defaults.baseURL = API_BASE_URL;
 
-export function setAuthHeaders(auth) {
-  console.log(auth, 'authToken');
-  axios.defaults.headers.Authorization = `Bearer ${auth.authToken}`;
+export function setAuthHeaders(authToken) {
+  console.log(authToken, 'authToken');
+  axios.defaults.headers.common.Authorization = `Bearer ${authToken}`;
 }

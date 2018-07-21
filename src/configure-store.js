@@ -3,19 +3,23 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import reducer from './reducers';
 import sagas from './sagas';
-import { AuthActions } from './actions';
+import { AuthActions, PostActions } from './actions';
 import { setAuthHeaders } from './api';
 
 const localStorageMiddleware = ({ getState }) => next => action => {
   const result = next(action);
-  // if (action.type === AuthActions.SET_AUTH_USER) {
-  AsyncStorage.setItem('authState', JSON.stringify(getState().auth));
-  setAuthHeaders(getState().auth);
-  // }
-  if (action.type === AuthActions.LOGOUT) {
+  if (action.type === AuthActions.SET_AUTH_USER ) {
+    AsyncStorage.setItem('authState', JSON.stringify(getState().auth));
+    setAuthHeaders(getState().auth.authToken);
+  }
+ /* else{
+    AsyncStorage.setItem('authState', JSON.stringify(getState().auth));
+    setAuthHeaders(getState().auth.authToken);
+  }*/
+ /* if (action.type === AuthActions.LOGOUT) {
     AsyncStorage.removeItem('authState');
     setAuthHeaders('');
-  }
+  }*/
   return result;
 };
 
@@ -30,7 +34,7 @@ const sagaMiddleware = createSagaMiddleware();
 
 export default function configureStore(initialState = {}) {
   if (initialState && initialState.auth) {
-    setAuthHeaders(initialState.auth);
+    setAuthHeaders(initialState.auth.authToken);
   }
   const middleware = [
     sagaMiddleware,

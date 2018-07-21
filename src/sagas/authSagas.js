@@ -12,7 +12,7 @@ function* doSignUp(action) {
   } catch (error) {
     let msgError = error;
     if (error.data) {
-      msgError = error.data.message;
+      msgError = error.data;
     }
     yield put(AuthActions.signupFailure(msgError));
   }

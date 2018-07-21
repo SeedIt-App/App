@@ -51,10 +51,13 @@ class SignUp extends React.PureComponent {
       confirmPwd: '',
     });
   }
-
   componentWillReceiveProps(nextProps) {
-    if (nextProps.signupErrorStatus) {
-      Toast.show(nextProps.signupErrorStatus, {
+    let message = null
+    if (nextProps.signupErrorStatus && nextProps.signupErrorStatus.message  === 'Validation Error') {
+      nextProps.signupErrorStatus.errors.forEach(function(e) {
+        message = e.field.split('.$').pop();
+      })
+      Toast.show(message, {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
       });

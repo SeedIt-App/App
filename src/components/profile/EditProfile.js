@@ -12,13 +12,14 @@ import {
   ScrollView,
   BackgroundImage,
 } from '../common';
-import { TextInput } from 'react-native';
+import { TextInput , AsyncStorage} from 'react-native';
 import { UserActions } from '../../actions';
 import Toast from 'react-native-root-toast';
 import idx from 'idx';
 import ImagePicker from 'react-native-image-picker';
 import ImageResizer from 'react-native-image-resizer';
-// import axios from 'axios';
+import RNFetchBlob from 'react-native-fetch-blob';
+import axios from 'axios';
 
 class EditProfile extends React.PureComponent {
   constructor(props) {
@@ -35,7 +36,9 @@ class EditProfile extends React.PureComponent {
       fullName: '',
       country: '',
       fullAddress: '',
-      profileImageUrl: '',
+      image: '',
+      flag : false,
+      goggleData : null
     };
   }
 
@@ -44,7 +47,7 @@ class EditProfile extends React.PureComponent {
   };
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.editProfileErrorStatus) {
+    if (nextProps.editProfileErrorStatus === 'FAILED') {
       Toast.show(nextProps.editProfileErrorStatus, {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
@@ -59,44 +62,139 @@ class EditProfile extends React.PureComponent {
   }
 
   componentDidMount() {
-    if (this.props.luser && this.props.luser.address && (this.props.luser.address.city || this.props.luser.address.state)) {
+
+    AsyncStorage.getItem("res").then((value) => {
+      let data = JSON.parse(value);
+      this.setState({goggleData : data.user})
+    }).done();
+
+    if(this.state.goggleData){
+      this.setState({flag : true})
+    }
+
+    if (
+      this.props.luser &&
+      this.props.luser.address &&
+      (this.props.luser.address.city || this.props.luser.address.state)
+    ) {
       this.setState({
-        fullAddress:(this.props.luser.address.city +' ' + this.props.luser.address.state) || ''
+        fullAddress:
+          `${this.props.luser.address.city
+          } ${
+            this.props.luser.address.state}` || '',
       });
     }
     if (this.props.luser) {
       this.setState({
-        userName: this.props.luser.userName || '',
-        country: this.props.luser.address && this.props.luser.address.country || '',
+        userName: this.props.luser.userName || (this.state.goggleData && this.state.goggleData.given_name) || '',
+        country:
+          (this.props.luser.address && this.props.luser.address.country) || '',
         bio: this.props.luser.bio || '',
         badges: this.props.luser.badges || [],
-        fullName:(this.props.luser.firstName  + ' ' + this.props.luser.lastName) || '',
+        fullName:
+          `${this.props.luser.firstName || (this.state.goggleData && this.state.goggleData.given_name) } 
+          ${this.props.luser.lastName || (this.state.goggleData && this.state.goggleData.family_name)}` || '',
       });
     }
-  }
-  
-  editProfile = () => {
-    const nameArr = this.state.fullName;
-    const addressArr = this.state.fullAddress;
-    
-    let firstName = nameArr.split(' ').slice(0, -1).join(' ');
-    let lastName = nameArr.split(' ').slice(-1).join(' ');
-    let city = addressArr.split(' ').slice(0, -1).join(' ');
-    let states = addressArr.split(' ').slice(-1).join(' ');
 
-    const values = {
-      id : this.props.luser._id,
-      firstName: firstName || this.props.luser.firstName,
-      lastName: lastName || this.props.luser.lastName,
-      userName: this.state.userName || this.props.luser.userName,
-      bio: this.state.bio  || this.props.luser.bio,
-      address: {
-        city : city,
-        state : states,
-        country: this.state.country
+  }
+
+  editProfile = () => {
+
+    if(this.state.flag){
+       const nameArr = this.state.fullName;
+      const addressArr = this.state.fullAddress;
+
+      const firstName = nameArr
+        .split(' ')
+        .slice(0, -1)
+        .join(' ');
+      const lastName = nameArr
+        .split(' ')
+        .slice(-1)
+        .join(' ');
+      const city = addressArr
+        .split(' ')
+        .slice(0, -1)
+        .join(' ');
+      const states = addressArr
+        .split(' ')
+        .slice(-1)
+        .join(' ');
+
+      const values = {
+        id: this.props.luser._id,
+        firstName: firstName || this.props.luser.firstName,
+        lastName: lastName || this.props.luser.lastName,
+        userName: this.state.userName || this.props.luser.userName,
+        bio: this.state.bio || this.props.luser.bio,
+        address: {
+          city,
+          state: states,
+          country: this.state.country,
+        },
+        picture : this.state.image
+      };
+      this.props.editProfile(values);
+    }
+    else{
+      Toast.show('Sorry!! You can not updated your profile', {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM,
+      });
+    }
+  };
+
+  openPicker = () => {
+    ImagePicker.showImagePicker(response => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else {
+        ImageResizer.createResizedImage(response.uri, 100, 100, 'JPEG', 100, 0)
+          .then(({ uri, path }) => {
+            const source = { uri };
+            this.uploadProfileImage(source.uri);
+          })
+          .catch(err => {
+            console.log(err);
+            return Alert.alert(
+              'Unable to resize the photo',
+              'Check the console for full the error message',
+            );
+          });
       }
-    };
-    this.props.editProfile(values);
+    });
+  };
+
+  uploadProfileImage = imgPath => {
+    const body = new FormData();
+    body.append('file', { uri: imgPath });
+    const fileToUpload = imgPath;
+    const fileName = fileToUpload.split('/').pop();
+    axios
+      .get(`/s3?fileName=${fileName}&fileType='image/jpeg'`)
+      .then(response => {
+        const { signedRequest, url } = response.data;
+        console.log({ signedRequest, url, fileName });
+        RNFetchBlob.fetch(
+          'PUT',
+          signedRequest,
+          {
+            'Content-Type': 'image/jpeg',
+          },
+          RNFetchBlob.wrap(fileToUpload),
+        )
+          .then(response => {
+            const fileToUpload = url;
+            this.setState({ image: fileToUpload });
+          })
+          .catch(err => {
+            // error handling ..
+            console.log(err);
+          });
+      });
   };
 
   render() {
@@ -117,19 +215,19 @@ class EditProfile extends React.PureComponent {
           <ScrollView>
             <View className="f-column p5">
               <View className="f-center mt15">
-                <Touchable className=" mb20">
-                  {this.state.image ? (
+                <Touchable className=" mb20" onPress={this.openPicker}>
+                  { this.state.image ||( luser && luser.picture) || ( this.state.goggleData && this.state.goggleData.picture) ? (
                     <Image
                       className="big_thumb"
-                      source={{ uri: this.state.image }}
+                      source={{ uri: ( (this.state.image)  || (luser && luser.picture) || (this.state.goggleData && this.state.goggleData.picture) )}}
                       resizeMode="stretch"
                     />
                   ) : (
-                    <Image
-                      className="big_thumb"
-                      source={require('../images/avatars/Abbott.png')}
-                      resizeMode="stretch"
-                    />
+                      <Image
+                        className="big_thumb"
+                        source={require('../images/icons/Login_Black.png')}
+                        resizeMode="stretch"
+                      />
                   )}
                 </Touchable>
               </View>
@@ -138,7 +236,7 @@ class EditProfile extends React.PureComponent {
                   <Text className="blue medium m10 bold ">Name :</Text>
                   <TextInput
                     style={{ color: 'grey', fontSize: 16 }}
-                    value={this.state.fullName}
+                    value={this.state.fullName || (this.state.goggleData && this.state.goggleData.given_name)}
                     autoCapitalize="none"
                     underlineColorAndroid="transparent"
                     onChangeText={fullName => this.setState({ fullName })}
@@ -148,7 +246,7 @@ class EditProfile extends React.PureComponent {
                   <Text className="blue medium m10 bold ">Username :</Text>
                   <TextInput
                     style={{ color: 'grey', fontSize: 16 }}
-                    value={this.state.userName}
+                    value={this.state.userName || (this.state.goggleData && this.state.goggleData.family_name)}
                     autoCapitalize="none"
                     underlineColorAndroid="transparent"
                     onChangeText={userName => this.setState({ userName })}
@@ -165,7 +263,7 @@ class EditProfile extends React.PureComponent {
                   />
                 </View>
                 <View className="bgWhite f-row w-2-1 editField j-start m5">
-                  <Text className="blue medium m10 bold ">City,State :</Text>
+                  <Text className="blue medium m10 bold ">City, State :</Text>
                   <TextInput
                     style={{ color: 'grey', fontSize: 16 }}
                     value={this.state.fullAddress}

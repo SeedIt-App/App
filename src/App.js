@@ -118,13 +118,17 @@ class App extends React.PureComponent {
   }
 
   componentWillMount() {
-    AsyncStorage.multiGet(['authState'], (error, localState) => {
+    AsyncStorage.multiGet(['authState', 'otpState'], (error, localState) => {
       let store = null;
       if (!error && localState) {
         const auth = JSON.parse(localState[0][1]);
+        const otp = JSON.parse(localState[1][1]);
         const initialState = {};
         if (auth) {
           initialState.auth = auth;
+        }
+        if (otp) {
+          initialState.otp = otp;
         }
         store = configureStore(initialState);
       } else {
@@ -134,6 +138,29 @@ class App extends React.PureComponent {
     });
   }
 
+
+  /*componentWillMount() {
+    AsyncStorage.getItem('authState', (error, authState) => {
+      let store = null;
+      if (!error && authState) {
+        store = configureStore({ auth: JSON.parse(authState) })
+      } else {
+        store = configureStore();
+      }
+      this.setState({ store });
+    });
+    AsyncStorage.getItem('authState', (error, authState) => {
+      let store = null;
+      let persistor = null;
+      if (!error && authState) {
+        ({ store, persistor } = configureStore({ auth: JSON.parse(authState) }));
+      } else {
+        ({ store, persistor } = configureStore());
+      }
+      this.setState({ store, persistor });
+    });
+  }
+*/
   render() {
     return (
       <View className="screen app-container">

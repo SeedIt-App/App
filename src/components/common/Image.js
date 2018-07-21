@@ -17,7 +17,7 @@ const imageStyles = StyleSheet.create({
     width: 10,
     backgroundColor: Colors.white,
   },
-  sm_thumb : {
+  sm_thumb: {
     height: 10,
     width: 10,
   },
@@ -29,7 +29,7 @@ const imageStyles = StyleSheet.create({
     height: 24,
     width: 24,
   },
-  miniTh : {
+  miniTh: {
     height: 9,
     width: 12,
   },
@@ -53,8 +53,6 @@ const imageStyles = StyleSheet.create({
     height: 45,
     width: 45,
     borderRadius: 45 / 2,
-    borderWidth: 1,
-    borderColor: Colors.blue,
     padding: 20,
     alignSelf: 'center',
     backgroundColor: 'white',

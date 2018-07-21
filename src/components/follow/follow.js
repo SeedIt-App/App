@@ -12,12 +12,12 @@ import {
   Spinner,
 } from '../common';
 import { AuthActions, FollowActions, PostActions } from '../../actions';
-import { TextInput } from 'react-native';
+import { TextInput,AsyncStorage } from 'react-native';
 import Toast from 'react-native-root-toast';
 import Accordion from 'react-native-collapsible/Accordion';
 import { View as NativeView } from 'react-native';
 import ModalSelector from 'react-native-modal-selector';
-import Modal from "react-native-modal";
+import Modal from 'react-native-modal';
 
 class Follow extends React.PureComponent {
   constructor(props) {
@@ -25,38 +25,51 @@ class Follow extends React.PureComponent {
     this.state = {
       user: this.props.user,
       modalVisible: false,
+      goggleData : null
     };
+    
+    AsyncStorage.getItem("res").then((value) => {
+      if(value){
+        let data = JSON.parse(value);
+        this.setState({goggleData : data.user})
+        console.log(data)
+      }
+    }).done();
   }
 
   componentDidMount() {
-    //this.props.getAllFollowers();
     this.props.getPosts();
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.getPostsErrorStatus === "jwt expired" || nextProps.getPostsErrorStatus === "jwt malformed") {
-      Toast.show("Please login to get your followed posts", {
-        duration: Toast.durations.LONG,
-        position: Toast.positions.BOTTOM
-      });
-      this.props.navigation.navigate("Login");
+    if(this.state.goggleData === null){
+      if (nextProps.token == null){
+        if(nextProps.getPostsErrorStatus === 'jwt expired'
+        || nextProps.getPostsErrorStatus === 'jwt malformed'){
+        Toast.show('Please login', {
+          duration: Toast.durations.LONG,
+          position: Toast.positions.BOTTOM,
+        });
+        this.props.navigation.navigate('Login');
+      } 
     }
-    if(nextProps.getPostsErrorStatus){
-      Toast.show(nextProps.getPostsErrorStatus, {
-        duration: Toast.durations.LONG,
-        position: Toast.positions.BOTTOM
-      });
-    }
-   if(nextProps.updateWaterPostRequestStatus ==='SUCCESS'){
+    }  
+    if (nextProps.getPostsErrorStatus === 'FAILED') {
+        Toast.show(nextProps.getPostsErrorStatus, {
+          duration: Toast.durations.LONG,
+          position: Toast.positions.BOTTOM,
+        });
+      }
+    if (nextProps.updateWaterPostRequestStatus === 'SUCCESS') {
       Toast.show(nextProps.updateWaterToPost, {
         duration: Toast.durations.LONG,
-        position: Toast.positions.BOTTOM
+        position: Toast.positions.BOTTOM,
       });
     }
-    if(nextProps.updateWaterPostErrorStatus){
+    if (nextProps.updateWaterPostErrorStatus === 'FAILED') {
       Toast.show(nextProps.updateWaterPostErrorStatus, {
         duration: Toast.durations.LONG,
-        position: Toast.positions.BOTTOM
+        position: Toast.positions.BOTTOM,
       });
     }
   }
@@ -65,17 +78,17 @@ class Follow extends React.PureComponent {
     this.props.navigation.navigate('CreatePost');
   };
 
-  goToAddComment = (section) => {
-    console.log(section)
+  goToAddComment = section => {
+    console.log(section);
     this.props.navigation.navigate('CreateComment', {
-      postData: section
+      postData: section,
     });
   };
 
-  updateWaterToPost = (section) => {
+  updateWaterToPost = section => {
     const body = {
-        postId: section._id
-      };
+      postId: section._id,
+    };
     this.props.updateWaterPost(body);
   };
 
@@ -83,57 +96,75 @@ class Follow extends React.PureComponent {
     this.setState({ modalVisible: !this.state.modalVisible });
   };
 
-  renderHeader = (section , i) => (
+  renderHeader = (section, i) => (
     <NativeView>
       <View className="f-row p5 mr20">
         <View className="f-row f-both m20">
-          <Image
-            className="med_thumb m10"
-            source={require('../images/avatars/Abbott.png')}
-            resizeMode="cover"
-          />
+          {section.postedBy.picture ? 
+            (<Image
+              className="med_thumb m10"
+              source={{uri : section.postedBy.picture}}
+              resizeMode="cover"
+            />)
+            : (<Image
+              className="med_thumb m10"
+              source={require('../images/icons/Login_Black.png')}
+              resizeMode="cover"
+            />)
+          }
         </View>
         <View className="f-column j-start mt10 w-2-1">
-          <Text className="black bold large t-left ">{section.postedBy.userName}</Text>
+          <Text className="black bold large t-left ">
+            {section.postedBy.userName}
+          </Text>
           <View className="f-column">
             <Text className="black large t-left">{section.text}</Text>
           </View>
-           <View className="f-column">
+          <View className="f-column">
             <View className="f-row flexWrap">
-              { section.tags && section.tags.length > 0 &&
-                section.tags.map((value,i) => (
-                  <Text className="lgBlue bold large t-left">{" "}#{value.tag}</Text>
-                ))
-              }
+              {section.tags &&
+                section.tags.length > 0 &&
+                section.tags.map((value, i) => (
+                  <Text className="lgBlue bold large t-left">
+                    {' '}
+                    #{value.tag}
+                  </Text>
+                ))}
             </View>
           </View>
           <View className="f-row flex w-1-2">
-            { section.images && section.images.length > 0 && section.images[0] !== 'image1.png' &&
-            section.images.map(v => (
-              <Image
-                className="x_l_thumb m5" 
-                source={{uri : section.images[0]}}
-                resizeMode="cover"
-              />
-            ))}
-          </View>
-            {this.state.user &&
-              this.state.user.role === 'admin' && (
+            {section.images &&
+              section.images.length > 0 &&
+              section.images[0] !== 'image1.png' &&
+              section.images.map(v => (
                 <Image
-                  className="micro_thumb m5"
-                  source={require('../images/icons/delete.jpg')}
+                  className="x_l_thumb m5"
+                  source={{ uri: section.images[0] }}
                   resizeMode="cover"
                 />
+              ))}
+          </View>
+          {this.state.user &&
+            this.state.user.role === 'admin' && (
+              <Image
+                className="micro_thumb m5"
+                source={require('../images/icons/delete.jpg')}
+                resizeMode="cover"
+              />
             )}
         </View>
         <View className="f-row pull-right f-both m20">
-          <Touchable className="p5" key={i} onPress={this.updateWaterToPost.bind(this, section)}>
+          <Touchable
+            className="p5"
+            key={i}
+            onPress={this.updateWaterToPost.bind(this, section)}
+          >
             <Image
               className="normal_thumb m10"
               source={require('../images/icons/drop.jpg')}
               resizeMode="cover"
             />
-          </Touchable>  
+          </Touchable>
         </View>
         <View className="dividerGrey" />
       </View>
@@ -141,9 +172,9 @@ class Follow extends React.PureComponent {
   );
 
   renderContent = (section, i) => (
-    <View className="f-row p5 mr20" >
+    <View className="f-row p5 mr20">
       <View className=" f-row f-both space-between w-1-1">
-        <View className="f-row" >
+        <View className="f-row">
           <View>
             <Touchable onPress={this.modelVisibleToggle}>
               <View className="mb5">
@@ -152,34 +183,48 @@ class Follow extends React.PureComponent {
                   source={require('../images/icons/share.png')}
                   resizeMode="cover"
                 />
-                <Modal isVisible={this.state.modalVisible}
-                  backdropColor={"grey"}
-                  backdropOpacity={.1}>
+                <Modal
+                  isVisible={this.state.modalVisible}
+                  backdropColor="grey"
+                  backdropOpacity={0.1}
+                >
                   <View className="overlay f-column f-both">
                     <View className=" f-row f-both m10">
-                      <Text className="lgBlue bold large_sm t-center">Share on Facebook</Text>
+                      <Text className="lgBlue bold large_sm t-center">
+                        Share on Facebook
+                      </Text>
                     </View>
                     <View className="dividerGrey" />
                     <View className=" f-row f-both m10">
-                      <Text className="lgBlue bold large_sm t-center">Share on Twitter</Text>
-                    </View>  
+                      <Text className="lgBlue bold large_sm t-center">
+                        Share on Twitter
+                      </Text>
+                    </View>
                   </View>
                   <View className="overlayCancel">
                     <View className="wh-1-1 f-row f-both m10">
-                      <Touchable className="p5" onPress={this.modelVisibleToggle}>
-                        <Text className="lgBlue bold large_sm t-center">Cancel</Text>
+                      <Touchable
+                        className="p5"
+                        onPress={this.modelVisibleToggle}
+                      >
+                        <Text className="lgBlue bold large_sm t-center">
+                          Cancel
+                        </Text>
                       </Touchable>
-                    </View>  
+                    </View>
                   </View>
                 </Modal>
               </View>
             </Touchable>
-          
           </View>
         </View>
         <View className="f-row mb5">
           <View slassName="mb10">
-            <Touchable className="p5" key={i} onPress={this.goToAddComment.bind(this, section)}>
+            <Touchable
+              className="p5"
+              key={i}
+              onPress={this.goToAddComment.bind(this, section)}
+            >
               <Image
                 className="micro m10"
                 source={require('../images/icons/cm.png')}
@@ -187,14 +232,22 @@ class Follow extends React.PureComponent {
               />
             </Touchable>
           </View>
-          <View className="marginTop10">  
-            { section.comments && section.comments.length > 0 &&
-              (<Text className="mt20 darkgrey bold small t-center"> ({section.comments.length} )</Text>)
-            }
+          <View className="marginTop10">
+            {section.comments &&
+              section.comments.length > 0 && (
+                <Text className="mt20 darkgrey bold small t-center">
+                  {' '}
+                  ({section.comments.length} )
+                </Text>
+              )}
           </View>
-        </View>  
+        </View>
         <View className="marginTop15">
-          <Touchable className="p5" key={i} onPress={this.updateWaterToPost.bind(this, section)}>
+          <Touchable
+            className="p5"
+            key={i}
+            onPress={this.updateWaterToPost.bind(this, section)}
+          >
             <Image
               className="normal_thumb m10"
               source={require('../images/icons/drop_grey.png')}
@@ -238,13 +291,13 @@ class Follow extends React.PureComponent {
                       underlayColor="transparent"
                     />
                   )}
-                  { getPostsRequestStatus === 'REQUESTING' &&
-                    <View className="p15 mt30">
-                      <Spinner large />
-                    </View> 
-                  }
-                  {getPostsRequestStatus === 'SUCCESS' &&
-                    allPosts.length === 0 && (
+                {getPostsRequestStatus === 'REQUESTING' && (
+                  <View className="p15 mt30">
+                    <Spinner large />
+                  </View>
+                )}
+                {getPostsRequestStatus === 'SUCCESS' &&
+                  allPosts.length === 0 && (
                     <View className="flex f-both p10">
                       <Text className="black bold">There are no posts</Text>
                     </View>
@@ -287,7 +340,7 @@ function mapStateToProps(state) {
     getPostsErrorStatus,
     updateWaterPostRequestStatus,
     updateWaterPostErrorStatus,
-    updateWaterToPost
+    updateWaterToPost,
   };
 }
 export default connect(mapStateToProps, {

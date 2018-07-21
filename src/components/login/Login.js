@@ -171,14 +171,17 @@ class Login extends React.PureComponent {
                       <Text className="normal white">Forgot Password ?</Text>
                     </Touchable>
                 </View>
-                <View className="f-center  mt20 mv20">
+                <View className="f-center mt20 mv20">
                   <Touchable className="submitField m20" onPress={this.Login}>
-                    <Text className="complementary title m10"> Login</Text>
+                    {loginRequestStatus === 'REQUESTING' ? 
+                     ( <Spinner color="white"/>)
+                    :( <Text className="complementary title m10"> Login</Text>)
+                    }
                   </Touchable>
                   <View className="f-row mt10">
-                    <Text className="normal white mt12">New</Text>
+                    <Text className="normal white">New </Text>
                     <Touchable className="mv20" onPress={this.goToSocialSignUp}>
-                      <Text className="normal bold white"> ? SignUp</Text>
+                      <Text className="normal bold white"> ? SignUp </Text>
                     </Touchable>
                   </View>
                 </View>

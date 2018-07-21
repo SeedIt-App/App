@@ -12,7 +12,7 @@ import {
   Footer,
   ScrollView,
 } from '../common';
-import { TextInput } from 'react-native';
+import { TextInput, AsyncStorage } from 'react-native';
 import {
   AuthActions,
   UserActions,
@@ -28,59 +28,17 @@ class Profile extends React.PureComponent {
       activeFlag: 'posted',
       activeFlagBorderColor: 'white',
       activeFlagTextColor: '#3CCDFD',
-      allLikePost : []
+      allLikePost: [],
+      goggleData : null
     };
-  }
 
-  componentWillReceiveProps(nextProps) {
-
-    if (nextProps.profileErrorStatus === 'jwt expired' 
-      || nextProps.profileErrorStatus === 'jwt malformed') {
-      Toast.show('Please login to get your profile', {
-        duration: Toast.durations.LONG,
-        position: Toast.positions.BOTTOM,
-      });
-      this.props.navigation.navigate('Login');
-    }
-    else if(nextProps.profileErrorStatus) {
-      Toast.show(nextProps.profileErrorStatus, {
-        duration: Toast.durations.LONG,
-        position: Toast.positions.BOTTOM,
-      });
-    }
-
-    else if (nextProps.getPostsErrorStatus === 'jwt expired' 
-      || nextProps.getPostsErrorStatus === 'jwt malformed') {
-      Toast.show('Please login to get your profile', {
-        duration: Toast.durations.LONG,
-        position: Toast.positions.BOTTOM,
-      });
-      this.props.navigation.navigate('Login');
-    }
-    else if(nextProps.getPostsErrorStatus) {
-      Toast.show(nextProps.getPostsErrorStatus, {
-        duration: Toast.durations.LONG,
-        position: Toast.positions.BOTTOM,
-      });
-    }
-
-    else if(nextProps.getPostsRequestStatus ==='SUCCESS'){
-     if(nextProps.allPosts && nextProps.allPosts.length > 0){
-        nextProps.allPosts.forEach(p => {
-          if(p.waters.length > 0){
-            this.state.allLikePost.push(p.waters);
-            if(this.state.allLikePost.length > 0){
-              this.state.allLikePost.forEach(p => {
-                this.props.getSingleUser(p)
-              })
-            }
-          }
-        });
-      } 
-    }
-    else {
-      null
-    }
+    AsyncStorage.getItem("res").then((value) => {
+      if(value){
+        let data = JSON.parse(value);
+        this.setState({goggleData : data.user})
+        console.log(data)
+      }
+    }).done();
   }
 
   componentDidMount() {
@@ -90,15 +48,55 @@ class Profile extends React.PureComponent {
     this.props.getAllUserFollowings();
   }
 
+  componentWillReceiveProps(nextProps) {
+
+    if(this.state.goggleData ===null){
+      if (nextProps.token == null || ''){
+        Toast.show('Please logins', {
+          duration: Toast.durations.LONG,
+          position: Toast.positions.BOTTOM,
+        });
+        this.props.navigation.navigate('Login');
+      } 
+    }  
+    if (nextProps.profileErrorStatus === 'FAILED') {
+        Toast.show(nextProps.profileErrorStatus, {
+          duration: Toast.durations.LONG,
+          position: Toast.positions.BOTTOM,
+        });
+    }
+    if (nextProps.getPostsErrorStatus === 'FAILED') {
+        Toast.show(nextProps.getPostsErrorStatus, {
+          duration: Toast.durations.LONG,
+          position: Toast.positions.BOTTOM,
+        });
+    }
+    if (nextProps.getPostsRequestStatus === 'SUCCESS') {
+      if (nextProps.allPosts && nextProps.allPosts.length > 0) {
+        nextProps.allPosts.forEach(p => {
+          if (p.waters.length > 0) {
+            this.state.allLikePost.push(p.waters);
+            if (this.state.allLikePost.length > 0) {
+              this.state.allLikePost.forEach(p => {
+                this.props.getSingleUser(p);
+              });
+            }
+          }
+        });
+      }
+    }
+  }
+
+
   goToEditProfile = () => {
     this.props.navigation.navigate('EditProfile');
   };
 
-  goToPublicProfile = (user) => {
+  goToPublicProfile = user => {
     this.props.navigation.navigate('PublicProfile', {
-      publicUser: user
+      publicUser: user,
     });
-  }
+  };
 
   renderTab = () => {
     const {
@@ -119,23 +117,34 @@ class Profile extends React.PureComponent {
       return (
         <View className="bg-transparent mt10 space-between">
           {singleUser &&
-            singleUser.map((user , i ) => (
+            singleUser.map((user, i) => (
               <View className="f-row p5 mr20">
                 <View className="f-row f-both m20">
-                  <Image
-                    className="med_thumb m10"
-                    source={require('../images/avatars/Abbott.png')}
-                    resizeMode="cover"
-                  />
+                  {user.picture ? 
+                    (<Image
+                      className="med_thumb m10"
+                      source={{uri : user.picture}}
+                      resizeMode="cover"
+                    />)
+                    : (<Image
+                      className="med_thumb m10"
+                      source={require('../images/icons/Login_Black.png')}
+                      resizeMode="cover"
+                    />)
+                  }
                 </View>
                 <View className="f-column mt10">
-                  <Touchable className="p5" key={i} onPress={this.goToPublicProfile.bind(this, user)}>
+                  <Touchable
+                    className="p5"
+                    key={i}
+                    onPress={this.goToPublicProfile.bind(this, user)}
+                  >
                     <View className="f-both">
                       <Text className="black large t-left">
-                        {user.userName} {"\n"} {user.email}
+                        {user.userName} {'\n'} {user.email}
                       </Text>
                     </View>
-                  </Touchable>  
+                  </Touchable>
                 </View>
                 <View className="f-row pull-right f-both m20">
                   <Image
@@ -146,34 +155,39 @@ class Profile extends React.PureComponent {
                 </View>
               </View>
             ))}
-            {
-              singleUser === null && 
-             ( <View>
-                <Text className="f-both darkGrey t-center bold medium">
-                  There is no liked posts
-                </Text>
-              </View> )   
-            }
+          {singleUser === null && (
+            <View>
+              <Text className="f-both darkGrey t-center bold medium">
+                There is no liked posts
+              </Text>
+            </View>
+          )}
         </View>
       );
     } else if (this.state.activeFlag === 'posted') {
       return (
         <View className="bg-transparent mt10 space-between">
-          {allPosts && allPosts.length > 0 && 
+          {allPosts &&
+            allPosts.length > 0 &&
             allPosts.map(p => (
               <View className="f-row p5 mr20">
                 <View className="f-row f-both m20">
-                  <Image
-                    className="med_thumb m10"
-                    source={require('../images/avatars/Abbott.png')}
-                    resizeMode="cover"
-                  />
+                  {p.postedBy.picture ? 
+                    (<Image
+                      className="med_thumb m10"
+                      source={{uri : p.postedBy.picture}}
+                      resizeMode="cover"
+                    />)
+                    : (<Image
+                      className="med_thumb m10"
+                      source={require('../images/icons/Login_Black.png')}
+                      resizeMode="cover"
+                    />)
+                  }
                 </View>
                 <View className="f-column w-2-1 mt10">
                   <View className="f-both">
-                    <Text className="black large t-left">
-                      {p.text} 
-                    </Text>
+                    <Text className="black large t-left">{p.text}</Text>
                   </View>
                 </View>
                 <View className="f-row pull-right f-both m20">
@@ -185,36 +199,49 @@ class Profile extends React.PureComponent {
                 </View>
               </View>
             ))}
-             {allPosts && allPosts.length === 0 && 
-             ( <View>
+          {allPosts &&
+            allPosts.length === 0 && (
+              <View>
                 <Text className="f-both darkGrey t-center bold medium">
                   There is no followers
                 </Text>
-              </View> )   
-            }
+              </View>
+            )}
         </View>
       );
     } else if (this.state.activeFlag === 'followers') {
       return (
         <View className="bg-transparent mt10 space-between">
-          {allFollowers && allFollowers.length > 0 &&
+          {allFollowers &&
+            allFollowers.length > 0 &&
             allFollowers.map((user, i) => (
               <View className="f-row p5 mr20">
                 <View className="f-row f-both m20">
-                  <Image
-                    className="med_thumb m10"
-                    source={require('../images/avatars/Abbott.png')}
-                    resizeMode="cover"
-                  />
+                  {user.picture ? 
+                    (<Image
+                      className="med_thumb m10"
+                      source={{uri : user.picture}}
+                      resizeMode="cover"
+                    />)
+                    : (<Image
+                      className="med_thumb m10"
+                      source={require('../images/icons/Login_Black.png')}
+                      resizeMode="cover"
+                    />)
+                  }
                 </View>
                 <View className="f-column  mt10">
-                  <Touchable className="p5" key={i} onPress={this.goToPublicProfile.bind(this, user)}>
+                  <Touchable
+                    className="p5"
+                    key={i}
+                    onPress={this.goToPublicProfile.bind(this, user)}
+                  >
                     <View className="f-both">
                       <Text className="black large t-left">
-                        {user.userName} {"\n"} {user.email}
+                        {user.userName} {'\n'} {user.email}
                       </Text>
                     </View>
-                  </Touchable> 
+                  </Touchable>
                 </View>
                 <View className="f-row pull-right f-both m20">
                   <Image
@@ -225,36 +252,49 @@ class Profile extends React.PureComponent {
                 </View>
               </View>
             ))}
-            {allFollowers && allFollowers.length === 0 && 
-             ( <View>
+          {allFollowers &&
+            allFollowers.length === 0 && (
+              <View>
                 <Text className="f-both darkGrey t-center bold medium">
                   There is no followers
                 </Text>
-              </View> )   
-            }
+              </View>
+            )}
         </View>
       );
     } else if (this.state.activeFlag === 'following') {
       return (
         <View className="bg-transparent mt10 space-between">
-          {allfollowings && allfollowings.length > 0 &&
-            allfollowings.map((user, i )=> (
+          {allfollowings &&
+            allfollowings.length > 0 &&
+            allfollowings.map((user, i) => (
               <View className="f-row p5 mr20">
                 <View className="f-row f-both m20">
-                  <Image
-                    className="med_thumb m10"
-                    source={require('../images/avatars/Abbott.png')}
-                    resizeMode="cover"
-                  />
+                  {user.picture ? 
+                    (<Image
+                      className="med_thumb m10"
+                      source={{uri : user.picture}}
+                      resizeMode="cover"
+                    />)
+                    : (<Image
+                      className="med_thumb m10"
+                      source={require('../images/icons/Login_Black.png')}
+                      resizeMode="cover"
+                    />)
+                  }
                 </View>
                 <View className="f-column mt10">
-                  <Touchable className="p5" key={i} onPress={this.goToPublicProfile.bind(this, user)}>
+                  <Touchable
+                    className="p5"
+                    key={i}
+                    onPress={this.goToPublicProfile.bind(this, user)}
+                  >
                     <View className="f-both">
                       <Text className="black large t-left">
-                        {user.userName} {"\n"} {user.email}
+                        {user.userName} {'\n'} {user.email}
                       </Text>
                     </View>
-                  </Touchable>  
+                  </Touchable>
                 </View>
                 <View className="f-row pull-right f-both m20">
                   <Image
@@ -265,13 +305,14 @@ class Profile extends React.PureComponent {
                 </View>
               </View>
             ))}
-            {allfollowings && allfollowings.length === 0 && 
-             ( <View>
+          {allfollowings &&
+            allfollowings.length === 0 && (
+              <View>
                 <Text className="f-both darkGrey t-center bold medium">
                   There is no followers
                 </Text>
-              </View> )   
-            }
+              </View>
+            )}
         </View>
       );
     }
@@ -300,8 +341,9 @@ class Profile extends React.PureComponent {
 
     if (this.props.luser && this.props.luser.address) {
       fullAddress =
-        `${idx(this.props.luser.address, _ => _.city)
-        }${'' + ' '}${this.props.luser.address.state}` +
+        `${idx(this.props.luser.address, _ => _.city)}${'' + ' '}${
+          this.props.luser.address.state
+        }` +
         `${'' + '\n '}${this.props.luser.address.country}` +
         `${'' + ' '}${this.props.luser.address.zip}` +
         '';
@@ -319,20 +361,29 @@ class Profile extends React.PureComponent {
             <View className="bg-transparent f-row mt10 space-between">
               <View className="mh15 f-row">
                 <View>
-                  <Image
-                    className="med_thumb_view"
-                    source={require('../images/icons/user.png')}
-                  />
+                  {(luser && luser.picture) || (this.state.goggleData && this.state.goggleData.picture) ? (
+                    <Image
+                      className="big_thumb"
+                      source={{ uri: (luser && luser.picture) || (this.state.goggleData && this.state.goggleData.picture) }}
+                      resizeMode="cover"
+                    />
+                  ) : (
+                    <Image
+                      className="big_thumb"
+                      source={require('../images/icons/Login_Black.png')}
+                      resizeMode="cover"
+                    />
+                  )}
                 </View>
                 <View className="mh25">
                   <Text className="darkGrey bold medium">
                     {(luser &&
                       luser.firstName &&
-                      `${luser.firstName} ${luser.lastName}`) ||
-                      'Full Name'}
+                      `${luser.firstName || (this.state.goggleData && this.state.goggleData.given_name)} 
+                      ${luser.lastName || (this.state.goggleData && this.state.goggleData.family_name)}` )}
                   </Text>
                   <Text className="darkGrey medium">
-                    {(luser && luser.userName && luser.userName) || 'UserName'}
+                    {( (luser && luser.userName && luser.userName) || (this.state.goggleData && this.state.goggleData.given_name) )}
                   </Text>
                   <Text className="darkGrey medium">
                     {luser && luser.address && fullAddress === 'undefined'
@@ -453,8 +504,14 @@ class Profile extends React.PureComponent {
 }
 
 function mapStateToProps(state) {
-  const { profileRequestStatus, profileErrorStatus, luser,
-    singleUser, getSingleUserRequestStatus, getSingleUserErrorStatus } = state.loggedUser;
+  const {
+    profileRequestStatus,
+    profileErrorStatus,
+    luser,
+    singleUser,
+    getSingleUserRequestStatus,
+    getSingleUserErrorStatus,
+  } = state.loggedUser;
   const { user } = state.auth;
   const token = state.auth.authToken;
 
@@ -474,7 +531,7 @@ function mapStateToProps(state) {
     getPostsErrorStatus,
   } = state.post;
   const allPosts = getAllPosts && getAllPosts.posts;
- 
+
   return {
     profileRequestStatus,
     profileErrorStatus,

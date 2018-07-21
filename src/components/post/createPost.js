@@ -37,8 +37,8 @@ class CreatePost extends React.PureComponent {
         position: Toast.positions.BOTTOM,
       });
     }
-    if (nextProps.createPostRequestStatus === "SUCCESS") {
-      Toast.show("Successfully posted", {
+    if (nextProps.createPostRequestStatus === 'SUCCESS') {
+      Toast.show('Successfully posted', {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
       });
@@ -53,7 +53,7 @@ class CreatePost extends React.PureComponent {
     if (this.state.message !== '') {
       const body = {
         text: this.state.message,
-        images: [ this.state.image],
+        images: [this.state.image],
       };
       this.props.createPost(body);
     } else {
@@ -93,9 +93,7 @@ class CreatePost extends React.PureComponent {
     const fileToUpload = imgPath;
     const fileName = fileToUpload.split('/').pop();
     axios
-      .get(`/s3?fileName=${
-        fileName
-      }&fileType='image/jpeg'`)
+      .get(`/s3?fileName=${fileName}&fileType='image/jpeg'`)
       .then(response => {
         const { signedRequest, url } = response.data;
         console.log({ signedRequest, url, fileName });
@@ -130,7 +128,7 @@ class CreatePost extends React.PureComponent {
               <View className="mt10">
                 <View className="f-row p5 mr20 mb25">
                   <View className="f-row f-both mr20 m20">
-                    {user && picture  ? (
+                    {user && picture ? (
                       <Image
                         className="normal_thumb"
                         source={{ uri: idx(user, _ => _.picture) }}
@@ -186,10 +184,10 @@ class CreatePost extends React.PureComponent {
                   </View>
                 </View>
                 <View className="f-center f-row">
-                  {this.state.image !=='' && (
+                  {this.state.image !== '' && (
                     <Image
                       className="x_large_thumb"
-                      source={{ uri : this.state.image}} 
+                      source={{ uri: this.state.image }}
                       resizeMode="cover"
                     />
                   )}
@@ -204,10 +202,7 @@ class CreatePost extends React.PureComponent {
             <View className="p5">
               <Touchable onPress={this.goToLogin}>
                 <View className="f-row f-both m20">
-                  <Touchable
-                    className="p5"
-                    onPress={this.openPicker}
-                  >
+                  <Touchable className="p5" onPress={this.openPicker}>
                     <Image
                       className="mini_thumb m10"
                       source={require('../images/icons/camera.png')}
@@ -235,7 +230,7 @@ function mapStateToProps(state) {
     token,
     user,
     createPostRequestStatus,
-    createPostErrorStatus
+    createPostErrorStatus,
   };
 }
 export default connect(mapStateToProps, { ...AuthActions, ...PostActions })(CreatePost);

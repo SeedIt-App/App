@@ -1,5 +1,5 @@
-import React from "react";
-import { connect } from "react-redux";
+import React from 'react';
+import { connect } from 'react-redux';
 import {
   Text,
   View,
@@ -7,14 +7,15 @@ import {
   Header,
   Image,
   Footer,
-  ScrollView,Spinner
-} from "../common";
-import { AuthActions, PostActions } from "../../actions";
-import { TextInput } from "react-native";
-import Toast from "react-native-root-toast";
-import Accordion from "react-native-collapsible/Accordion";
-import { View as NativeView } from "react-native";
-import Modal from "react-native-modal";
+  ScrollView,
+  Spinner,
+} from '../common';
+import { AuthActions, PostActions } from '../../actions';
+import { TextInput , AsyncStorage} from 'react-native';
+import Toast from 'react-native-root-toast';
+import Accordion from 'react-native-collapsible/Accordion';
+import { View as NativeView } from 'react-native';
+import Modal from 'react-native-modal';
 
 class Redwood extends React.PureComponent {
   constructor(props) {
@@ -22,11 +23,19 @@ class Redwood extends React.PureComponent {
 
     this.state = {
       user: this.props.user,
-      activeFlag: "seed",
-      activeFlagBorderColor: "#3CCDFD",
-      activeFlagTextColor: "white",
+      activeFlag: 'seed',
+      activeFlagBorderColor: '#3CCDFD',
+      activeFlagTextColor: 'white',
       modalVisible: false,
+      goggleData : null
     };
+    AsyncStorage.getItem("res").then((value) => {
+      if(value){
+        let data = JSON.parse(value);
+        this.setState({goggleData : data.user})
+        console.log(data)
+      }
+    }).done();
   }
 
   componentDidMount() {
@@ -34,40 +43,38 @@ class Redwood extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.getPostsErrorStatus === "jwt expired" 
-      || nextProps.getPostsErrorStatus === "jwt malformed") {
-      Toast.show("Please login to get your tags", {
-        duration: Toast.durations.LONG,
-        position: Toast.positions.BOTTOM
-      });
-      this.props.navigation.navigate("Login");
-    }
-    else if(nextProps.getPostsErrorStatus){
+   if(this.state.goggleData ===null){
+      if (nextProps.token == null || ''){
+        Toast.show('Please login', {
+          duration: Toast.durations.LONG,
+          position: Toast.positions.BOTTOM,
+        });
+        this.props.navigation.navigate('Login');
+      } 
+    }  
+    if (nextProps.getPostsErrorStatus === 'FAILED') {
       Toast.show(nextProps.getPostsErrorStatus, {
         duration: Toast.durations.LONG,
-        position: Toast.positions.BOTTOM
+        position: Toast.positions.BOTTOM,
       });
-    }   
-    else {
-      null
     }
   }
 
   goToCreatePost = () => {
-    this.props.navigation.navigate("CreatePost");
+    this.props.navigation.navigate('CreatePost');
   };
 
-  goToAddComment = (section) => {
-    console.log(section)
+  goToAddComment = section => {
+    console.log(section);
     this.props.navigation.navigate('CreateComment', {
-      postData: section
+      postData: section,
     });
   };
 
-  updateWaterToPost = (section) => {
+  updateWaterToPost = section => {
     const body = {
-        postId: section._id
-      };
+      postId: section._id,
+    };
     this.props.updateWaterPost(body);
   };
 
@@ -76,11 +83,9 @@ class Redwood extends React.PureComponent {
   };
 
   renderTab = allPosts => {
-     const {
-      getPostsRequestStatus,
-    } = this.props;
-    
-    if (this.state.activeFlag === "sapling") {
+    const { getPostsRequestStatus } = this.props;
+
+    if (this.state.activeFlag === 'sapling') {
       return (
         <View className="bg-transparent  mb20 mt10 space-between">
           <Text className="f-both t-center bold medium">
@@ -88,7 +93,7 @@ class Redwood extends React.PureComponent {
           </Text>
         </View>
       );
-    } else if (this.state.activeFlag === "seed") {
+    } else if (this.state.activeFlag === 'seed') {
       return (
         <View className="bg-transparent mt10  mb20 space-between">
           {allPosts &&
@@ -100,27 +105,26 @@ class Redwood extends React.PureComponent {
                 underlayColor="transparent"
               />
             )}
-            { getPostsRequestStatus === 'REQUESTING' &&
-              <View className="p15 mt30">
-                <Spinner large />
-              </View> 
-            }
-            {getPostsRequestStatus === 'SUCCESS' &&
-              allPosts.length === 0 && (
+          {getPostsRequestStatus === 'REQUESTING' && (
+            <View className="p15 mt30">
+              <Spinner large />
+            </View>
+          )}
+          {getPostsRequestStatus === 'SUCCESS' &&
+            allPosts.length === 0 && (
               <View className="flex f-both p10">
                 <Text className="black bold">There are no posts</Text>
               </View>
             )}
-
         </View>
       );
-    } else if (this.state.activeFlag === "tree") {
+    } else if (this.state.activeFlag === 'tree') {
       return (
         <View className="bg-transparent mt10  mb20 space-between">
           <Text className="f-both t-center bold medium">There is no tree</Text>
         </View>
       );
-    } else if (this.state.activeFlag === "redwood") {
+    } else if (this.state.activeFlag === 'redwood') {
       return (
         <View className="bg-transparent mt10  mb20 space-between">
           <Text className="f-both t-center bold medium">
@@ -131,67 +135,85 @@ class Redwood extends React.PureComponent {
     }
   };
 
-   renderHeader = (section , i) => (
+  renderHeader = (section, i) => (
     <NativeView>
       <View className="f-row p5 mr20">
         <View className="f-row f-both m20">
-          <Image
-            className="med_thumb m10"
-            source={require('../images/avatars/Abbott.png')}
-            resizeMode="cover"
-          />
+          {section.postedBy.picture ? 
+            (<Image
+              className="med_thumb m10"
+              source={{uri : section.postedBy.picture}}
+              resizeMode="cover"
+            />)
+            : (<Image
+              className="med_thumb m10"
+              source={require('../images/icons/Login_Black.png')}
+              resizeMode="cover"
+            />)
+          }
         </View>
         <View className="f-column j-start mt10 w-2-1">
-          <Text className="black bold large t-left ">{section.postedBy.userName}</Text>
+          <Text className="black bold large t-left ">
+            {section.postedBy.userName}
+          </Text>
           <View className="f-column">
             <Text className="black large t-left">{section.text}</Text>
           </View>
           <View className="f-column">
             <View className="f-row flexWrap">
-              { section.tags && section.tags.length > 0 &&
-                section.tags.map((value,i) => (
-                  <Text className="lgBlue bold large t-left">{" "}#{value.tag}</Text>
-                ))
-              }
+              {section.tags &&
+                section.tags.length > 0 &&
+                section.tags.map((value, i) => (
+                  <Text className="lgBlue bold large t-left">
+                    {' '}
+                    #{value.tag}
+                  </Text>
+                ))}
             </View>
           </View>
           <View className="f-row flex w-1-2">
-            { section.images && section.images.length > 0 && section.images[0] !== 'image1.png' &&
-            section.images.map(v => (
-              <Image
-                className="x_l_thumb m5" 
-                source={{uri : section.images[0]}}
-                resizeMode="cover"
-              />
-            ))}
-          </View>  
-            {this.state.user &&
-              this.state.user.role === 'admin' && (
+            {section.images &&
+              section.images.length > 0 &&
+              section.images[0] !== 'image1.png' &&
+              section.images.map(v => (
                 <Image
-                  className="micro_thumb m5"
-                  source={require('../images/icons/delete.jpg')}
+                  className="x_l_thumb m5"
+                  source={{ uri: section.images[0] }}
                   resizeMode="cover"
                 />
+              ))}
+          </View>
+          {this.state.user &&
+            this.state.user.role === 'admin' && (
+              <Image
+                className="micro_thumb m5"
+                source={require('../images/icons/delete.jpg')}
+                resizeMode="cover"
+              />
             )}
         </View>
         <View className="f-row pull-right f-both m20">
-          <Touchable className="p5" key={i} onPress={this.updateWaterToPost.bind(this, section)}>
+          <Touchable
+            className="p5"
+            key={i}
+            onPress={this.updateWaterToPost.bind(this, section)}
+          >
             <Image
               className="normal_thumb m10"
               source={require('../images/icons/drop.jpg')}
               resizeMode="cover"
             />
-          </Touchable>  
+          </Touchable>
         </View>
         <View className="dividerGrey" />
       </View>
     </NativeView>
   );
 
- renderContent = (section, i) => (
-    <View className="f-row p5 mr20" >
+  renderContent = (section, i) => (
+    <View className="f-row p5 mr20">
       <View className=" f-row f-both space-between w-1-1">
-        <View className="f-row" >
+        <View className="f-row">
           <View>
             <Touchable onPress={this.modelVisibleToggle}>
               <View className="mb5">
@@ -200,34 +222,48 @@ class Redwood extends React.PureComponent {
                   source={require('../images/icons/share.png')}
                   resizeMode="cover"
                 />
-                <Modal isVisible={this.state.modalVisible}
-                  backdropColor={"grey"}
-                  backdropOpacity={.1}>
+                <Modal
+                  isVisible={this.state.modalVisible}
+                  backdropColor="grey"
+                  backdropOpacity={0.1}
+                >
                   <View className="overlay f-column f-both">
                     <View className=" f-row f-both m10">
-                      <Text className="lgBlue bold large_sm t-center">Share on Facebook</Text>
+                      <Text className="lgBlue bold large_sm t-center">
+                        Share on Facebook
+                      </Text>
                     </View>
                     <View className="dividerGrey" />
                     <View className=" f-row f-both m10">
-                      <Text className="lgBlue bold large_sm t-center">Share on Twitter</Text>
-                    </View>  
+                      <Text className="lgBlue bold large_sm t-center">
+                        Share on Twitter
+                      </Text>
+                    </View>
                   </View>
                   <View className="overlayCancel">
                     <View className="wh-1-1 f-row f-both m10">
-                      <Touchable className="p5" onPress={this.modelVisibleToggle}>
-                        <Text className="lgBlue bold large_sm t-center">Cancel</Text>
+                      <Touchable
+                        className="p5"
+                        onPress={this.modelVisibleToggle}
+                      >
+                        <Text className="lgBlue bold large_sm t-center">
+                          Cancel
+                        </Text>
                       </Touchable>
-                    </View>  
+                    </View>
                   </View>
                 </Modal>
               </View>
             </Touchable>
-          
           </View>
         </View>
         <View className="f-row mb5">
           <View slassName="mb10">
-            <Touchable className="p5" key={i} onPress={this.goToAddComment.bind(this, section)}>
+            <Touchable
+              className="p5"
+              key={i}
+              onPress={this.goToAddComment.bind(this, section)}
+            >
               <Image
                 className="micro m10"
                 source={require('../images/icons/cm.png')}
@@ -235,14 +271,22 @@ class Redwood extends React.PureComponent {
               />
             </Touchable>
           </View>
-          <View className="marginTop10">  
-            { section.comments && section.comments.length > 0 &&
-              (<Text className="mt20 darkgrey bold small t-center"> ({section.comments.length} )</Text>)
-            }
+          <View className="marginTop10">
+            {section.comments &&
+              section.comments.length > 0 && (
+                <Text className="mt20 darkgrey bold small t-center">
+                  {' '}
+                  ({section.comments.length} )
+                </Text>
+              )}
           </View>
-        </View>  
+        </View>
         <View className="marginTop15">
-          <Touchable className="p5" key={i} onPress={this.updateWaterToPost.bind(this, section)}>
+          <Touchable
+            className="p5"
+            key={i}
+            onPress={this.updateWaterToPost.bind(this, section)}
+          >
             <Image
               className="normal_thumb m10"
               source={require('../images/icons/drop_grey.png')}
@@ -259,7 +303,7 @@ class Redwood extends React.PureComponent {
       user,
       allPosts,
       getPostsRequestStatus,
-      getPostsErrorStatus
+      getPostsErrorStatus,
     } = this.props;
     const { props } = this;
     return (
@@ -278,21 +322,21 @@ class Redwood extends React.PureComponent {
                     <View className="mh10 p5">
                       <Touchable
                         style={{
-                          backgroundColor: "transparent",
+                          backgroundColor: 'transparent',
                           borderBottomWidth: 2,
                           borderBottomColor:
-                            this.state.activeFlag === "seed"
+                            this.state.activeFlag === 'seed'
                               ? this.state.activeFlagBorderColor
-                              : "transparent"
+                              : 'transparent',
                         }}
                         onPress={() => {
-                          this.setState({ activeFlag: "seed" });
+                          this.setState({ activeFlag: 'seed' });
                         }}
                       >
                         <View>
                           <Image
                             className="micro1_thumb m5"
-                            source={require("../images/icons/seed.png")}
+                            source={require('../images/icons/seed.png')}
                             resizeMode="cover"
                           />
                           <Text className="black medium">Seed</Text>
@@ -302,23 +346,23 @@ class Redwood extends React.PureComponent {
                     <View className="mh10 p5">
                       <Touchable
                         style={{
-                          backgroundColor: "transparent",
+                          backgroundColor: 'transparent',
                           borderBottomWidth: 2,
                           borderBottomColor:
-                            this.state.activeFlag === "sapling"
+                            this.state.activeFlag === 'sapling'
                               ? this.state.activeFlagBorderColor
-                              : "transparent"
+                              : 'transparent',
                         }}
                         onPress={() => {
                           this.setState({
-                            activeFlag: "sapling"
+                            activeFlag: 'sapling',
                           });
                         }}
                       >
                         <View>
                           <Image
                             className="micro1_thumb m5"
-                            source={require("../images/icons/sapling.jpg")}
+                            source={require('../images/icons/sapling.jpg')}
                             resizeMode="cover"
                           />
                           <Text className="black medium">Sapling</Text>
@@ -328,23 +372,23 @@ class Redwood extends React.PureComponent {
                     <View className="mh10 p5">
                       <Touchable
                         style={{
-                          backgroundColor: "transparent",
+                          backgroundColor: 'transparent',
                           borderBottomWidth: 2,
                           borderBottomColor:
-                            this.state.activeFlag === "tree"
+                            this.state.activeFlag === 'tree'
                               ? this.state.activeFlagBorderColor
-                              : "transparent"
+                              : 'transparent',
                         }}
                         onPress={() => {
                           this.setState({
-                            activeFlag: "tree"
+                            activeFlag: 'tree',
                           });
                         }}
                       >
-                        <View>
+                        <View className="mh10 p5">
                           <Image
                             className="micro1_thumb m5"
-                            source={require("../images/icons/rt.png")}
+                            source={require('../images/icons/rt.png')}
                             resizeMode="cover"
                           />
                           <Text className="black medium">Tree</Text>
@@ -354,23 +398,23 @@ class Redwood extends React.PureComponent {
                     <View className="mh10 p5">
                       <Touchable
                         style={{
-                          backgroundColor: "transparent",
+                          backgroundColor: 'transparent',
                           borderBottomWidth: 2,
                           borderBottomColor:
-                            this.state.activeFlag === "redwood"
+                            this.state.activeFlag === 'redwood'
                               ? this.state.activeFlagBorderColor
-                              : "transparent"
+                              : 'transparent',
                         }}
                         onPress={() => {
                           this.setState({
-                            activeFlag: "redwood"
+                            activeFlag: 'redwood',
                           });
                         }}
                       >
                         <View>
                           <Image
                             className="micro1_thumb m5"
-                            source={require("../images/icons/tree.png")}
+                            source={require('../images/icons/tree.png')}
                             resizeMode="cover"
                           />
                           <Text className="black medium">Redwood</Text>
@@ -396,7 +440,7 @@ function mapStateToProps(state) {
   const {
     getAllPosts,
     getPostsRequestStatus,
-    getPostsErrorStatus
+    getPostsErrorStatus,
   } = state.post;
   const allPosts = getAllPosts && getAllPosts.posts;
   return {
@@ -404,10 +448,10 @@ function mapStateToProps(state) {
     user,
     allPosts,
     getPostsRequestStatus,
-    getPostsErrorStatus
+    getPostsErrorStatus,
   };
 }
 export default connect(mapStateToProps, {
   ...AuthActions,
-  ...PostActions
+  ...PostActions,
 })(Redwood);

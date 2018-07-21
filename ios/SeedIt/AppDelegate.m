@@ -22,6 +22,14 @@
   return [RCTLinkingManager application:application openURL:url options:options];
 }
 
+
+// (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
+//   sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+// {
+//   return [RCTLinkingManager application:application openURL:url
+//                       sourceApplication:sourceApplication annotation:annotation];
+// }
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   NSURL *jsCodeLocation;

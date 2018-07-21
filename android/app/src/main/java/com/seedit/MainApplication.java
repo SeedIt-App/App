@@ -65,6 +65,21 @@ public class MainApplication extends Application implements ReactApplication {
     return mReactNativeHost;
   }
 
+  /*public void openWebPage(String url) {
+
+    Uri webpage = Uri.parse(url);
+
+    if (!url.startsWith("http://") && !url.startsWith("https://")) {
+        webpage = Uri.parse("http://" + url);
+    }
+
+    Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+    if (intent.resolveActivity(getPackageManager()) != null) {
+        startActivity(intent);
+    }
+  }*/
+
+
    @Override
   public void onCreate() {
     super.onCreate();

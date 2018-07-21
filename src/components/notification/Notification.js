@@ -39,7 +39,7 @@ class Notifications extends React.PureComponent {
           <View className="f-column">
             <View className="bg-transparent mt10 space-between">
               {notificationStatus === 'REQUESTING' &&
-                !allNotification && <Spinner />}
+                <Spinner />}
               {notificationStatus === 'SUCCESS' &&
                 allNotification.length === 0 && (
                 <View className="flex f-both p10">
@@ -49,12 +49,14 @@ class Notifications extends React.PureComponent {
               {notificationStatus === 'SUCCESS' &&
                 allNotification.length > 0 && 
                 allNotification.map(value => (
-                  <View className="f-column p5 f-both j-start w-1-1 mt10">                  
-                    <Touchable>
-                      <Text className="black bold">
-                        {value.message}
-                      </Text>
-                    </Touchable>
+                  <View className="f-column h50 f-both  w-1-1">   
+                    <View className="f-both p5">
+                      <Touchable >
+                        <Text className="black bold">
+                          {value.message}
+                        </Text>
+                      </Touchable>
+                    </View>
                     <View className="dividerGrey" />
                   </View>
                 ))  

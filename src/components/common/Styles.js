@@ -307,7 +307,7 @@ const flex = {
   flex: {
     flexGrow: 1,
   },
-  flexWrap : {
+  flexWrap: {
     flexWrap: 'wrap',
   },
   'f-row': {
@@ -367,7 +367,7 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.transparent,
   },
-  
+
   'wh-1-1': {
     height: '100%',
     width: '100%',
@@ -411,7 +411,7 @@ export default StyleSheet.create({
   'h-1-5': {
     height: '20%',
   },
-  h20 : {
+  h20: {
     height: 20,
   },
   h38: {
@@ -483,7 +483,7 @@ export default StyleSheet.create({
   dividerGrey: {
     alignSelf: 'stretch',
     height: 0.6,
-    backgroundColor: "#DCDCDC",
+    backgroundColor: '#DCDCDC',
   },
   'abs-cover': {
     position: 'absolute',
@@ -552,7 +552,7 @@ export default StyleSheet.create({
   showPassword: {
     height: 50,
     width: 70,
-    marginTop : -5,
+    marginTop: -5,
     backgroundColor: Colors.vlblue,
   },
   showPasswordAuth: {
@@ -607,7 +607,7 @@ export default StyleSheet.create({
     height: 68,
     alignItems: 'center',
   },
-  overlay : {
+  overlay: {
     position: 'absolute',
     flex: 0.1,
     left: 0,
@@ -621,7 +621,7 @@ export default StyleSheet.create({
     height: 120,
     alignItems: 'center',
   },
-  overlayCancel : {
+  overlayCancel: {
     position: 'absolute',
     flex: 0.1,
     left: 0,
@@ -635,21 +635,21 @@ export default StyleSheet.create({
     height: 60,
     alignItems: 'center',
   },
-  shadowBox : {
-    paddingTop : 8,
-    paddingLeft : 8,
-    paddingRight : 8,
-    paddingBottom : 8,
-    borderColor : 'transparent',
-    backgroundColor : Colors.lgGrey
+  shadowBox: {
+    paddingTop: 8,
+    paddingLeft: 8,
+    paddingRight: 8,
+    paddingBottom: 8,
+    borderColor: 'transparent',
+    backgroundColor: Colors.lgGrey,
   },
-  search_input : {
-    paddingTop : 5,
-    paddingLeft : 5,
-    paddingRight : 5,
-    backgroundColor : Colors.white,
+  search_input: {
+    paddingTop: 5,
+    paddingLeft: 5,
+    paddingRight: 5,
+    backgroundColor: Colors.white,
     borderRadius: 5,
     borderWidth: 1,
-    borderColor: Colors.white
-  }
+    borderColor: Colors.white,
+  },
 });

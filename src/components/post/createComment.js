@@ -16,7 +16,8 @@ import Toast from 'react-native-root-toast';
 import ImagePicker from 'react-native-image-picker';
 import ImageResizer from 'react-native-image-resizer';
 import RNFetchBlob from 'react-native-fetch-blob';
-import axios from 'axios';import idx from 'idx';
+import axios from 'axios';
+import idx from 'idx';
 
 class CreateComment extends React.PureComponent {
   constructor(props) {
@@ -24,7 +25,7 @@ class CreateComment extends React.PureComponent {
     this.state = {
       userNameFlag: false,
       message: '',
-      currentPostData : this.props.navigation.state.params.postData
+      currentPostData: this.props.navigation.state.params.postData,
     };
   }
 
@@ -46,11 +47,11 @@ class CreateComment extends React.PureComponent {
       const body = {
         postId: this.state.currentPostData._id,
         text: this.state.message,
-        images: [this.state.image]
+        images: [this.state.image],
       };
       this.props.addNewCommentToPost(body);
-        if (this.props.addNewCommentToPostRequestStatus === "SUCCESS") {
-        Toast.show("Comment added to the post", {
+      if (this.props.addNewCommentToPostRequestStatus === 'SUCCESS') {
+        Toast.show('Comment added to the post', {
           duration: Toast.durations.LONG,
           position: Toast.positions.BOTTOM,
         });
@@ -92,9 +93,7 @@ class CreateComment extends React.PureComponent {
     const fileToUpload = imgPath;
     const fileName = fileToUpload.split('/').pop();
     axios
-      .get(`/s3?fileName=${
-        fileName
-      }&fileType='image/jpeg'`)
+      .get(`/s3?fileName=${fileName}&fileType='image/jpeg'`)
       .then(response => {
         const { signedRequest, url } = response.data;
         console.log({ signedRequest, url, fileName });
@@ -118,11 +117,16 @@ class CreateComment extends React.PureComponent {
   };
 
   render() {
-    const { user, 
-    addNewCommentToPostRequestStatus, 
-    addNewCommentToPostErrorStatus } = this.props;
+    const {
+      user,
+      addNewCommentToPostRequestStatus,
+      addNewCommentToPostErrorStatus,
+    } = this.props;
     const { props } = this;
-    console.log(this.props.navigation.state.params,'this.props.navigation.state.params')
+    console.log(
+      this.props.navigation.state.params,
+      'this.props.navigation.state.params',
+    );
     return (
       <View className="screen">
         <Header title="Add a Comment" back navigation={this.props.navigation} />
@@ -168,14 +172,19 @@ class CreateComment extends React.PureComponent {
               <View className="m10 ">
                 <View className="f-center f-row">
                   <View>
-                    <Text className="black bold large t-center ">{this.state.currentPostData.text}</Text>
-                    { this.state.currentPostData && 
+                    <Text className="black bold large t-center ">
+                      {this.state.currentPostData.text}
+                    </Text>
+                    {this.state.currentPostData &&
                       this.state.currentPostData.comments &&
                       this.state.currentPostData.comments.length > 0 &&
                       this.state.currentPostData.comments.map(value => (
-                        <Text className="black bold medium t-left">{value.text}{'\n'} {' - '}{value.commentBy.userName}</Text>
-                      ))
-                    }
+                        <Text className="black bold medium t-left">
+                          {value.text}
+                          {'\n'} {' - '}
+                          {value.commentBy.userName}
+                        </Text>
+                      ))}
                     <TextInput
                       style={{ color: 'black', fontSize: 16, width: 250 }}
                       value={this.state.message}
@@ -188,11 +197,11 @@ class CreateComment extends React.PureComponent {
                     />
                   </View>
                 </View>
-                 <View className="f-center f-row">
-                  {this.state.image !=='' && (
+                <View className="f-center f-row">
+                  {this.state.image !== '' && (
                     <Image
                       className="x_large_thumb"
-                      source={{ uri : this.state.image}} 
+                      source={{ uri: this.state.image }}
                       resizeMode="cover"
                     />
                   )}
@@ -209,10 +218,7 @@ class CreateComment extends React.PureComponent {
             <View className="p5">
               <Touchable onPress={this.goToLogin}>
                 <View className="f-row f-both m20">
-                  <Touchable
-                    className="p5"
-                    onPress={this.openPicker}
-                  >
+                  <Touchable className="p5" onPress={this.openPicker}>
                     <Image
                       className="mini_thumb m10"
                       source={require('../images/icons/camera.png')}
@@ -235,12 +241,15 @@ class CreateComment extends React.PureComponent {
 function mapStateToProps(state) {
   const token = state.auth.authToken;
   const { user } = state.auth;
-  const { addNewCommentToPostRequestStatus, addNewCommentToPostErrorStatus } = state.post;
+  const {
+    addNewCommentToPostRequestStatus,
+    addNewCommentToPostErrorStatus,
+  } = state.post;
   return {
     token,
     user,
-    addNewCommentToPostRequestStatus, 
-    addNewCommentToPostErrorStatus
+    addNewCommentToPostRequestStatus,
+    addNewCommentToPostErrorStatus,
   };
 }
 export default connect(mapStateToProps, { ...AuthActions, ...PostActions })(CreateComment);
