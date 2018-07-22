@@ -266,10 +266,7 @@ class NewsFeed extends React.PureComponent {
                         </View>
                       </View>
                     ))
-                  ) : (
-                    <View className="p15 mt30">
-                      <Spinner large />
-                    </View>
+                  ) : (null
                   )}
                 </View>
               </View>

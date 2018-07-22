@@ -64,8 +64,10 @@ class EditProfile extends React.PureComponent {
   componentDidMount() {
 
     AsyncStorage.getItem("res").then((value) => {
-      let data = JSON.parse(value);
-      this.setState({goggleData : data.user})
+      if(value){
+        let data = JSON.parse(value);
+        this.setState({goggleData : data.user})
+      }
     }).done();
 
     if(this.state.goggleData){
@@ -92,8 +94,7 @@ class EditProfile extends React.PureComponent {
         bio: this.props.luser.bio || '',
         badges: this.props.luser.badges || [],
         fullName:
-          `${this.props.luser.firstName || (this.state.goggleData && this.state.goggleData.given_name) } 
-          ${this.props.luser.lastName || (this.state.goggleData && this.state.goggleData.family_name)}` || '',
+          `${this.props.luser.firstName || (this.state.goggleData && this.state.goggleData.given_name) } ${this.props.luser.lastName || (this.state.goggleData && this.state.goggleData.family_name)}` || '',
       });
     }
 

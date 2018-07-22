@@ -44,21 +44,9 @@ class Tags extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    /*if(this.state.goggleData){
-      if (
-        nextProps.getPostsErrorStatus === 'jwt expired' ||
-        nextProps.getPostsErrorStatus === 'jwt malformed'
-      ) {
-        Toast.show('Please login to get your tags', {
-          duration: Toast.durations.LONG,
-          position: Toast.positions.BOTTOM,
-        });
-        this.props.navigation.navigate('Login');
-      }
-    }  */
 
     if(this.state.goggleData === null){
-      if (nextProps.token == null || nextProps.getPostsErrorStatus === 'jwt expired'){
+      if (nextProps.token == null){
         Toast.show('Please login', {
           duration: Toast.durations.LONG,
           position: Toast.positions.BOTTOM,

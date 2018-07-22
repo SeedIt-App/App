@@ -44,15 +44,12 @@ class Follow extends React.PureComponent {
   componentWillReceiveProps(nextProps) {
     if(this.state.goggleData === null){
       if (nextProps.token == null){
-        if(nextProps.getPostsErrorStatus === 'jwt expired'
-        || nextProps.getPostsErrorStatus === 'jwt malformed'){
         Toast.show('Please login', {
           duration: Toast.durations.LONG,
           position: Toast.positions.BOTTOM,
         });
         this.props.navigation.navigate('Login');
       } 
-    }
     }  
     if (nextProps.getPostsErrorStatus === 'FAILED') {
         Toast.show(nextProps.getPostsErrorStatus, {

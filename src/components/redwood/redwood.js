@@ -43,15 +43,15 @@ class Redwood extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-   if(this.state.goggleData ===null){
-      if (nextProps.token == null || ''){
+    if(this.state.goggleData === null){
+      if (nextProps.token == null){
         Toast.show('Please login', {
           duration: Toast.durations.LONG,
           position: Toast.positions.BOTTOM,
         });
         this.props.navigation.navigate('Login');
       } 
-    }  
+    }    
     if (nextProps.getPostsErrorStatus === 'FAILED') {
       Toast.show(nextProps.getPostsErrorStatus, {
         duration: Toast.durations.LONG,

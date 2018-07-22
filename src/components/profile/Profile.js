@@ -52,7 +52,7 @@ class Profile extends React.PureComponent {
 
     if(this.state.goggleData ===null){
       if (nextProps.token == null || ''){
-        Toast.show('Please logins', {
+        Toast.show('Please login', {
           duration: Toast.durations.LONG,
           position: Toast.positions.BOTTOM,
         });
@@ -379,8 +379,7 @@ class Profile extends React.PureComponent {
                   <Text className="darkGrey bold medium">
                     {(luser &&
                       luser.firstName &&
-                      `${luser.firstName || (this.state.goggleData && this.state.goggleData.given_name)} 
-                      ${luser.lastName || (this.state.goggleData && this.state.goggleData.family_name)}` )}
+                      `${luser.firstName || (this.state.goggleData && this.state.goggleData.given_name)} ${luser.lastName || (this.state.goggleData && this.state.goggleData.family_name)}` )}
                   </Text>
                   <Text className="darkGrey medium">
                     {( (luser && luser.userName && luser.userName) || (this.state.goggleData && this.state.goggleData.given_name) )}

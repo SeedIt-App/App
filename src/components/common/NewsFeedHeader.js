@@ -53,7 +53,7 @@ class NewsFeedHeader extends React.PureComponent {
             }
 
             {props.title === 'Newsfeed' && 
-              token === '' ?
+              token === null ?
                 (
                 <Touchable
                   className="pull-right"

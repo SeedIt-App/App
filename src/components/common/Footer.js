@@ -19,7 +19,7 @@ class Footer extends React.PureComponent {
     return (
       <View className="footer">
         <View className="w-1-0 f-row f-both space-between m10">
-          {token === '' ? (
+          {token === null ? (
             <View className="p5">
               <Touchable onPress={this.goToLogin}>
                 <View className="f-row f-both m20">
