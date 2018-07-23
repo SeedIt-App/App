@@ -55,7 +55,6 @@
 		E6BC8D3B43B0465F958E511E /* libRCTImageResizer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4920C556097548838B14F863 /* libRCTImageResizer.a */; };
 		ECDBDCCD3A2244D282CAF798 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CD4781A5B7D4C66AF643D8C /* libRNVectorIcons.a */; };
 		F27A7D4A421747EDB2818C2C /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E04E8282270D42909982E343 /* libRNFS.a */; };
-		FAC5FBEBA5F14D9FAFF7D804 /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F9619871AC2A44369B2E157D /* libRCTCamera.a */; };
 		30D05899359F4255BE997732 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2B10E6FA98F45F98223B4D6 /* Roboto-Black.ttf */; };
 		F1EAE0103EE04503BD402522 /* Roboto-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 79311141DBB84C8283A6AD7B /* Roboto-BlackItalic.ttf */; };
 		6712E7A5E07346F38642751A /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A283C84CEE104C42BA45733E /* Roboto-Bold.ttf */; };
@@ -308,13 +307,7 @@
 			remoteGlobalIDString = 555FF3BA1B37AC8D0064F175;
 			remoteInfo = AppHubTests;
 		};
-		E15E1A312041FB97008C60B5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D41B0864C5F54BFD94918912 /* RCTCamera.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4107012F1ACB723B00C6AA39;
-			remoteInfo = RCTCamera;
-		};
+	
 		E15E1A372041FB97008C60B5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DC65706E90B64FCB8600A954 /* RCTImageResizer.xcodeproj */;
@@ -469,7 +462,6 @@
 		B919969AAFEF4EDF91CDA681 /* RCTOneSignal.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTOneSignal.xcodeproj; path = "../node_modules/react-native-onesignal/ios/RCTOneSignal.xcodeproj"; sourceTree = "<group>"; };
 		BAB41041C9C243AE874B475F /* libRNFetchBlob.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFetchBlob.a; sourceTree = "<group>"; };
 		C53F7F35A4144D29B1A4D62C /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
-		D41B0864C5F54BFD94918912 /* RCTCamera.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTCamera.xcodeproj; path = "../node_modules/react-native-camera/ios/RCTCamera.xcodeproj"; sourceTree = "<group>"; };
 		D61A536A47CE46E79E5DB4EA /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		D7743590666C4F52BD4AF6BD /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		DADAA4A3A004481EAE5C6BAF /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNImagePicker.xcodeproj; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; };
@@ -477,7 +469,6 @@
 		DED13BF7AE9F408899011B4E /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		E04E8282270D42909982E343 /* libRNFS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFS.a; sourceTree = "<group>"; };
 		F69FBA75EF5C45FCAA250FCF /* libRCTVideo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTVideo.a; sourceTree = "<group>"; };
-		F9619871AC2A44369B2E157D /* libRCTCamera.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTCamera.a; sourceTree = "<group>"; };
 		E2B10E6FA98F45F98223B4D6 /* Roboto-Black.ttf */ = {isa = PBXFileReference; name = "Roboto-Black.ttf"; path = "../src/fonts/Roboto/Roboto-Black.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		79311141DBB84C8283A6AD7B /* Roboto-BlackItalic.ttf */ = {isa = PBXFileReference; name = "Roboto-BlackItalic.ttf"; path = "../src/fonts/Roboto/Roboto-BlackItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		A283C84CEE104C42BA45733E /* Roboto-Bold.ttf */ = {isa = PBXFileReference; name = "Roboto-Bold.ttf"; path = "../src/fonts/Roboto/Roboto-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
@@ -527,7 +518,6 @@
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				48CAE2B0F31949419C5B50DC /* libRNFetchBlob.a in Frameworks */,
 				AE655197188240B38B1F679C /* libAppHubTestUtils.a in Frameworks */,
-				FAC5FBEBA5F14D9FAFF7D804 /* libRCTCamera.a in Frameworks */,
 				F27A7D4A421747EDB2818C2C /* libRNFS.a in Frameworks */,
 				BDA8BFA4BB3742079BB0FF24 /* libRNImagePicker.a in Frameworks */,
 				E6BC8D3B43B0465F958E511E /* libRCTImageResizer.a in Frameworks */,
@@ -759,7 +749,6 @@
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				8127E03C4EFC436F9205ECC2 /* RNFetchBlob.xcodeproj */,
 				6B7253BC7B8C439D87210FAA /* AppHub.xcodeproj */,
-				D41B0864C5F54BFD94918912 /* RCTCamera.xcodeproj */,
 				B195DAFD137A4CE4A8939E57 /* RNFS.xcodeproj */,
 				DADAA4A3A004481EAE5C6BAF /* RNImagePicker.xcodeproj */,
 				DC65706E90B64FCB8600A954 /* RCTImageResizer.xcodeproj */,
@@ -821,7 +810,6 @@
 			children = (
 				BAB41041C9C243AE874B475F /* libRNFetchBlob.a */,
 				5C5AB072EB0043CD96802F34 /* libAppHubTestUtils.a */,
-				F9619871AC2A44369B2E157D /* libRCTCamera.a */,
 				E04E8282270D42909982E343 /* libRNFS.a */,
 				0FB0AD2FAF6341AC83E1E3DE /* libRNImagePicker.a */,
 				4920C556097548838B14F863 /* libRCTImageResizer.a */,
@@ -849,14 +837,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		E15E1A162041FB97008C60B5 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				E15E1A322041FB97008C60B5 /* libRCTCamera.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
+	
 		E15E1A182041FB97008C60B5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1033,10 +1014,6 @@
 				{
 					ProductGroup = ADBDB9201DFEBF0600ED6528 /* Products */;
 					ProjectRef = ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */;
-				},
-				{
-					ProductGroup = E15E1A162041FB97008C60B5 /* Products */;
-					ProjectRef = D41B0864C5F54BFD94918912 /* RCTCamera.xcodeproj */;
 				},
 				{
 					ProductGroup = 00C302B61ABCB90400DB3ED1 /* Products */;
@@ -1331,13 +1308,7 @@
 			remoteRef = E15E1A292041FB97008C60B5 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		E15E1A322041FB97008C60B5 /* libRCTCamera.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRCTCamera.a;
-			remoteRef = E15E1A312041FB97008C60B5 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
+	
 		E15E1A382041FB97008C60B5 /* libRCTImageResizer.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1608,7 +1579,6 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-fetch-blob/ios/**",
 					"$(SRCROOT)/../node_modules/apphub/AppHub/**",
-					"$(SRCROOT)/../node_modules/react-native-camera/ios",
 					"$(SRCROOT)/../node_modules/react-native-fs/**",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-image-resizer/ios/RCTImageResizer",
@@ -1652,7 +1622,6 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-fetch-blob/ios/**",
 					"$(SRCROOT)/../node_modules/apphub/AppHub/**",
-					"$(SRCROOT)/../node_modules/react-native-camera/ios",
 					"$(SRCROOT)/../node_modules/react-native-fs/**",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-image-resizer/ios/RCTImageResizer",
@@ -1697,7 +1666,6 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-fetch-blob/ios/**",
 					"$(SRCROOT)/../node_modules/apphub/AppHub/**",
-					"$(SRCROOT)/../node_modules/react-native-camera/ios",
 					"$(SRCROOT)/../node_modules/react-native-fs/**",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-image-resizer/ios/RCTImageResizer",
@@ -1727,7 +1695,6 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-fetch-blob/ios/**",
 					"$(SRCROOT)/../node_modules/apphub/AppHub/**",
-					"$(SRCROOT)/../node_modules/react-native-camera/ios",
 					"$(SRCROOT)/../node_modules/react-native-fs/**",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-image-resizer/ios/RCTImageResizer",
@@ -1764,7 +1731,6 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-fetch-blob/ios/**",
 					"$(SRCROOT)/../node_modules/apphub/AppHub/**",
-					"$(SRCROOT)/../node_modules/react-native-camera/ios",
 					"$(SRCROOT)/../node_modules/react-native-fs/**",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-image-resizer/ios/RCTImageResizer",
@@ -1817,7 +1783,6 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-fetch-blob/ios/**",
 					"$(SRCROOT)/../node_modules/apphub/AppHub/**",
-					"$(SRCROOT)/../node_modules/react-native-camera/ios",
 					"$(SRCROOT)/../node_modules/react-native-fs/**",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-image-resizer/ios/RCTImageResizer",
