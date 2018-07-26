@@ -1,63 +1,64 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {
-  Text,
-  View,
-  Touchable,
-  Header,
-  Image,
-  Footer,
-  SelectInput,
-  ScrollView,
-} from '../common';
+import {Text, View, Touchable, Header, Image, Footer, SelectInput, ScrollView,Spinner} from '../common';
 import { AuthActions, FollowActions, PostActions } from '../../actions';
-import { TextInput } from 'react-native';
+import { AsyncStorage } from 'react-native';
 import Toast from 'react-native-root-toast';
 import Accordion from 'react-native-collapsible/Accordion';
 import { View as NativeView } from 'react-native';
-import ModalSelector from 'react-native-modal-selector';
-
-  const statusOptions =[
-    {
-      key: 'Share on Facebook',
-      label: 'Share on Facebook',
-      value: 'Share on Facebook'
-    },
-    {
-      key: 'Share on Twitter',
-      label: 'Share on Twitter',
-      value: 'Share on Twitter'
-    }
-  ]
+import Modal from 'react-native-modal';
 
 class SingleTag extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       user: this.props.user,
-      currentTagData : this.props.navigation.state.params.tagData
+      modalVisible: false,
+      currentTagData : this.props.navigation.state.params.tagData,
+      goggleData : null
     };
+    this.updateWaterToPost = this.updateWaterToPost.bind(this);
+    AsyncStorage.getItem("res").then((value) => {
+      if(value){
+        let data = JSON.parse(value);
+        this.setState({goggleData : data.user})
+        console.log(data)
+      }
+    }).done();
   }
 
   componentDidMount() {
-    //this.props.getAllFollowers();
     this.props.getPosts();
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.getPostsErrorStatus === "jwt expired" || nextProps.getPostsErrorStatus === "jwt malformed") {
-      Toast.show("Please login to get your posts", {
-        duration: Toast.durations.LONG,
-        position: Toast.positions.BOTTOM
-      });
-      this.props.navigation.navigate("Login");
-    }
-    else {
+    if(this.state.goggleData === null){
+      if (nextProps.token === null){
+        Toast.show('Please login', {
+          duration: Toast.durations.LONG,
+          position: Toast.positions.BOTTOM,
+        });
+        this.props.navigation.navigate('Login');
+      } 
+    }  
+    if (nextProps.getPostsErrorStatus === 'FAILED') {
       Toast.show(nextProps.getPostsErrorStatus, {
         duration: Toast.durations.LONG,
-        position: Toast.positions.BOTTOM
+        position: Toast.positions.BOTTOM,
       });
-    }  
+    }
+    if (nextProps.updateWaterPostRequestStatus === 'SUCCESS') {
+      Toast.show(nextProps.updateWaterToPost, {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM,
+      });
+    }
+    if (nextProps.updateWaterPostErrorStatus === 'FAILED') {
+      Toast.show(nextProps.updateWaterPostErrorStatus, {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM,
+      });
+    }
   }
 
   goToCreatePost = () => {
@@ -73,27 +74,31 @@ class SingleTag extends React.PureComponent {
 
   updateWaterToPost = (section) => {
     const body = {
-        postId: section._id
-      };
+      postId: section._id
+    };
     this.props.updateWaterPost(body);
   };
 
-  /*  <View className="mt10">
-    <ModalSelector
-      data={statusOptions}
-      initValue=""
-    />
-  </View>*/
+  modelVisibleToggle = () => {
+    this.setState({ modalVisible: !this.state.modalVisible });
+  };
 
   renderHeader = (section , i) => (
     <NativeView>
       <View className="f-row p5 mr20">
         <View className="f-row f-both m20">
-          <Image
-            className="med_thumb m10"
-            source={require('../images/avatars/Abbott.png')}
-            resizeMode="cover"
-          />
+          {section.postedBy.picture ? 
+            (<Image
+              className="med_thumb m10"
+              source={{uri : section.postedBy.picture}}
+              resizeMode="cover"
+            />)
+            : (<Image
+              className="med_thumb m10"
+              source={require('../images/icons/Login_Black.png')}
+              resizeMode="cover"
+            />)
+          }
         </View>
         <View className="f-column j-start mt10 w-2-1">
           <Text className="black bold large t-left ">{section.postedBy.userName}</Text>
@@ -102,6 +107,18 @@ class SingleTag extends React.PureComponent {
           </View>
           <View className="f-row ">
             <Text className="lgBlue bold large t-left">{" "}#{this.state.currentTagData.tag}</Text>
+          </View>
+          <View className="f-row flex w-1-2">
+            {section.images &&
+              section.images.length > 0 &&
+              section.images[0] !== 'image1.png' &&
+              section.images.map(v => (
+                <Image
+                  className="x_l_thumb m5"
+                  source={{ uri: section.images[0] }}
+                  resizeMode="cover"
+                />
+              ))}
           </View>  
             {this.state.user &&
               this.state.user.role === 'admin' && (
@@ -122,34 +139,80 @@ class SingleTag extends React.PureComponent {
           </Touchable>  
         </View>
         <View className="dividerGrey" />
-        <View className="dividerGrey" />
       </View>
     </NativeView>
   );
 
   renderContent = (section, i) => (
     <View className="f-row p5 mr20" >
-      <View className=" f-row space-between w-1-1">
-        <View className="f-row" >
+      <View className=" f-row f-both space-between w-1-1">
+        <View className="f-row">
           <View>
-            <Image
-              className="micro1_thumb m10"
-              source={require('../images/icons/share.png')}
-              resizeMode="cover"
-            />
+            <Touchable onPress={this.modelVisibleToggle}>
+              <View className="mb5">
+                <Image
+                  className="micro1_thumb m10"
+                  source={require('../images/icons/share.png')}
+                  resizeMode="cover"
+                />
+                <Modal
+                  isVisible={this.state.modalVisible}
+                  backdropColor="grey"
+                  backdropOpacity={0.1}
+                >
+                  <View className="overlay f-column f-both">
+                    <View className=" f-row f-both m10">
+                      <Text className="lgBlue bold large_sm t-center">
+                        Share on Facebook
+                      </Text>
+                    </View>
+                    <View className="dividerGrey" />
+                    <View className=" f-row f-both m10">
+                      <Text className="lgBlue bold large_sm t-center">
+                        Share on Twitter
+                      </Text>
+                    </View>
+                  </View>
+                  <View className="overlayCancel">
+                    <View className="wh-1-1 f-row f-both m10">
+                      <Touchable
+                        className="p5"
+                        onPress={this.modelVisibleToggle}
+                      >
+                        <Text className="lgBlue bold large_sm t-center">
+                          Cancel
+                        </Text>
+                      </Touchable>
+                    </View>
+                  </View>
+                </Modal>
+              </View>
+            </Touchable>
           </View>
         </View>
-        <View className="f-row">
-          <Touchable className="p5" key={i} onPress={this.goToAddComment.bind(this, section)}>
-            <Image
-              className="micro m10"
-              source={require('../images/icons/cm.png')}
-              resizeMode="cover"
-            />
-          </Touchable>
-            { section.comments && section.comments.length > 0 &&
-              (<Text className="mt20 darkgrey bold small t-center"> ({section.comments.length} )</Text>)
-            }
+        <View className="f-row mb5">
+          <View slassName="mb10">
+            <Touchable
+              className="p5"
+              key={i}
+              onPress={this.goToAddComment.bind(this, section)}
+            >
+              <Image
+                className="micro m10"
+                source={require('../images/icons/cm.png')}
+                resizeMode="cover"
+              />
+            </Touchable>
+          </View>
+          <View className="marginTop10">
+            {section.comments &&
+              section.comments.length > 0 && (
+                <Text className="mt20 darkgrey bold small t-center">
+                  {' '}
+                  ({section.comments.length} )
+                </Text>
+              )}
+          </View>
         </View>
         <View className="marginTop15">
           <Touchable className="p5" key={i} onPress={this.updateWaterToPost.bind(this, section)}>
@@ -171,6 +234,11 @@ class SingleTag extends React.PureComponent {
       allPosts,
       getAllFollowersErrorStatus,
       getAllFollowersRequestStatus,
+      getPostsRequestStatus,
+      getPostsErrorStatus,
+      updateWaterPostRequestStatus,
+      updateWaterPostErrorStatus,
+      updateWaterToPost,
     } = this.props;
     const { props } = this;
 
@@ -205,6 +273,18 @@ class SingleTag extends React.PureComponent {
                       underlayColor="transparent"
                     />
                   )}
+                  {getPostsRequestStatus === 'REQUESTING' && (
+                    <View className="p15 mt30">
+                      <Spinner large />
+                    </View>
+                  )}
+                  {getPostsRequestStatus === 'SUCCESS' &&
+                    allPostsData &&
+                    allPostsData.length === 0 && (
+                    <View className="flex f-both p10">
+                      <Text className="black bold">There are no tags.</Text>
+                    </View>
+                  )}
               </View>
             </View>
           </View>
@@ -227,8 +307,12 @@ function mapStateToProps(state) {
     getAllPosts,
     getPostsRequestStatus,
     getPostsErrorStatus,
+    updateWaterPostRequestStatus,
+    updateWaterPostErrorStatus,
+    updateWaterToPost,
   } = state.post;
   const allPosts = getAllPosts && getAllPosts.posts;
+
   return {
     token,
     user,
@@ -238,6 +322,9 @@ function mapStateToProps(state) {
     allPosts,
     getPostsRequestStatus,
     getPostsErrorStatus,
+    updateWaterPostRequestStatus,
+    updateWaterPostErrorStatus,
+    updateWaterToPost,
   };
 }
 export default connect(mapStateToProps, {

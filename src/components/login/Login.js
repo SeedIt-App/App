@@ -178,8 +178,8 @@ class Login extends React.PureComponent {
                     :( <Text className="complementary title m10"> Login</Text>)
                     }
                   </Touchable>
-                  <View className="f-row mt10">
-                    <Text className="normal white">New </Text>
+                  <View className="f-row mt20">
+                    <Text className="normal white mt3">New</Text>
                     <Touchable className="mv20" onPress={this.goToSocialSignUp}>
                       <Text className="normal bold white"> ? SignUp </Text>
                     </Touchable>

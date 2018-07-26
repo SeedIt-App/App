@@ -32,7 +32,7 @@ const initialState = {
 };
 
 export default function (state = initialState, action) {
-  // create post
+// create post
   switch (action.type) {
     case PostActions.CREATE_POST_REQUEST:
       return ip.setIn(state, ['createPostRequestStatus'], requestStatus[0]);
@@ -46,7 +46,7 @@ export default function (state = initialState, action) {
       state = ip.setIn(state, ['createdPosts'], createPosts);
       return ip.setIn(state, ['createPostRequestStatus'], requestStatus[2]);
 
-    // get all posts
+// get all posts
     case PostActions.GET_POSTS_REQUEST:
       return ip.setIn(state, ['getPostsRequestStatus'], requestStatus[0]);
 
@@ -59,7 +59,7 @@ export default function (state = initialState, action) {
       state = ip.setIn(state, ['getAllPosts'], getAllPosts);
       return ip.setIn(state, ['getPostsRequestStatus'], requestStatus[2]);
 
-    // get water posts
+// get water posts
     case PostActions.GET_WATER_POSTS_REQUEST:
       return ip.setIn(state, ['getWaterPostsRequestStatus'], requestStatus[0]);
 
@@ -72,7 +72,7 @@ export default function (state = initialState, action) {
       state = ip.setIn(state, ['getWaterPosts'], waters);
       return ip.setIn(state, ['getWaterPostsRequestStatus'], requestStatus[2]);
 
-    // update(patch) water post
+// update(patch) water post
     case PostActions.UPDATE_WATER_POST_REQUEST:
       return ip.setIn(
         state,
@@ -97,7 +97,7 @@ export default function (state = initialState, action) {
         requestStatus[2],
       );
 
-    // add new comment to post
+// add new comment to post
     case PostActions.ADD_NEW_COMMENT_TO_POST_REQUEST:
       return ip.setIn(
         state,
@@ -124,7 +124,7 @@ export default function (state = initialState, action) {
         requestStatus[2],
       );
 
-    // get comments list
+// get comments list
     case PostActions.GET_COMMENT_LIST_REQUEST:
       return ip.setIn(state, ['getCommentListRequestStatus'], requestStatus[0]);
 
@@ -137,7 +137,7 @@ export default function (state = initialState, action) {
       state = ip.setIn(state, ['allCommentsList'], allCommentsList);
       return ip.setIn(state, ['getCommentListRequestStatus'], requestStatus[2]);
 
-    // patch call to reply on the post comment
+// patch call to reply on the post comment
     case PostActions.REPLY_TO_POST_COMMENT_REQUEST:
       return ip.setIn(
         state,
@@ -162,7 +162,7 @@ export default function (state = initialState, action) {
         requestStatus[2],
       );
 
-    // get all reply on the comment
+// get all reply on the comment
     case PostActions.GET_ALL_RPL_ON_COMMENT_REQUEST:
       return ip.setIn(
         state,
@@ -191,7 +191,7 @@ export default function (state = initialState, action) {
         requestStatus[2],
       );
 
-    // User create post on the timiline
+// User create post on the timiline
     case PostActions.CREATE_POST_ON_TIMELINE_REQUEST:
       return ip.setIn(
         state,

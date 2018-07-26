@@ -1,8 +1,9 @@
 import { put, call, all, fork, takeLatest, select } from 'redux-saga/effects';
-import { NewsFeedActions, AuthActions } from '../actions';
+import { NewsFeedActions } from '../actions';
 import { GET } from '../api';
 import idx from 'idx';
 
+// news feed by logged in user
 function* userNewsFeed(action) {
   yield put(NewsFeedActions.userNewsFeedRequest());
   try {
@@ -22,6 +23,7 @@ function* userNewsFeed(action) {
   }
 }
 
+// news feed for guest user
 function* guestUserNewsFeed(action) {
   yield put(NewsFeedActions.guestUserNewsFeedRequest());
   try {

@@ -3,6 +3,7 @@ import { FollowActions, AuthActions } from '../actions';
 import { GET, POST, PUT, PATCH } from '../api';
 import idx from 'idx';
 
+// follow another user
 function* followAnotherUser(action) {
   yield put(FollowActions.followAnotherUserRequest());
   try {
@@ -21,6 +22,7 @@ function* followAnotherUser(action) {
   }
 }
 
+//get all followers data
 function* getAllFollowers(action) {
   yield put(FollowActions.getAllFollowersRequest());
   try {
@@ -43,6 +45,7 @@ function* getAllFollowers(action) {
   }
 }
 
+// get all follwings user
 function* getAllUserFollowings(action) {
   yield put(FollowActions.getAllUserFollowingsRequest());
   try {

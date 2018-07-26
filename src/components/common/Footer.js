@@ -19,7 +19,7 @@ class Footer extends React.PureComponent {
     return (
       <View className="footer">
         <View className="w-1-0 f-row f-both space-between m10">
-          {token === null ? (
+          {this.props.token === null ? (
             <View className="p5">
               <Touchable onPress={this.goToLogin}>
                 <View className="f-row f-both m20">
@@ -46,6 +46,19 @@ class Footer extends React.PureComponent {
               <Text className="text">Profile</Text>
             </View>
           )}
+
+           <View className="p5">
+              <Touchable onPress={this.goToLogin}>
+                <View className="f-row f-both m20">
+                  <Image
+                    className="mini_thumb m10"
+                    source={require('../images/icons/Login.png')}
+                    resizeMode="cover"
+                  />
+                </View>
+              </Touchable>
+              <Text className="text">Login</Text>
+            </View>
 
           <View className="p5">
             <Touchable onPress={this.goToTags}>

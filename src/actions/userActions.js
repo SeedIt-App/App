@@ -1,6 +1,6 @@
 import { createAction } from 'redux-actions';
 
-// State for Get single User
+// State for Get single User process
 
 export const GET_SINGLE_USER = 'LUSER/GET_SINGLE_USER';
 export const GET_SINGLE_USER_REQUEST = 'LUSER/GET_SINGLE_USER_REQUEST';
@@ -12,7 +12,8 @@ export const getSingleUserRequest = createAction(GET_SINGLE_USER_REQUEST);
 export const getSingleUserSuccess = createAction(GET_SINGLE_USER_SUCCESS);
 export const getSingleUserFailure = createAction(GET_SINGLE_USER_FAILURE);
 
-// State for Get all User
+// State for Get all User process
+
 export const GET_ALL_USER = "LUSER/GET_ALL_USER";
 export const GET_ALL_USER_REQUEST = "LUSER/GET_ALL_USER_REQUEST";
 export const GET_ALL_USER_SUCCESS = "LUSER/GET_ALL_USER_SUCCESS";

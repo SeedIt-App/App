@@ -11,7 +11,7 @@ import {
   KeyboardAvoidingView,
 } from '../common';
 import Toast from 'react-native-root-toast';
-import { google } from 'react-native-simple-auth';
+import { google, facebook} from 'react-native-simple-auth';
 import { AsyncStorage } from "react-native"
 import { setAuthHeaders } from './../../api';
 import { AuthActions } from '../../actions';
@@ -51,29 +51,28 @@ class SocialSignUp extends React.PureComponent {
     });
   };
 
-
   goggleLogin = () => {
     console.log('starting user loging with google');
     google({
+      //appId : 'AIzaSyD0f2uYNf_EnOxtSFpD4tChsEDPHresegA'
       appId: '799673784369-1rm7ekellvreork3e9358oh58tbck0kh.apps.googleusercontent.com',
       callback: 'com.seedit:/oauth2redirect'
     }).then((res) => {
       setAuthHeaders(res.credentials.access_token);
         AsyncStorage.setItem('res', JSON.stringify(res));
-
-      /*const userData = {
-        firstName: res.user.given_name || '',
-        lastName: res.user.family_name || '',
-        userName: res.user.name || '',
-        email: res.user.email || '',
-        password: res.user.pwd || '',
-        phone: res.user.phoneNo || '',
-        gender: res.user.gender || '',
-        birthDate: '',
-        picture : res.user.picture || ''
-      };
-      console.log(this.state)
-      this.props.signup(userData);*/
+        /*const userData = {
+          firstName: res.user.given_name || '',
+          lastName: res.user.family_name || '',
+          userName: res.user.name || '',
+          email: res.user.email || '',
+          password: res.user.pwd || '',
+          phone: res.user.phoneNo || '',
+          gender: res.user.gender || '',
+          birthDate: '',
+          picture : res.user.picture || ''
+        };
+        console.log(this.state)
+        this.props.signup(userData);*/
       this.gotToBack()
     })
     .catch((error) => {
@@ -81,20 +80,42 @@ class SocialSignUp extends React.PureComponent {
     })
   }
 
-  /* facebookLogin = () => {
+  facebookLogin = () => {
+    console.log('starting user loging with facebook');
     facebook({
-        appId: '1805069292902129',
-        callback: 'https://developers.facebook.com/apps/1805069292902129/fb-login/'
-     }).then((info) => {
-      console.log(info, 'facebooks****************************')
+        appId: '1129148127232364',
+        callback: 'fb1129148127232364://authorize',
+        //callback: 'https://com.seedit/_oauth/facebook',
+        //scope: 'user_friends', // you can override the default scope here
+        fields: ['email', 'first_name', 'last_name' , 'picture' ], // you 
+     }).then((res) => {
+      console.log(res, 'facebooks****************************')
       // info.user - user details from the provider
-      // info.credentials - tokens from the provider
+      this.gotToBack()
     }).catch((error) => {
-      console.log(error, 'facebooke***************************')
+      console.log(error, 'facebooks***************************')
       // error.code
       // error.description
     });
-  }*/
+  }
+
+  twitterLogin = () => {
+    console.log('starting user loging with twitter');
+    facebook({
+        appId: 'UQe2aS1KYC4ZSLbpViNVNFxOY',
+        appSecret: 'cba0987654321',
+        callback: 'com.seedit://authorize',
+        //callback: 'https://com.seedit/_oauth/facebook',
+     }).then((res) => {
+      console.log(res, 'twitter****************************')
+      // info.user - user details from the provider
+      this.gotToBack()
+    }).catch((error) => {
+      console.log(error, 'twitter***************************')
+      // error.code
+      // error.description
+    });
+  }
 
   render() {
     const {props } = this;

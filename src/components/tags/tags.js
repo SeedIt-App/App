@@ -1,20 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {
-  Text,
-  View,
-  Touchable,
-  Header,
-  Image,
-  Footer,
-  ScrollView,
-  Spinner,
-  Colors,
-  SelectInput,
-  Overlay,
-} from '../common';
+import { Text, View, Touchable, Header, Image, Footer, ScrollView, Spinner, Overlay} from '../common';
 import { AuthActions, PostActions } from '../../actions';
-import { TextInput,AsyncStorage } from 'react-native';
+import { AsyncStorage } from 'react-native';
 import Toast from 'react-native-root-toast';
 import Accordion from 'react-native-collapsible/Accordion';
 import { View as NativeView } from 'react-native';
@@ -44,9 +32,8 @@ class Tags extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-
     if(this.state.goggleData === null){
-      if (nextProps.token == null){
+      if (nextProps.token === null){
         Toast.show('Please login', {
           duration: Toast.durations.LONG,
           position: Toast.positions.BOTTOM,
@@ -156,7 +143,8 @@ class Tags extends React.PureComponent {
                   source={{ uri: section.images[0] }}
                   resizeMode="cover"
                 />
-              ))}
+              ))
+            }
           </View>
           {this.state.user &&
             this.state.user.role === 'admin' && (
@@ -186,7 +174,7 @@ class Tags extends React.PureComponent {
   );
 
   renderContent = (section, i) => (
-    <View className="f-row p5 mr20">
+    <View className="f-row p5 mr20 f-both">
       <View className=" f-row f-both space-between w-1-1">
         <View className="f-row">
           <View>
@@ -200,7 +188,7 @@ class Tags extends React.PureComponent {
                 <Modal
                   isVisible={this.state.modalVisible}
                   backdropColor="grey"
-                  backdropOpacity={0.1}
+                  backdropOpacity={0.4}
                 >
                   <View className="overlay f-column f-both">
                     <View className=" f-row f-both m10">

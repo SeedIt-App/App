@@ -173,7 +173,6 @@ configurations.all {
 
 
 dependencies {
-
     implementation 'com.android.support:multidex:1.0.3'
     compile project(':react-native-vector-icons')
     compile project(':react-native-image-resizer')

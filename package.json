@@ -81,8 +81,7 @@
   },
   "rnpm": {
     "assets": [
-      "./src/fonts/Roboto",
-      "./src/fonts/SFPro"
+      "./src/fonts/OpenSans"
     ]
   }
 }

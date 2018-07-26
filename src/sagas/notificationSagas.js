@@ -3,6 +3,8 @@ import idx from 'idx';
 import { NotificationActions } from '../actions';
 import { GET, PUT, POST } from '../api';
 
+// get notifcation
+
 function* getNotifications() {
   yield put(NotificationActions.getNotificationsRequest());
   try {
@@ -20,14 +22,14 @@ function* getNotifications() {
   }
 }
 
-//const getUser = state => state.auth.user;
+const getUser = state => state.auth.user;
+const getDeviceId = state => state.auth.deviceId;
 
-//const getDeviceId = state => state.auth.deviceId;
+// device register for notfications
 
-/*function* registerDeviceForNotifications(action) {
+function* registerDeviceForNotifications(action) {
   yield put(NotificationActions.registerDeviceForNotificationsRequest());
   try {
-    //const { deviceId } = action.payload;
     const deviceId = yield select(getDeviceId);
     const user = yield select(getUser);
     // If we delete the token from either onesignal or database…this causes the issue. since its cached on phone
@@ -51,6 +53,8 @@ function* getNotifications() {
   }
 }
 
+// device deRegister for notfications
+
 function* deregisterDeviceForNotifications() {
   yield put(NotificationActions.deregisterDeviceForNotificationsRequest());
   try {
@@ -69,12 +73,12 @@ function* deregisterDeviceForNotifications() {
     yield put(NotificationActions.deregisterDeviceForNotificationsFailure(msgError));
   }
 }
-*/
+
 export default function* authSagas() {
   yield all([
     fork(takeLatest, NotificationActions.GET_NOTIFICATIONS, getNotifications),
   ]);
- /* yield all([
+  yield all([
     fork(
       takeLatest,
       NotificationActions.REGISTER_DEVICE_FOR_NOTIFICATIONS,
@@ -87,5 +91,5 @@ export default function* authSagas() {
       NotificationActions.DEREGISTER_DEVICE_FOR_NOTIFICATIONS,
       deregisterDeviceForNotifications,
     ),
-  ]);*/
+  ]);
 }

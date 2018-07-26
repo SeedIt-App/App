@@ -5,14 +5,15 @@ import Styles from './Styles';
 
 const textStyle = StyleSheet.create({
   text: {
-    fontFamily: 'Roboto-Light',
+    fontFamily: 'OpenSans-Light',
     fontWeight: '300',
     color: 'black',
     fontSize: 15,
     backgroundColor: 'transparent',
   },
   bold: {
-    fontFamily: 'Roboto-Bold',
+    fontFamily: 'OpenSans-Bold',
+    fontWeight: '600',
   },
   heading: {
     fontSize: 24,
@@ -56,6 +57,9 @@ const textStyle = StyleSheet.create({
   darkGrey: {
     color: Colors.darkgrey,
   },
+  lightGrey : {
+    color : Colors.lightGrey,
+  },
   blue: {
     color: Colors.headerBg,
   },
@@ -80,7 +84,7 @@ const textStyle = StyleSheet.create({
     fontSize: 17,
   },
   large_sm: {
-    fontSize: 20,
+    fontSize: 18,
   },
   x_large: {
     fontSize: 25,

@@ -15,6 +15,8 @@ const initialState = {
   token: null
 };
 
+// state set User user
+
 export default function(state = initialState, action) {
   switch (action.type) {
     case AuthActions.SET_AUTH_USER: {
@@ -32,7 +34,7 @@ export default function(state = initialState, action) {
       return state;
     }
 
-    //Refresh token
+//Refresh token
     case AuthActions.REFRESH_TOKEN_REQUEST:
       return ip.setIn(state, ["refreshTokenRequestStatus"], requestStatus[0]);
 
@@ -43,7 +45,7 @@ export default function(state = initialState, action) {
     case AuthActions.REFRESH_TOKEN_SUCCESS:
       return ip.setIn(state, ["refreshTokenRequestStatus"], requestStatus[2]);
 
-    //Forgot Password
+//Forgot Password
     case AuthActions.FORGOT_PASSWORD_REQUEST:
       return ip.setIn(state, ["forgotPasswordRequestStatus"], requestStatus[0]);
 
@@ -54,7 +56,7 @@ export default function(state = initialState, action) {
     case AuthActions.FORGOT_PASSWORD_SUCCESS:
       return ip.setIn(state, ["forgotPasswordRequestStatus"], requestStatus[2]);
 
-    //reset password
+//reset password
     case AuthActions.RESET_PASSWORD_REQUEST:
       return ip.setIn(state, ["resetPasswordRequestStatus"], requestStatus[0]);
 

@@ -101,9 +101,8 @@ class EditProfile extends React.PureComponent {
   }
 
   editProfile = () => {
-
-    if(this.state.flag){
-       const nameArr = this.state.fullName;
+    if(this.state.flag === false){
+      const nameArr = this.state.fullName;
       const addressArr = this.state.fullAddress;
 
       const firstName = nameArr
@@ -221,7 +220,7 @@ class EditProfile extends React.PureComponent {
                     <Image
                       className="big_thumb"
                       source={{ uri: ( (this.state.image)  || (luser && luser.picture) || (this.state.goggleData && this.state.goggleData.picture) )}}
-                      resizeMode="stretch"
+                      resizeMode="cover"
                     />
                   ) : (
                       <Image

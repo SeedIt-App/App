@@ -37,41 +37,30 @@ class NewsFeedHeader extends React.PureComponent {
               />
             </Touchable>
             <Text className="complementary title bold m10">{props.title}</Text>
-           
-            {props.title === 'Newsfeed' &&
-              token !== '' ? (
-                <Touchable
-                  className="pull-right mr20"
-                  onPress={() => this.props.createPostRequest()}
-                >
-                  <Image
-                    className="mini1_thumb"
-                    source={require('../images/icons/plus.png')}
-                  />
-                </Touchable>
-              ) : null
-            }
-
-            {props.title === 'Newsfeed' && 
-              token === null ?
-                (
-                <Touchable
+          
+            {
+              (this.props.token === null) &&
+                (<Touchable
                   className="pull-right"
                   onPress={this.goToSocialSignUp}
                   >
                   <Text className="complementary title m10">Sign Up</Text>
                 </Touchable>
-                ) :
-                 (<Touchable
-                  className="pull-right"
-                    onPress={this.goToNotification}
-                  >
-                  <Image
-                    className="mini1_thumb"
-                    source={require('../images/icons/alerts.png')}
-                  />
-                </Touchable>)
+                )
               }
+            { 
+              (this.props.token !== null) &&
+              (<Touchable
+                className="pull-right"
+                  onPress={this.goToNotification}
+                >
+                <Image
+                  className="mini1_thumb"
+                  source={require('../images/icons/alerts.png')}
+                />
+              </Touchable>
+              )
+            }
           </View>
         </View>
         <View className="dividerBlack" />

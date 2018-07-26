@@ -1,16 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {
-  Text,
-  View,
-  Touchable,
-  Header,
-  Image,
-  Footer,
-  SelectInput,
-  ScrollView,
-  Spinner,
-} from '../common';
+import {Text, View, Touchable, Header, Image, Footer, SelectInput, ScrollView, Spinner} from '../common';
 import { AuthActions, FollowActions, PostActions } from '../../actions';
 import { TextInput,AsyncStorage } from 'react-native';
 import Toast from 'react-native-root-toast';
@@ -27,6 +17,7 @@ class Follow extends React.PureComponent {
       modalVisible: false,
       goggleData : null
     };
+    this.updateWaterToPost = this.updateWaterToPost.bind(this);
     
     AsyncStorage.getItem("res").then((value) => {
       if(value){

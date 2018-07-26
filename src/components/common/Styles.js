@@ -97,6 +97,9 @@ const margins = {
   ml15: {
     marginLeft: 15,
   },
+  mt3 : {
+    marginTop: 2,
+  },
   mt5: {
     marginTop: 5,
   },
@@ -560,6 +563,12 @@ export default StyleSheet.create({
     width: 70,
     backgroundColor: '#D8F6F7',
   },
+  showSelectedGender: {
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: Colors.vlblue,
+    backgroundColor: 'transparent',
+  },
   submitField: {
     height: 40,
     width: 120,
@@ -618,7 +627,7 @@ export default StyleSheet.create({
     borderColor: Colors.white,
     borderWidth: 1,
     flexDirection: 'row',
-    height: 120,
+    height: 100,
     alignItems: 'center',
   },
   overlayCancel: {
@@ -632,7 +641,7 @@ export default StyleSheet.create({
     borderColor: Colors.white,
     borderWidth: 1,
     flexDirection: 'row',
-    height: 60,
+    height: 50,
     alignItems: 'center',
   },
   shadowBox: {

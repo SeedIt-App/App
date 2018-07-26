@@ -130,9 +130,9 @@ class CreatePost extends React.PureComponent {
                   <View className="f-row f-both mr20 m20">
                     {user && picture ? (
                       <Image
-                        className="normal_thumb"
+                        className="med_thumb"
                         source={{ uri: idx(user, _ => _.picture) }}
-                        resizeMode="stretch"
+                        resizeMode="cover"
                       />
                     ) : (
                       <Image

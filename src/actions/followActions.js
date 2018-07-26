@@ -1,6 +1,6 @@
 import { createAction } from 'redux-actions';
 
-// State for follow another user
+// State for follow another user process
 
 export const FOLLOW_ANOTHER_USER = 'FOLLOW/FOLLOW_ANOTHER_USER';
 export const FOLLOW_ANOTHER_USER_REQUEST = 'FOLLOW/FOLLOW_ANOTHER_USER_REQUEST';
@@ -12,7 +12,7 @@ export const followAnotherUserRequest = createAction(FOLLOW_ANOTHER_USER_REQUEST
 export const followAnotherUserSuccess = createAction(FOLLOW_ANOTHER_USER_SUCCESS);
 export const followAnotherUserFailure = createAction(FOLLOW_ANOTHER_USER_FAILURE);
 
-// State for get all followers
+// State for get all followers process
 
 export const GET_ALL_FOLLOWERS = 'FOLLOW/GET_ALL_FOLLOWERS';
 export const GET_ALL_FOLLOWERS_REQUEST = 'FOLLOW/GET_ALL_FOLLOWERS_REQUEST';
@@ -24,7 +24,7 @@ export const getAllFollowersRequest = createAction(GET_ALL_FOLLOWERS_REQUEST);
 export const getAllFollowersSuccess = createAction(GET_ALL_FOLLOWERS_SUCCESS);
 export const getAllFollowersFailure = createAction(GET_ALL_FOLLOWERS_FAILURE);
 
-// State for get all user followings
+// State for get all user followings process
 
 export const GET_ALL_USER_FOLLOWINGS = 'FOLLOW/GET_ALL_USER_FOLLOWINGS';
 export const GET_ALL_USER_FOLLOWINGS_REQUEST = 'FOLLOW/GET_ALL_USER_FOLLOWINGS_REQUEST';

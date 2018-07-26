@@ -135,12 +135,20 @@ class CreateComment extends React.PureComponent {
             <View className="f-column bg-transparent  space-between">
               <View className="mt10">
                 <View className="f-row p5 mr20">
-                  <View className="f-row f-both m20">
-                    <Image
-                      className="med_thumb m10"
-                      source={require('../images/avatars/Abbott.png')}
-                      resizeMode="cover"
-                    />
+                  <View className="f-row f-both m20 mr20">
+                   {this.props.user && this.props.user.picture ? (
+                      <Image
+                        className="med_thumb"
+                        source={{ uri: idx(this.props.user, _ => _.picture) }}
+                        resizeMode="cover"
+                      />
+                    ) : (
+                      <Image
+                        className="normal_thumb"
+                        source={require('../images/icons/user.png')}
+                        resizeMode="contain"
+                      />
+                    )}
                   </View>
                   <View className="f-column j-start mt10 ">
                     <View className="f-row">

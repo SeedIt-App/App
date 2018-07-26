@@ -26,7 +26,7 @@ export default function (state = initialState, action) {
       state = ip.setIn(state, ['userNewsFeed'], userNewsFeed);
       return ip.setIn(state, ['userNewsFeedRequestStatus'], requestStatus[2]);
 
-    // get GUEST_USER_NEWS_FEED
+// get GUEST_USER_NEWS_FEED
     case NewsFeedActions.GUEST_USER_NEWS_FEED_REQUEST:
       return ip.setIn(
         state,

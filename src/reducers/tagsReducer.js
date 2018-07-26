@@ -25,9 +25,10 @@ const initialState = {
   getAllFollowersTagErrorStatus: null
 };
 
-// State for get all tags list
 export default function(state = initialState, action) {
   switch (action.type) {
+
+// State for get all tags list
     case TagsActions.GET_ALL_TAGS_LIST_REQUEST:
       return ip.setIn(state, ["getAllTagsListRequestStatus"], requestStatus[0]);
 
@@ -40,7 +41,7 @@ export default function(state = initialState, action) {
       state = ip.setIn(state, ["getAllTags"], getAllTagsLists);
       return ip.setIn(state, ["getAllTagsListRequestStatus"], requestStatus[2]);
 
-    // State for Get create new tag
+// State for Get create new tag
     case TagsActions.CREATE_NEW_TAG_REQUEST:
       return ip.setIn(state, ["createNewTagRequestStatus"], requestStatus[0]);
 
@@ -53,7 +54,7 @@ export default function(state = initialState, action) {
       state = ip.setIn(state, ["createdNewTag"], createdNewTag);
       return ip.setIn(state, ["createNewTagRequestStatus"], requestStatus[2]);
 
-    // State for Get single tag
+// State for Get single tag
     case TagsActions.GET_SINGLE_TAG_REQUEST:
       return ip.setIn(state, ["getSingleTagRequestStatus"], requestStatus[0]);
 
@@ -66,7 +67,7 @@ export default function(state = initialState, action) {
       state = ip.setIn(state, ["getSingleTag"], getSingleTag);
       return ip.setIn(state, ["getSingleTagRequestStatus"], requestStatus[2]);
 
-    // State for Update(patch) tag name
+// State for Update(patch) tag name
     case TagsActions.UPDATE_TAG_NAME_REQUEST:
       return ip.setIn(
         state,
@@ -91,7 +92,7 @@ export default function(state = initialState, action) {
         requestStatus[2]
       );
 
-    // State for delete tag
+// State for delete tag
     case TagsActions.DELETE_TAG_REQUEST:
       return ip.setIn(state, ["deleteTagRequestStatus"], requestStatus[0]);
 
@@ -115,7 +116,7 @@ export default function(state = initialState, action) {
       state = ip.setIn(state, ["followTag"], followTag);
       return ip.setIn(state, ["followTagRequestStatus"], requestStatus[2]);
 
-    // State for all tag followers list
+// State for all tag followers list
 
     case TagsActions.GET_ALL_FOLLOWERS_TAG_REQUEST:
       return ip.setIn(

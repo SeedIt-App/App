@@ -17,17 +17,17 @@ class NotificationHandler extends React.PureComponent {
     console.log('Setting up Notification Handlers');
     this.props.getNotifications();
     OneSignal.inFocusDisplaying(2);
-    OneSignal.addEventListener('received', this.onNotificationReceived);
-    OneSignal.addEventListener('opened', this.onNotificationOpened);
-    OneSignal.addEventListener('registered', this.onRegistered);
-    OneSignal.addEventListener('ids', this.onIds);
+    OneSignal.addEventListener('received', this.onNotificationReceived.bind(this));
+    OneSignal.addEventListener('opened', this.onNotificationOpened.bind(this));
+   // OneSignal.addEventListener('registered', this.onRegistered);
+    OneSignal.addEventListener('ids', this.onIds.bind(this));
     OneSignal.configure();  // add this to trigger `ids` event
   }
 
   componentWillUnmount() {
     OneSignal.removeEventListener('received', this.onNotificationReceived);
     OneSignal.removeEventListener('opened', this.onNotificationOpened);
-    OneSignal.removeEventListener('registered', this.onRegistered);
+   // OneSignal.removeEventListener('registered', this.onRegistered);
     OneSignal.removeEventListener('ids', this.onIds);
   }
 
@@ -40,9 +40,9 @@ class NotificationHandler extends React.PureComponent {
     console.log('on Notification Opened', { openResult });
   };
 
-  onRegistered = notifData => {
+  /*onRegistered = notifData => {
     console.log('On registered', notifData);
-  };
+  };*/
 
   onIds = ({ pushToken, userId }) => {
     console.log('On Ids', { pushToken, userId });

@@ -111,13 +111,13 @@ class SignUp extends React.PureComponent {
         });
       }
       else if(!validateUserName.test(this.state.username)){
-        Toast.show("Please provide valid username with minimun 4 and maximum 16 charecters", {
+        Toast.show("Please provide valid username with minimun 4 and maximum 16 characters", {
           duration: Toast.durations.LONG,
           position: Toast.positions.BOTTOM,
         });
       }
       else if(!validatePassword.test(this.state.pwd)){
-        Toast.show("Please provide valid password with minimun 6 characters", {
+        Toast.show("Please provide valid password minimum 6 characters, at least one uppercase letter, one lowercase letter, one number and one special character", {
           duration: Toast.durations.LONG,
           position: Toast.positions.BOTTOM,
         });
@@ -129,7 +129,7 @@ class SignUp extends React.PureComponent {
         });
       }
       else if(!validateEmail.test(this.state.email)){
-        Toast.show("Please provide valid email minimum six characters, at least one uppercase letter, one lowercase letter, one number and one special character", {
+        Toast.show("Please provide valid email format", {
           duration: Toast.durations.LONG,
           position: Toast.positions.BOTTOM,
         });
@@ -241,7 +241,7 @@ class SignUp extends React.PureComponent {
                       style={{ color: 'white', fontSize: 16, width: 280 }}
                       value={this.state.phoneNo}
                       autoCapitalize="none"
-                      placeholder="Phone no"
+                      placeholder="Phone Number"
                       placeholderTextColor='white'
                       underlineColorAndroid="transparent"
                       onChangeText={phoneNo => this.setState({ phoneNo })}
@@ -306,7 +306,7 @@ class SignUp extends React.PureComponent {
                       {this.state.gender.map((g,i) => (
                         this.state.selectedGender === g ?
                           <View className="f-row">
-                          <Touchable  key={i} 
+                          <Touchable  key={i} className="showSelectedGender"
                             onPress={this.selectGender.bind(this, g)}>
                             <Text className="complementary bold m10">{g}</Text>
                           </Touchable>

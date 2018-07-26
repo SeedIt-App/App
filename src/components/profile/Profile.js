@@ -1,18 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import idx from 'idx';
-import {
-  View,
-  Image,
-  Touchable,
-  Text,
-  Colors,
-  KeyboardAvoidingView,
-  Header,
-  Footer,
-  ScrollView,
-} from '../common';
-import { TextInput, AsyncStorage } from 'react-native';
+import {View, Image, Touchable, Text, Colors, KeyboardAvoidingView, Header, Footer,ScrollView} from '../common';
+import { AsyncStorage } from 'react-native';
 import {
   AuthActions,
   UserActions,
@@ -133,7 +123,7 @@ class Profile extends React.PureComponent {
                     />)
                   }
                 </View>
-                <View className="f-column mt10">
+                <View className="f-column">
                   <Touchable
                     className="p5"
                     key={i}
@@ -157,7 +147,7 @@ class Profile extends React.PureComponent {
             ))}
           {singleUser === null && (
             <View>
-              <Text className="f-both darkGrey t-center bold medium">
+              <Text className="f-both lightGrey t-center bold medium">
                 There is no liked posts
               </Text>
             </View>
@@ -185,7 +175,10 @@ class Profile extends React.PureComponent {
                     />)
                   }
                 </View>
-                <View className="f-column w-2-1 mt10">
+                <View className="f-column w-2-1">
+                  <Text className="black bold large t-left">
+                    {p.postedBy.userName}
+                  </Text>
                   <View className="f-both">
                     <Text className="black large t-left">{p.text}</Text>
                   </View>
@@ -202,7 +195,7 @@ class Profile extends React.PureComponent {
           {allPosts &&
             allPosts.length === 0 && (
               <View>
-                <Text className="f-both darkGrey t-center bold medium">
+                <Text className="f-both lightGrey t-center bold medium">
                   There is no followers
                 </Text>
               </View>
@@ -230,7 +223,7 @@ class Profile extends React.PureComponent {
                     />)
                   }
                 </View>
-                <View className="f-column  mt10">
+                <View className="f-column">
                   <Touchable
                     className="p5"
                     key={i}
@@ -255,7 +248,7 @@ class Profile extends React.PureComponent {
           {allFollowers &&
             allFollowers.length === 0 && (
               <View>
-                <Text className="f-both darkGrey t-center bold medium">
+                <Text className="f-both lightGrey t-center bold medium">
                   There is no followers
                 </Text>
               </View>
@@ -283,7 +276,7 @@ class Profile extends React.PureComponent {
                     />)
                   }
                 </View>
-                <View className="f-column mt10">
+                <View className="f-column">
                   <Touchable
                     className="p5"
                     key={i}
@@ -308,7 +301,7 @@ class Profile extends React.PureComponent {
           {allfollowings &&
             allfollowings.length === 0 && (
               <View>
-                <Text className="f-both darkGrey t-center bold medium">
+                <Text className="f-both lightGrey t-center bold medium">
                   There is no followers
                 </Text>
               </View>
@@ -381,10 +374,10 @@ class Profile extends React.PureComponent {
                       luser.firstName &&
                       `${luser.firstName || (this.state.goggleData && this.state.goggleData.given_name)} ${luser.lastName || (this.state.goggleData && this.state.goggleData.family_name)}` )}
                   </Text>
-                  <Text className="darkGrey medium">
+                  <Text className="lightGrey medium">
                     {( (luser && luser.userName && luser.userName) || (this.state.goggleData && this.state.goggleData.given_name) )}
                   </Text>
-                  <Text className="darkGrey medium">
+                  <Text className="lightGrey medium">
                     {luser && luser.address && fullAddress === 'undefined'
                       ? 'Address'
                       : 'Address'}
@@ -394,7 +387,7 @@ class Profile extends React.PureComponent {
             </View>
             <View className="bg-transparent f-row mt10 space-between">
               <View className="mh25 mt10">
-                <Text className="darkGrey medium">
+                <Text className="lightGrey medium">
                   {(luser && luser.bio) || 'Bio'}
                 </Text>
               </View>
@@ -511,6 +504,7 @@ function mapStateToProps(state) {
     getSingleUserRequestStatus,
     getSingleUserErrorStatus,
   } = state.loggedUser;
+  
   const { user } = state.auth;
   const token = state.auth.authToken;
 

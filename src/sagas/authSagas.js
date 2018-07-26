@@ -3,6 +3,8 @@ import { AuthActions } from "../actions";
 import { POST, PUT } from "../api";
 import idx from "idx";
 
+// sign up user
+
 function* doSignUp(action) {
   yield put(AuthActions.signupRequest());
   try {
@@ -17,6 +19,8 @@ function* doSignUp(action) {
     yield put(AuthActions.signupFailure(msgError));
   }
 }
+
+// login user
 
 function* doLogin(action) {
   yield put(AuthActions.loginRequest());
@@ -42,6 +46,8 @@ function* doLogin(action) {
 const getUser = state => state.auth.user;
 console.log(getUser, "getUser");
 
+// refresh token
+
 function* refreshToken(action) {
   yield put(AuthActions.refreshTokenRequest());
   try {
@@ -61,24 +67,7 @@ function* refreshToken(action) {
     yield put(AuthActions.refreshTokenFailure(msgError));
   }
 }
-
-/*function* doSignupByGoggle(action) {
-  yield put(AuthActions.googlesignupRequest());
-  try {
-    const googleLoginURL = '/auth/google';
-    const { response } = yield call(GET, googleLoginURL);
-    yield put(AuthActions.googlesignupSuccess());
-    yield put(AuthActions.setAuthUser({
-      user: idx(response, _ => _.data.data),
-    }));
-  } catch (error) {
-    let msgError = error;
-    if (error.data) {
-      msgError = error.data.error.message;
-    }
-    yield put(AuthActions.googlesignupFailure(msgError));
-  }
-}*/
+// forgot Password
 
 function* forgotPassword(action) {
   yield put(AuthActions.forgotPasswordRequest());
@@ -95,6 +84,8 @@ function* forgotPassword(action) {
     yield put(AuthActions.forgotPasswordFailure(msgError));
   }
 }
+
+// reset Password
 
 function* resetPassword(action) {
   yield put(AuthActions.resetPasswordRequest());

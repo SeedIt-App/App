@@ -8,6 +8,8 @@ const initialState = {
   notifications: null
 };
 
+// state Notification
+
 export default function (state = initialState, action) {
   switch (action.type) {
     case NotificationActions.GET_NOTIFICATIONS_REQUEST:

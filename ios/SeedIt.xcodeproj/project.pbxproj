@@ -307,7 +307,6 @@
 			remoteGlobalIDString = 555FF3BA1B37AC8D0064F175;
 			remoteInfo = AppHubTests;
 		};
-	
 		E15E1A372041FB97008C60B5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DC65706E90B64FCB8600A954 /* RCTImageResizer.xcodeproj */;
@@ -837,7 +836,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-	
 		E15E1A182041FB97008C60B5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1308,7 +1306,6 @@
 			remoteRef = E15E1A292041FB97008C60B5 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-	
 		E15E1A382041FB97008C60B5 /* libRCTImageResizer.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;

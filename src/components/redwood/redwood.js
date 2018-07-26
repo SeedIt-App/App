@@ -11,7 +11,7 @@ import {
   Spinner,
 } from '../common';
 import { AuthActions, PostActions } from '../../actions';
-import { TextInput , AsyncStorage} from 'react-native';
+import { AsyncStorage} from 'react-native';
 import Toast from 'react-native-root-toast';
 import Accordion from 'react-native-collapsible/Accordion';
 import { View as NativeView } from 'react-native';
@@ -29,6 +29,8 @@ class Redwood extends React.PureComponent {
       modalVisible: false,
       goggleData : null
     };
+    this.updateWaterToPost = this.updateWaterToPost.bind(this);
+    
     AsyncStorage.getItem("res").then((value) => {
       if(value){
         let data = JSON.parse(value);

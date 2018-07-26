@@ -46,6 +46,20 @@ class PublicProfile extends React.PureComponent {
         position: Toast.positions.BOTTOM,
       });
     }
+    if (nextProps.getPostsRequestStatus === 'SUCCESS') {
+      if (nextProps.allPosts && nextProps.allPosts.length > 0) {
+        nextProps.allPosts.forEach(p => {
+          if (p.waters.length > 0) {
+            this.state.allLikePost.push(p.waters);
+            if (this.state.allLikePost.length > 0) {
+              this.state.allLikePost.forEach(p => {
+                this.props.getSingleUser(p);
+              });
+            }
+          }
+        });
+      }
+    }
   }
 
   componentDidMount() {
@@ -70,14 +84,54 @@ class PublicProfile extends React.PureComponent {
       getAllUserFollowingsErrorStatus,
       followAnotherUserRequestStatus,
       followAnotherUserErrorStatus,
+      singleUser,
+      getSingleUserRequestStatus,
+      getSingleUserErrorStatus,
     } = this.props;
 
     if (this.state.activeFlag === 'liked') {
       return (
         <View>
-          <Text className="f-both darkGrey t-center bold medium">
-            There is no liked posts
-          </Text>
+          {singleUser &&
+            singleUser.map((user, i) => (
+              <View className="f-row p5 mr20">
+                <View className="f-row f-both m20">
+                  {user.picture ? 
+                    (<Image
+                      className="med_thumb m10"
+                      source={{uri : user.picture}}
+                      resizeMode="cover"
+                    />)
+                    : (<Image
+                      className="med_thumb m10"
+                      source={require('../images/icons/Login_Black.png')}
+                      resizeMode="cover"
+                    />)
+                  }
+                </View>
+                <View className="f-column">
+                  <View className="f-both">
+                    <Text className="black large t-left">
+                      {user.userName} {'\n'} {user.email}
+                    </Text>
+                  </View>
+                </View>
+                <View className="f-row pull-right f-both m20">
+                  <Image
+                    className="normal_thumb m10"
+                    source={require('../images/icons/drop.jpg')}
+                    resizeMode="cover"
+                  />
+                </View>
+              </View>
+            ))}
+          {singleUser === null && (
+            <View>
+              <Text className="f-both darkGrey t-center bold medium">
+                There is no liked posts
+              </Text>
+            </View>
+          )}
         </View>
       );
     } else if (this.state.activeFlag === 'posted') {
@@ -100,7 +154,7 @@ class PublicProfile extends React.PureComponent {
                     />)
                   }
                 </View>
-                <View className="f-column w-2-1 mt10">
+                <View className="f-column w-2-1">
                   <View className="f-both">
                     <Text className="black large t-left">{p.text}</Text>
                   </View>
@@ -144,7 +198,7 @@ class PublicProfile extends React.PureComponent {
                     />)
                   }
                 </View>
-                <View className="f-column mt10">
+                <View className="f-column">
                   <View className="f-both">
                     <Text className="black large t-left">
                       {p.userName} {'\n'} {p.email}
@@ -190,7 +244,7 @@ class PublicProfile extends React.PureComponent {
                     />)
                   }
                 </View>
-                <View className="f-column mt10">
+                <View className="f-column">
                   <View className="f-both">
                     <Text className="black large t-left">
                       {f.userName} {'\n'} {f.email}
@@ -230,6 +284,9 @@ class PublicProfile extends React.PureComponent {
       getAllUserFollowingsErrorStatus,
       followAnotherUserRequestStatus,
       followAnotherUserErrorStatus,
+      singleUser,
+      getSingleUserRequestStatus,
+      getSingleUserErrorStatus,
     } = this.props;
     console.log(this.props);
 
@@ -417,6 +474,13 @@ function mapStateToProps(state) {
     getPostsErrorStatus,
   } = state.post;
   const allPosts = getAllPosts && getAllPosts.posts;
+
+  const {
+    singleUser,
+    getSingleUserRequestStatus,
+    getSingleUserErrorStatus,
+  } = state.loggedUser;
+
   return {
     getAllFollowersRequestStatus,
     getAllFollowersErrorStatus,
@@ -428,6 +492,9 @@ function mapStateToProps(state) {
     allPosts,
     allFollowers,
     allfollowings,
+    singleUser,
+    getSingleUserRequestStatus,
+    getSingleUserErrorStatus,
   };
 }
 

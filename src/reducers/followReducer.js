@@ -14,31 +14,31 @@ const initialState = {
 };
 
 // state follow another user
-export default function (state = initialState, action) {
-  switch (action.type) {
-    case FollowActions.FOLLOW_ANOTHER_USER_REQUEST:
-      return ip.setIn(
-        state,
-        ['followAnotherUserRequestStatus'],
-        requestStatus[0],
-      );
+  export default function (state = initialState, action) {
+    switch (action.type) {
+      case FollowActions.FOLLOW_ANOTHER_USER_REQUEST:
+        return ip.setIn(
+          state,
+          ['followAnotherUserRequestStatus'],
+          requestStatus[0],
+        );
 
-    case FollowActions.FOLLOW_ANOTHER_USER_FAILURE:
-      state = ip.setIn(state, ['followAnotherUserErrorStatus'], action.payload);
-      return ip.setIn(
-        state,
-        ['followAnotherUserRequestStatus'],
-        requestStatus[1],
-      );
+      case FollowActions.FOLLOW_ANOTHER_USER_FAILURE:
+        state = ip.setIn(state, ['followAnotherUserErrorStatus'], action.payload);
+        return ip.setIn(
+          state,
+          ['followAnotherUserRequestStatus'],
+          requestStatus[1],
+        );
 
-    case FollowActions.FOLLOW_ANOTHER_USER_SUCCESS:
-      return ip.setIn(
-        state,
-        ['followAnotherUserRequestStatus'],
-        requestStatus[2],
-      );
+      case FollowActions.FOLLOW_ANOTHER_USER_SUCCESS:
+        return ip.setIn(
+          state,
+          ['followAnotherUserRequestStatus'],
+          requestStatus[2],
+        );
 
-    // State for get all followers
+// State for get all followers
 
     case FollowActions.GET_ALL_FOLLOWERS_REQUEST:
       return ip.setIn(
@@ -64,7 +64,7 @@ export default function (state = initialState, action) {
         requestStatus[2],
       );
 
-    // State for get all user followings
+// State for get all user followings
     case FollowActions.GET_ALL_USER_FOLLOWINGS_REQUEST:
       return ip.setIn(
         state,

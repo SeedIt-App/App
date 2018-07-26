@@ -10,6 +10,8 @@ const initialState = {
 };
 
 export default function(state = initialState, action) {
+// state signup user
+
   switch (action.type) {
     case AuthActions.SIGNUP_REQUEST:
       return ip.setIn(state, ["signupRequestStatus"], requestStatus[0]);
@@ -20,16 +22,6 @@ export default function(state = initialState, action) {
 
     case AuthActions.SIGNUP_SUCCESS:
       return ip.setIn(state, ["signupRequestStatus"], requestStatus[2]);
-
-    case AuthActions.GOOGLESIGNUP_REQUEST:
-      return ip.setIn(state, ["googleSignupRequestStatus"], requestStatus[0]);
-
-    case AuthActions.GOOGLESIGNUP_FAILURE:
-      state = ip.setIn(state, ["googleSignupErrorStatus"], action.payload);
-      return ip.setIn(state, ["googleSignupRequestStatus"], requestStatus[1]);
-
-    case AuthActions.GOOGLESIGNUP_SUCCESS:
-      return ip.setIn(state, ["googleSignupRequestStatus"], requestStatus[2]);
 
     default:
       return state;

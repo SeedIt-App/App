@@ -1,5 +1,6 @@
 import { createAction } from 'redux-actions';
-// State for Get create post
+
+// State for Get create post process
 
 export const CREATE_POST = 'POST/CREATE_POST';
 export const CREATE_POST_REQUEST = 'POST/CREATE_POST_REQUEST';
@@ -11,7 +12,7 @@ export const createPostRequest = createAction(CREATE_POST_REQUEST);
 export const createPostSuccess = createAction(CREATE_POST_SUCCESS);
 export const createPostFailure = createAction(CREATE_POST_FAILURE);
 
-// State for Get posts
+// State for Get posts process
 
 export const GET_POSTS = 'POST/GET_POSTS';
 export const GET_POSTS_REQUEST = 'POST/GET_POSTS_REQUEST';
@@ -23,7 +24,7 @@ export const getPostsRequest = createAction(GET_POSTS_REQUEST);
 export const getPostsSuccess = createAction(GET_POSTS_SUCCESS);
 export const getPostsFailure = createAction(GET_POSTS_FAILURE);
 
-// Get water posts
+// Get water posts process
 
 export const GET_WATER_POSTS = 'POST/GET_WATER_POSTS';
 export const GET_WATER_POSTS_REQUEST = 'POST/GET_WATER_POSTS_REQUEST';
@@ -35,7 +36,7 @@ export const getWaterPostsRequest = createAction(GET_WATER_POSTS_REQUEST);
 export const getWaterPostsSuccess = createAction(GET_WATER_POSTS_SUCCESS);
 export const getWaterPostsFailure = createAction(GET_WATER_POSTS_FAILURE);
 
-// Update water post
+// Update water post process
 
 export const UPDATE_WATER_POST = 'POST/UPDATE_WATER_POST';
 export const UPDATE_WATER_POST_REQUEST = 'POST/UPDATE_WATER_POST_REQUEST';
@@ -47,7 +48,7 @@ export const updateWaterPostRequest = createAction(UPDATE_WATER_POST_REQUEST);
 export const updateWaterPostSuccess = createAction(UPDATE_WATER_POST_SUCCESS);
 export const updateWaterPostFailure = createAction(UPDATE_WATER_POST_FAILURE);
 
-// add New Comment To Post
+// add New Comment To Post process
 
 export const ADD_NEW_COMMENT_TO_POST = 'POST/ADD_NEW_COMMENT_TO_POST';
 export const ADD_NEW_COMMENT_TO_POST_REQUEST =
@@ -62,7 +63,7 @@ export const addNewCommentToPostRequest = createAction(ADD_NEW_COMMENT_TO_POST_R
 export const addNewCommentToPostSuccess = createAction(ADD_NEW_COMMENT_TO_POST_SUCCESS);
 export const addNewCommentToPostFailure = createAction(ADD_NEW_COMMENT_TO_POST_FAILURE);
 
-// get comments list
+// get comments list process
 
 export const GET_COMMENT_LIST = 'POST/GET_COMMENT_LIST';
 export const GET_COMMENT_LIST_REQUEST = 'POST/GET_COMMENT_LIST_REQUEST';
@@ -74,7 +75,7 @@ export const getCommentsListRequest = createAction(GET_COMMENT_LIST_REQUEST);
 export const getCommentsListSuccess = createAction(GET_COMMENT_LIST_SUCCESS);
 export const getCommentsListFailure = createAction(GET_COMMENT_LIST_FAILURE);
 
-// patch call to reply on the post comment
+// patch call to reply on the post comment process
 
 export const REPLY_TO_POST_COMMENT = 'POST/REPLY_TO_POST_COMMENT';
 export const REPLY_TO_POST_COMMENT_REQUEST =
@@ -89,7 +90,7 @@ export const replyToPostCommentRequest = createAction(REPLY_TO_POST_COMMENT_REQU
 export const replyToPostCommentSuccess = createAction(REPLY_TO_POST_COMMENT_SUCCESS);
 export const replyToPostCommentFailure = createAction(REPLY_TO_POST_COMMENT_FAILURE);
 
-// get all reply on the comment
+// get all reply on the comment process
 
 export const GET_ALL_RPL_ON_COMMENT = 'POST/GET_ALL_RPL_ON_COMMENT';
 export const GET_ALL_RPL_ON_COMMENT_REQUEST =
@@ -104,7 +105,7 @@ export const getAllRplOnCommentRequest = createAction(GET_ALL_RPL_ON_COMMENT_REQ
 export const getAllRplOnCommentSuccess = createAction(GET_ALL_RPL_ON_COMMENT_SUCCESS);
 export const getAllRplOnCommentFailure = createAction(GET_ALL_RPL_ON_COMMENT_FAILURE);
 
-// User create post on the timiline
+// State for User create post on the timiline process
 
 export const CREATE_POST_ON_TIMELINE = 'POST/CREATE_POST_ON_TIMELINE';
 export const CREATE_POST_ON_TIMELINE_REQUEST =

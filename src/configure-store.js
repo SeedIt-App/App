@@ -3,7 +3,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import reducer from './reducers';
 import sagas from './sagas';
-import { AuthActions, PostActions } from './actions';
+import { AuthActions } from './actions';
 import { setAuthHeaders } from './api';
 
 const localStorageMiddleware = ({ getState }) => next => action => {
@@ -12,14 +12,6 @@ const localStorageMiddleware = ({ getState }) => next => action => {
     AsyncStorage.setItem('authState', JSON.stringify(getState().auth));
     setAuthHeaders(getState().auth.authToken);
   }
- /* else{
-    AsyncStorage.setItem('authState', JSON.stringify(getState().auth));
-    setAuthHeaders(getState().auth.authToken);
-  }*/
- /* if (action.type === AuthActions.LOGOUT) {
-    AsyncStorage.removeItem('authState');
-    setAuthHeaders('');
-  }*/
   return result;
 };
 

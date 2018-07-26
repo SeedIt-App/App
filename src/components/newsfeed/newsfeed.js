@@ -1,21 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {
-  Text,
-  View,
-  Touchable,
-  NewsFeedHeader,
-  Image,
-  Footer,
-  ScrollView,
-  Spinner,
-  Colors,
-} from '../common';
+import { Text, View, Touchable, NewsFeedHeader, Image, Footer, ScrollView, Spinner, Colors} from '../common';
 import { AuthActions, NewsFeedActions, PostActions } from '../../actions';
 import { TextInput, ListView } from 'react-native';
 import Toast from 'react-native-root-toast';
 import Accordion from 'react-native-collapsible/Accordion';
 import { View as NativeView } from 'react-native';
+import NotificationHandler from '../notification/NotificationHandler';
 
 const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 
@@ -70,11 +61,18 @@ class NewsFeed extends React.PureComponent {
             <View className="bg-transparent mt10 space-between">
               <View className="f-row p5 mr20">
                 <View className="f-row f-both m20">
-                  <Image
-                    className="med_thumb m10"
-                    source={require('../images/avatars/Abbott.png')}
-                    resizeMode="cover"
-                  />
+                  {searchPosts.postedBy.picture ? 
+                    (<Image
+                      className="med_thumb m10"
+                      source={{uri : searchPosts.postedBy.picture}}
+                      resizeMode="cover"
+                    />)
+                    : (<Image
+                      className="med_thumb m10"
+                      source={require('../images/icons/Login_Black.png')}
+                      resizeMode="cover"
+                    />)
+                  }
                 </View>
                 <View className="f-column j-start w-2-1 mt10">
                   <Text className="black bold large t-left">
@@ -95,29 +93,30 @@ class NewsFeed extends React.PureComponent {
                   </View>
 
                   <View className="f-column">
-                    {searchPosts.tags &&
-                      searchPosts.tags.length > 0 &&
-                      searchPosts.tags.map(t => (
-                        <View className="f-row flex w-1-2 mr30">
+                    <View className="f-row flex w-1-2 mr30">
+                      {searchPosts.tags &&
+                        searchPosts.tags.length > 0 &&
+                        searchPosts.tags.map((v, i) => (
                           <Text className="lgBlue bold large t-left">
                             {' '}
-                            #{t.tag}
+                            #{v.tag}
                           </Text>
-                        </View>
-                      ))}
-                    {searchPosts.images &&
-                      searchPosts.images.length > 0 &&
-                      searchPosts.images[0] !== 'image1.png' &&
-                      searchPosts.images.map(value => (
-                        <View className="f-row flex w-1-2 mr30">
+                        ))}
+                    </View>
+                   
+                  </View>
+                   <View className="f-row flex w-1-2 mr30">
+                      {searchPosts.images &&
+                        searchPosts.images.length > 0 &&
+                        searchPosts.images[0] !== 'image1.png' &&
+                        searchPosts.images.map(v => (
                           <Image
                             className="x_l_thumb m5"
-                            source={{ uri: value }}
+                            source={{ uri: v }}
                             resizeMode="cover"
                           />
-                        </View>
-                      ))}
-                  </View>
+                        ))}
+                    </View>
                 </View>
                 <View className="f-row pull-right f-both m20">
                   <Touchable
@@ -151,6 +150,7 @@ class NewsFeed extends React.PureComponent {
     } = this.props;
     return (
       <View className="screen">
+        <NotificationHandler />
         <NewsFeedHeader
           title="NewsFeed"
           navigation={this.props.navigation}

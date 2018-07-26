@@ -19,6 +19,8 @@ const initialState = {
 
 export default function(state = initialState, action) {
   switch (action.type) {
+// State for get profile 
+
     case UserActions.PROFILE_REQUEST:
       return ip.setIn(state, ["profileRequestStatus"], requestStatus[0]);
 
@@ -32,6 +34,8 @@ export default function(state = initialState, action) {
       state = ip.setIn(state, ["luser"], luser);
       return state;
 
+// State for get all user 
+
     case UserActions.GET_ALL_USER_REQUEST:
       return ip.setIn(state, ["getAllUserRequestStatus"], requestStatus[0]);
 
@@ -44,6 +48,8 @@ export default function(state = initialState, action) {
       state = ip.setIn(state, ["getAllUserRequestStatus"], requestStatus[2]);
       state = ip.setIn(state, ["allUsers"], allUsers);
       return state;
+
+// State for get single user 
 
     case UserActions.GET_SINGLE_USER_REQUEST:
       return ip.setIn(
@@ -61,6 +67,8 @@ export default function(state = initialState, action) {
       state = ip.setIn(state, ["getSingleUserRequestStatus"], requestStatus[2]);
       state = ip.setIn(state, ["singleUser"], singleUserData);
       return state;
+
+// State for edit profile 
 
     case UserActions.EDITPROFILE_REQUEST:
       return ip.setIn(state, ["editProfileRequestStatus"], requestStatus[0]);

@@ -7,6 +7,8 @@ const initialState = {
   loginErrorStatus: null,
 };
 
+// state for login user
+
 export default function (state = initialState, action) {
   switch (action.type) {
     case AuthActions.LOGIN_REQUEST:
