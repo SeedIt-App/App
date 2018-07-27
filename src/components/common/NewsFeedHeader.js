@@ -44,7 +44,7 @@ class NewsFeedHeader extends React.PureComponent {
                   className="pull-right"
                   onPress={this.goToSocialSignUp}
                   >
-                  <Text className="complementary title m10">Sign Up</Text>
+                  <Text className="complementary large_sm m10">Sign Up</Text>
                 </Touchable>
                 )
               }
@@ -76,7 +76,6 @@ function mapStateToProps(state) {
     refreshTokenErrorStatus,
   } = state.auth;
   const token = state.auth.authToken;
-  console.log(state, 'HeaderState');
   return {
     user,
     token,

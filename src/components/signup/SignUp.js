@@ -52,20 +52,24 @@ class SignUp extends React.PureComponent {
     });
   }
   componentWillReceiveProps(nextProps) {
-    let message = null
-    if (nextProps.signupErrorStatus && nextProps.signupErrorStatus.message  === 'Validation Error') {
-      nextProps.signupErrorStatus.errors.forEach(function(e) {
-        message = e.field.split('.$').pop();
+    let messages = null
+    if (nextProps.errorData && nextProps.errorData.message  === 'Validation Error') {
+      nextProps.errorData.errors.forEach(function(e) {
+        messages = e.field.split('.$').pop();
       })
-      Toast.show(message, {
+      Toast.show(messages,{
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
+        backgroundColor : '#bcf2c8',
+        textColor : 'black',
       });
     }
-    if (nextProps.signupRequestStatus == 'SUCCESS') {
-      Toast.show('Signed Up successfully', {
+    if (nextProps.signupRequestStatus === 'SUCCESS') {
+      Toast.show('Signed Up successfully',{
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
+        backgroundColor : '#bcf2c8',
+        textColor : 'black',
       });
       this.props.navigation.navigate('Login');
     }
@@ -84,14 +88,14 @@ class SignUp extends React.PureComponent {
     let validateEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     const userData = {
-      firstName: this.state.firstname,
-      lastName: this.state.lastname,
-      userName: this.state.username,
-      email: this.state.email,
-      password: this.state.pwd,
-      phone: this.state.phoneNo,
-      gender: this.state.selectedGender,
-      birthDate: this.state.date,
+      firstName: this.state.firstname || 'aa',
+      lastName: this.state.lastname || 'aaa',
+      userName: this.state.username || 'aaaa',
+      email: this.state.email || 'aa@gmail.com',
+      password: this.state.pwd || 'Welcome@123',
+      phone: this.state.phoneNo || '8956857452',
+      gender: this.state.selectedGender || 'female',
+      birthDate: this.state.date || '07-20-1998',
     };
     if(this.state.firstname ==="" || this.state.lastname ==="" ||
         this.state.username ==="" ||this.state.email ==="" ||
@@ -101,43 +105,57 @@ class SignUp extends React.PureComponent {
       Toast.show("Fields is not allowed to be empty", {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
+        backgroundColor : '#bcf2c8',
+        textColor : 'black',
       });
     }
     else {
       if(!validateText.test(parseInt(this.state.firstname)) && !validateText.test(this.state.lastname)){
-        Toast.show("Please provide valid name", {
+        Toast.show("Please provide valid name",{
           duration: Toast.durations.LONG,
           position: Toast.positions.BOTTOM,
+          backgroundColor : '#bcf2c8',
+          textColor : 'black',
         });
       }
       else if(!validateUserName.test(this.state.username)){
-        Toast.show("Please provide valid username with minimun 4 and maximum 16 characters", {
+        Toast.show("Please provide valid username with minimun 4 and maximum 16 characters",{
           duration: Toast.durations.LONG,
           position: Toast.positions.BOTTOM,
+          backgroundColor : '#bcf2c8',
+          textColor : 'black',
         });
       }
       else if(!validatePassword.test(this.state.pwd)){
-        Toast.show("Please provide valid password minimum 6 characters, at least one uppercase letter, one lowercase letter, one number and one special character", {
+        Toast.show("Password should have minimum 6 characters, at least one uppercase letter, one lowercase letter, one number and one special character", {
           duration: Toast.durations.LONG,
           position: Toast.positions.BOTTOM,
+          backgroundColor : '#bcf2c8',
+          textColor : 'black',
         });
       }
       else if(this.state.pwd !== this.state.confirmPwd){
-        Toast.show("Please provide valid password and confirm password", {
+        Toast.show("Please provide valid password and confirm password",{
           duration: Toast.durations.LONG,
           position: Toast.positions.BOTTOM,
+          backgroundColor : '#bcf2c8',
+          textColor : 'black',
         });
       }
       else if(!validateEmail.test(this.state.email)){
-        Toast.show("Please provide valid email format", {
+        Toast.show("Please provide valid email format",{
           duration: Toast.durations.LONG,
           position: Toast.positions.BOTTOM,
+          backgroundColor : '#bcf2c8',
+          textColor : 'black',
         });
       }
       else if(!validatePhNumber.test(this.state.phoneNo)){
-        Toast.show("Please provide valid phone number", {
+        Toast.show("Please provide valid phone number",{
           duration: Toast.durations.LONG,
           position: Toast.positions.BOTTOM,
+          backgroundColor : '#bcf2c8',
+          textColor : 'black',
         });
       }
       else{
@@ -155,7 +173,7 @@ class SignUp extends React.PureComponent {
   };
 
   render() {
-    const { signupRequestStatus, signupErrorStatus } = this.props;
+    const { signupRequestStatus, errorData, signupErrorStatus } = this.props;
     return (
       <KeyboardAvoidingView>
         <View className="screen">
@@ -305,14 +323,14 @@ class SignUp extends React.PureComponent {
                     <View className="f-row">
                       {this.state.gender.map((g,i) => (
                         this.state.selectedGender === g ?
-                          <View className="f-row">
+                          <View className="f-row h38 mt5">
                           <Touchable  key={i} className="showSelectedGender"
                             onPress={this.selectGender.bind(this, g)}>
                             <Text className="complementary bold m10">{g}</Text>
                           </Touchable>
                         </View>
                         :
-                        <View className="f-row">
+                        <View className="f-row h38">
                           <Touchable  key={i} 
                             onPress={this.selectGender.bind(this, g)}>
                             <Text className="complementary m10">{g}</Text>
@@ -327,35 +345,35 @@ class SignUp extends React.PureComponent {
                       source={require('../images/icons/Cake.png')}
                     />
                     <View className="dividerVertrical mt7 mr10" />
-                    <DatePicker
-                      customStyles={{
-                        dateInput: {
-                          borderWidth: 0,
-                        },
-                        dateText: {
-                          marginLeft: -10,
-                          fontSize: 16,
-                          color: 'white',
-                          textAlign: 'left',
-                        },
-                        placeholderText: {
-                          marginLeft: -10,
-                          fontSize: 16,
-                          color: 'white',
-                          textAlign: 'left',
-                        },
-                      }}
-                      date={this.state.date}
-                      mode="date"
-                      placeholder="Birthday"
-                      format="MM-DD-YYYY"
-                      confirmBtnText="Confirm"
-                      cancelBtnText="Cancel"
-                      showIcon={false}
-                      onDateChange={date => {
-                        this.setState({ date });
-                      }}
-                    />
+                      <DatePicker
+                        style={{ width: 200 }}
+                        customStyles={{
+                          dateInput: {
+                            borderWidth: 0,
+                          },
+                          dateText: {
+                            marginLeft: -10,
+                            fontSize: 16,
+                            color: 'white',
+                            textAlign: 'left',
+                          },
+                          placeholderText: {
+                            fontSize: 16,
+                            color: 'white',
+                            textAlign: 'left',
+                          },
+                        }}
+                        date={this.state.date}
+                        mode="date"
+                        placeholder="Birthday (MM/DD/YYYY)"
+                        format="MM-DD-YYYY"
+                        confirmBtnText="Confirm"
+                        cancelBtnText="Cancel"
+                        showIcon={false}
+                        onDateChange={date => {
+                          this.setState({ date });
+                        }}
+                      />
                   </View>
                 </View>
               </ScrollView>
@@ -382,10 +400,11 @@ class SignUp extends React.PureComponent {
 }
 
 function mapStateToProps(state) {
-  const { signupErrorStatus, signupRequestStatus } = state.signup;
+  const { signupErrorStatus, signupRequestStatus, errorData } = state.signup;
   return {
     signupErrorStatus,
     signupRequestStatus,
+    errorData,
   };
 }
 export default connect(mapStateToProps, { ...AuthActions })(SignUp);

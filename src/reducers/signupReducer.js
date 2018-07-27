@@ -4,6 +4,7 @@ import { AuthActions } from "../actions";
 const requestStatus = ["REQUESTING", "FAILED", "SUCCESS"];
 const initialState = {
   signupRequestStatus: null,
+  errorData : null,
   signupErrorStatus: null,
   googleSignupRequestStatus : null,
   googleSignupErrorStatus : null,
@@ -17,7 +18,7 @@ export default function(state = initialState, action) {
       return ip.setIn(state, ["signupRequestStatus"], requestStatus[0]);
 
     case AuthActions.SIGNUP_FAILURE:
-      state = ip.setIn(state, ["signupErrorStatus"], action.payload);
+      state = ip.setIn(state, ["errorData"], action.payload);
       return ip.setIn(state, ["signupRequestStatus"], requestStatus[1]);
 
     case AuthActions.SIGNUP_SUCCESS:

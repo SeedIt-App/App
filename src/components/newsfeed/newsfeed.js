@@ -183,12 +183,6 @@ class NewsFeed extends React.PureComponent {
             <View class="p5">
               <View className="f-column">
                 <View className="bg-transparent mt10 space-between">
-                  {userNewsFeedRequestStatus === 'REQUESTING' ||
-                    (guestUserNewsFeedRequestStatus === 'REQUESTING' && (
-                      <View className="p15 mt30">
-                        <Spinner large />
-                      </View>
-                    ))}
                   {userNewsFeedRequestStatus === 'SUCCESS' ||
                   guestUserNewsFeedRequestStatus === 'SUCCESS' ||
                   (getAllNewsFeed && getAllNewsFeed.length > 0) ? (
@@ -266,7 +260,9 @@ class NewsFeed extends React.PureComponent {
                         </View>
                       </View>
                     ))
-                  ) : (null
+                  ) : (<View className="p15 mt30">
+                        <Spinner large />
+                      </View>
                   )}
                 </View>
               </View>

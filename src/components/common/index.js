@@ -16,9 +16,8 @@ import Header from './Header';
 import NewsFeedHeader from './NewsFeedHeader';
 import Footer from './Footer';
 import Switch from './Switch';
-import Prompt from './Prompt';
-import SelectInput from './SelectInput';
 import Overlay from './Overlay';
+import Prompt from './Prompt';
 
 export {
   KeyboardAvoidingView,
@@ -39,7 +38,6 @@ export {
   NewsFeedHeader,
   Footer,
   Switch,
-  Prompt,
-  SelectInput,
-  Overlay
+  Overlay,
+  Prompt
 };

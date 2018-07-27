@@ -12,7 +12,7 @@ function* doSignUp(action) {
     const { response } = yield call(POST, signUpURL, action.payload);
     yield put(AuthActions.signupSuccess());
   } catch (error) {
-    let msgError = error;
+    let msgError = null;
     if (error.data) {
       msgError = error.data;
     }

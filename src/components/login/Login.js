@@ -99,7 +99,7 @@ class Login extends React.PureComponent {
 
   forgotPassword = emailId => {
     const body = {
-      email  :emailId
+      email : emailId
     }
     this.props.forgotPassword({ body });
     this.toggleEmailPrompt();

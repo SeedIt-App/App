@@ -19,7 +19,7 @@ class Footer extends React.PureComponent {
     return (
       <View className="footer">
         <View className="w-1-0 f-row f-both space-between m10">
-          {this.props.token === null ? (
+          { this.props.token === null && (
             <View className="p5">
               <Touchable onPress={this.goToLogin}>
                 <View className="f-row f-both m20">
@@ -32,7 +32,8 @@ class Footer extends React.PureComponent {
               </Touchable>
               <Text className="text">Login</Text>
             </View>
-          ) : (
+          )}
+          { this.props.token !== null && (
             <View className="p5">
               <Touchable onPress={this.goToProfile}>
                 <View className="f-row f-both m20">
@@ -46,19 +47,6 @@ class Footer extends React.PureComponent {
               <Text className="text">Profile</Text>
             </View>
           )}
-
-           <View className="p5">
-              <Touchable onPress={this.goToLogin}>
-                <View className="f-row f-both m20">
-                  <Image
-                    className="mini_thumb m10"
-                    source={require('../images/icons/Login.png')}
-                    resizeMode="cover"
-                  />
-                </View>
-              </Touchable>
-              <Text className="text">Login</Text>
-            </View>
 
           <View className="p5">
             <Touchable onPress={this.goToTags}>
@@ -114,12 +102,13 @@ class Footer extends React.PureComponent {
   }
 }
 
-/* function mapStateToProps(state) {
-  const { profileRequestStatus, profileErrorStatus } = state.loggedUser;
+function mapStateToProps(state) {
+  const { user } = state.auth;
+  const token = state.auth.authToken;
   return {
-    profileRequestStatus,
-    profileErrorStatus,
+    user,
+    token
   };
-} */
+}
 
-export default Footer;
+export default connect(mapStateToProps, { ...AuthActions })(Footer);

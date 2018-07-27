@@ -564,10 +564,11 @@ export default StyleSheet.create({
     backgroundColor: '#D8F6F7',
   },
   showSelectedGender: {
+    height : 27,
     borderRadius: 5,
     borderWidth: 1,
-    borderColor: Colors.vlblue,
-    backgroundColor: 'transparent',
+    borderColor: Colors.lgBlue,
+    backgroundColor: Colors.lgBlue,
   },
   submitField: {
     height: 40,
