@@ -18,6 +18,7 @@ import Footer from './Footer';
 import Switch from './Switch';
 import Overlay from './Overlay';
 import Prompt from './Prompt';
+import RootToast from './RootToast';
 
 export {
   KeyboardAvoidingView,
@@ -39,5 +40,6 @@ export {
   Footer,
   Switch,
   Overlay,
+  RootToast,
   Prompt
 };

@@ -27,9 +27,11 @@ class NewsFeed extends React.PureComponent {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.guestUserNewsFeedErrorStatus) {
-      Toast.show(nextProps.guestUserNewsFeedErrorStatus, {
+      Toast.show(nextProps.guestUserNewsFeedErrorStatus,{
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
+        backgroundColor : '#bcf2c8',
+        textColor : 'black',
       });
     }
   }
@@ -289,13 +291,8 @@ function mapStateToProps(state) {
   let getAllNewsFeed = [];
   if (userNewsFeed && userNewsFeed.records.length > 0 && token) {
     getAllNewsFeed = userNewsFeed.records;
-    console.log(userNewsFeed.records, 'userNewsFeed********************');
   } else if (guestUserNewsFeed && guestUserNewsFeed.records.length > 0) {
     getAllNewsFeed = guestUserNewsFeed.records;
-    console.log(
-      guestUserNewsFeed.records,
-      'guestUserNewsFeed********************',
-    );
   }
   return {
     token,

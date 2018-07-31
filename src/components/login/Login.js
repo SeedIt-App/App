@@ -10,7 +10,7 @@ import {
   Colors,
   KeyboardAvoidingView,
   ScrollView,
-  Prompt,
+  Prompt,RootToast
 } from '../common';
 import { TextInput } from 'react-native';
 import { AuthActions } from '../../actions';
@@ -31,15 +31,19 @@ class Login extends React.PureComponent {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.loginErrorStatus) {
-      Toast.show(nextProps.loginErrorStatus, {
+      Toast.show(nextProps.loginErrorStatus,{
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
+        backgroundColor : '#bcf2c8',
+        textColor : 'black',
       });
     }
     if (nextProps.loginRequestStatus === 'SUCCESS') {
-      Toast.show('Logged in Successfully!', {
+      Toast.show('Logged in Successfully!',{
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
+        backgroundColor : '#bcf2c8',
+        textColor : 'black',
       });
       this.props.navigation.dispatch({
         type: 'Navigation/RESET',
@@ -69,17 +73,24 @@ class Login extends React.PureComponent {
       usernameOrEmail: this.state.username,
       password: this.state.password,
     };
+   /* if (this.state.username === '' || this.state.password == '') {
+      <RootToast/> 
+    }*/
     if (this.state.username === '' || this.state.password == '') {
-      Toast.show('Fields is not allowed to be empty', {
+      Toast.show('Fields is not allowed to be empty',{
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
+        backgroundColor : '#bcf2c8',
+        textColor : 'black',
       });
     }
     else {
       if(!validateEmailOrUserName.test(this.state.username)){
-        Toast.show('Please provide valid email Or Username', {
+        Toast.show('Please provide valid email Or Username',{
           duration: Toast.durations.LONG,
           position: Toast.positions.BOTTOM,
+          backgroundColor : '#bcf2c8',
+          textColor : 'black',
         });
       }
       else{

@@ -34,29 +34,37 @@ class SingleTag extends React.PureComponent {
   componentWillReceiveProps(nextProps) {
     if(this.state.goggleData === null){
       if (nextProps.token === null){
-        Toast.show('Please login', {
-          duration: Toast.durations.LONG,
-          position: Toast.positions.BOTTOM,
-        });
+        Toast.show('Please login',{
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM,
+        backgroundColor : '#bcf2c8',
+        textColor : 'black',
+      });
         this.props.navigation.navigate('Login');
       } 
     }  
     if (nextProps.getPostsErrorStatus === 'FAILED') {
-      Toast.show(nextProps.getPostsErrorStatus, {
+      Toast.show(nextProps.getPostsErrorStatus,{
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
+        backgroundColor : '#bcf2c8',
+        textColor : 'black',
       });
     }
     if (nextProps.updateWaterPostRequestStatus === 'SUCCESS') {
-      Toast.show(nextProps.updateWaterToPost, {
+      Toast.show(nextProps.updateWaterToPost,{
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
+        backgroundColor : '#bcf2c8',
+        textColor : 'black',
       });
     }
     if (nextProps.updateWaterPostErrorStatus === 'FAILED') {
-      Toast.show(nextProps.updateWaterPostErrorStatus, {
+      Toast.show(nextProps.updateWaterPostErrorStatus,{
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
+        backgroundColor : '#bcf2c8',
+        textColor : 'black',
       });
     }
   }

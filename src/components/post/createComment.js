@@ -31,9 +31,11 @@ class CreateComment extends React.PureComponent {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.addNewCommentToPostErrorStatus) {
-      Toast.show(nextProps.addNewCommentToPostErrorStatus, {
+      Toast.show(nextProps.addNewCommentToPostErrorStatus,{
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
+        backgroundColor : '#bcf2c8',
+        textColor : 'black',
       });
     }
   }
@@ -51,15 +53,19 @@ class CreateComment extends React.PureComponent {
       };
       this.props.addNewCommentToPost(body);
       if (this.props.addNewCommentToPostRequestStatus === 'SUCCESS') {
-        Toast.show('Comment added to the post', {
-          duration: Toast.durations.LONG,
-          position: Toast.positions.BOTTOM,
-        });
-      }
-    } else {
-      Toast.show('Please write the text for comment', {
+        Toast.show('Comment added to the post',{
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
+        backgroundColor : '#bcf2c8',
+        textColor : 'black',
+      });
+      }
+    } else {
+      Toast.show('Please write the text for comment',{
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM,
+        backgroundColor : '#bcf2c8',
+        textColor : 'black',
       });
     }
   };

@@ -30,24 +30,30 @@ class SocialSignUp extends React.PureComponent {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.signupErrorStatus ) {
-      Toast.show(nextProps.signupErrorStatus, {
+      Toast.show(nextProps.signupErrorStatus,{
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
+        backgroundColor : '#bcf2c8',
+        textColor : 'black',
       });
     }
-    if (nextProps.signupRequestStatus == 'SUCCESS') {
-      Toast.show('Signed Up successfully by Gmail', {
+   /* if (nextProps.signupRequestStatus === 'SUCCESS') {
+      Toast.show('Signed Up successfully by Gmail',{
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
+        backgroundColor : '#bcf2c8',
+        textColor : 'black',
       });
       this.props.navigation.navigate('Newsfeed');
-    }
+    }*/
   }
 
   gotoInformation = () => {
-    Toast.show('Work in progress!', {
+    Toast.show('Work in progress!',{
       duration: Toast.durations.LONG,
       position: Toast.positions.BOTTOM,
+      backgroundColor : '#bcf2c8',
+      textColor : 'black',
     });
   };
 

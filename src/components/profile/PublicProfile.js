@@ -34,16 +34,20 @@ class PublicProfile extends React.PureComponent {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.followAnotherUserErrorStatus) {
-      Toast.show(nextProps.followAnotherUserErrorStatus, {
+      Toast.show(nextProps.followAnotherUserErrorStatus,{
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
+        backgroundColor : '#bcf2c8',
+        textColor : 'black',
       });
     }
 
     if (nextProps.followAnotherUserRequestStatus === 'SUCCESS') {
-      Toast.show(nextProps.followAnotherUserRequestStatus, {
+      Toast.show(nextProps.followAnotherUserRequestStatus,{
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
+        backgroundColor : '#bcf2c8',
+        textColor : 'black',
       });
     }
     if (nextProps.getPostsRequestStatus === 'SUCCESS') {

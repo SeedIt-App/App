@@ -32,15 +32,19 @@ class CreatePost extends React.PureComponent {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.createPostErrorStatus) {
-      Toast.show(nextProps.createPostErrorStatus, {
+      Toast.show(nextProps.createPostErrorStatus,{
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
+        backgroundColor : '#bcf2c8',
+        textColor : 'black',
       });
     }
     if (nextProps.createPostRequestStatus === 'SUCCESS') {
-      Toast.show('Successfully posted', {
+      Toast.show('Successfully posted',{
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
+        backgroundColor : '#bcf2c8',
+        textColor : 'black',
       });
     }
   }
@@ -57,9 +61,11 @@ class CreatePost extends React.PureComponent {
       };
       this.props.createPost(body);
     } else {
-      Toast.show('Please write the text for post', {
+      Toast.show('Please write the text for post',{
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
+        backgroundColor : '#bcf2c8',
+        textColor : 'black',
       });
     }
   };

@@ -48,21 +48,24 @@ class EditProfile extends React.PureComponent {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.editProfileErrorStatus === 'FAILED') {
-      Toast.show(nextProps.editProfileErrorStatus, {
+      Toast.show(nextProps.editProfileErrorStatus,{
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
+        backgroundColor : '#bcf2c8',
+        textColor : 'black',
       });
     }
     if (nextProps.editProfileRequestStatus === 'SUCCESS') {
-      Toast.show('Profile updated successfully!', {
+      Toast.show('Profile updated successfully!',{
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
+        backgroundColor : '#bcf2c8',
+        textColor : 'black',
       });
     }
   }
 
   componentDidMount() {
-
     AsyncStorage.getItem("res").then((value) => {
       if(value){
         let data = JSON.parse(value);
@@ -138,9 +141,12 @@ class EditProfile extends React.PureComponent {
       this.props.editProfile(values);
     }
     else{
-      Toast.show('Sorry!! You can not updated your profile', {
+
+      Toast.show('Sorry!! You can not updated your profile',{
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
+        backgroundColor : '#bcf2c8',
+        textColor : 'black',
       });
     }
   };

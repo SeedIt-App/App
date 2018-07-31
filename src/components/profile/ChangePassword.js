@@ -26,9 +26,11 @@ class ChangePassword extends React.PureComponent {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.resetPasswordErrorStatus) {
-      Toast.show(nextProps.resetPasswordErrorStatus, {
+      Toast.show(nextProps.resetPasswordErrorStatus,{
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
+        backgroundColor : '#bcf2c8',
+        textColor : 'black',
       });
     }
   }
@@ -41,16 +43,20 @@ class ChangePassword extends React.PureComponent {
       newPassword: this.state.newPwd
     }
     if (this.state.oldPwd === '' || this.state.newPwd == '') {
-      Toast.show('Fields is not allowed to be empty', {
+      Toast.show('Fields is not allowed to be empty',{
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
+        backgroundColor : '#bcf2c8',
+        textColor : 'black',
       });
     }
     else {
       if(!validatePassword.test(this.state.newPwd)){
-        Toast.show('Please provide valid new password', {
+        Toast.show('Please provide valid new password',{
           duration: Toast.durations.LONG,
           position: Toast.positions.BOTTOM,
+          backgroundColor : '#bcf2c8',
+          textColor : 'black',
         });
       }
       else{
