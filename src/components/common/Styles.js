@@ -16,6 +16,9 @@ const margins = {
   m15: {
     margin: 15,
   },
+  m30 : {
+    margin: 30,
+  },
   mv5: {
     marginVertical: 5,
   },
@@ -553,13 +556,13 @@ export default StyleSheet.create({
     shadowOpacity: 1.0,
   },
   showPassword: {
-    height: 50,
+    height: Platform.OS === 'ios' ? 40 : 50,
     width: 70,
-    marginTop: -5,
+    marginTop: Platform.OS === 'ios' ? -2 : -5,
     backgroundColor: Colors.vlblue,
   },
   showPasswordAuth: {
-    height: 50,
+    height: Platform.OS === 'ios' ? 45  : 50,
     width: 70,
     backgroundColor: '#D8F6F7',
   },

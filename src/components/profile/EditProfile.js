@@ -12,7 +12,7 @@ import {
   ScrollView,
   BackgroundImage,
 } from '../common';
-import { TextInput , AsyncStorage} from 'react-native';
+import { TextInput , AsyncStorage, Platform  } from 'react-native';
 import { UserActions } from '../../actions';
 import Toast from 'react-native-root-toast';
 import idx from 'idx';
@@ -160,8 +160,11 @@ class EditProfile extends React.PureComponent {
       } else {
         ImageResizer.createResizedImage(response.uri, 100, 100, 'JPEG', 100, 0)
           .then(({ uri, path }) => {
-            const source = { uri };
-            this.uploadProfileImage(source.uri);
+            let source =  uri;
+            if (Platform.OS == 'ios') {
+              source = source.replace('file://', '');
+            }
+            this.uploadProfileImage(source);
           })
           .catch(err => {
             console.log(err);
@@ -241,17 +244,18 @@ class EditProfile extends React.PureComponent {
                 <View className="bgWhite f-row w-2-1 editField j-start m5">
                   <Text className="blue medium m10 bold ">Name :</Text>
                   <TextInput
-                    style={{ color: 'grey', fontSize: 16 }}
+                    style={{ color: 'grey', fontSize: 16 , flex : Platform.OS === 'ios' ? 1 : null}}
                     value={this.state.fullName || (this.state.goggleData && this.state.goggleData.given_name)}
                     autoCapitalize="none"
                     underlineColorAndroid="transparent"
                     onChangeText={fullName => this.setState({ fullName })}
+                    keyboardType = "numeric"
                   />
                 </View>
                 <View className="bgWhite f-row w-2-1 editField j-start m5">
                   <Text className="blue medium m10 bold ">Username :</Text>
                   <TextInput
-                    style={{ color: 'grey', fontSize: 16 }}
+                    style={{ color: 'grey', fontSize: 16 , flex : Platform.OS === 'ios' ? 1 : null}}
                     value={this.state.userName || (this.state.goggleData && this.state.goggleData.family_name)}
                     autoCapitalize="none"
                     underlineColorAndroid="transparent"
@@ -261,7 +265,7 @@ class EditProfile extends React.PureComponent {
                 <View className="bgWhite f-row w-2-1 editField j-start m5">
                   <Text className="blue medium m10 bold ">Country :</Text>
                   <TextInput
-                    style={{ color: 'grey', fontSize: 16 }}
+                    style={{ color: 'grey', fontSize: 16 , flex : Platform.OS === 'ios' ? 1 : null}}
                     value={this.state.country}
                     autoCapitalize="none"
                     underlineColorAndroid="transparent"
@@ -271,7 +275,7 @@ class EditProfile extends React.PureComponent {
                 <View className="bgWhite f-row w-2-1 editField j-start m5">
                   <Text className="blue medium m10 bold ">City, State :</Text>
                   <TextInput
-                    style={{ color: 'grey', fontSize: 16 }}
+                    style={{ color: 'grey', fontSize: 16 , flex : Platform.OS === 'ios' ? 1 : null}}
                     value={this.state.fullAddress}
                     autoCapitalize="none"
                     underlineColorAndroid="transparent"
@@ -281,7 +285,7 @@ class EditProfile extends React.PureComponent {
                 <View className="bgWhite w-2-1 textArea f-row j-start m5">
                   <Text className="blue medium m10 bold">Bio:</Text>
                   <TextInput
-                    style={{ color: 'grey', fontSize: 16 }}
+                    style={{ color: 'grey', fontSize: 16 , flex : Platform.OS === 'ios' ? 1 : null}}
                     value={this.state.bio}
                     autoCapitalize="none"
                     underlineColorAndroid="transparent"

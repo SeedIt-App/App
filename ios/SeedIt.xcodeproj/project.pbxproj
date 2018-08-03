@@ -67,7 +67,7 @@
 		BDA8BFA4BB3742079BB0FF24 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FB0AD2FAF6341AC83E1E3DE /* libRNImagePicker.a */; };
 		D42BD36412664C2CBD09B0F9 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D7743590666C4F52BD4AF6BD /* Ionicons.ttf */; };
 		E6BC8D3B43B0465F958E511E /* libRCTImageResizer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4920C556097548838B14F863 /* libRCTImageResizer.a */; };
-		ECDBDCCD3A2244D282CAF798 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CD4781A5B7D4C66AF643D8C /* libRNVectorIcons.a */; };
+		ECDBDCCD3A2244D282CAF798 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CD4781A5B7D4C66AF643D8C /* libRNVectorIcons.a */; settings = {ATTRIBUTES = (Weak, ); }; };
 		F43D4B8FA3C841F4A7CEC49C /* OpenSans-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 962BE1B0B70A4396B49B22C3 /* OpenSans-Light.ttf */; };
 /* End PBXBuildFile section */
 

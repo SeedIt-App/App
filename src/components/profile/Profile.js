@@ -42,7 +42,7 @@ class Profile extends React.PureComponent {
 
     if(this.state.goggleData ===null){
       if (nextProps.token == null || ''){
-        Toast.show('Please login',{
+        Toast.show('Please login' , {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
         backgroundColor : '#bcf2c8',

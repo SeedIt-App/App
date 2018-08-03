@@ -47,7 +47,6 @@ class Footer extends React.PureComponent {
               <Text className="text">Profile</Text>
             </View>
           )}
-
           <View className="p5">
             <Touchable onPress={this.goToTags}>
               <View className="f-row f-both m20">
@@ -77,7 +76,7 @@ class Footer extends React.PureComponent {
               <View className="f-row f-both m20 mt5">
                 <Image
                   className="micro1_thumb m10"
-                  source={require('../images/icons/Redwood_Tree.png')}
+                  source={require('../images/icons/Tree.jpg')}
                   resizeMode="center"
                 />
               </View>
