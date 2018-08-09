@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Seed-It</string>
+    <string name="facebook_app_id">2088512791387208</string>
+	<string name="fb_login_protocol_scheme">fb2088512791387208</string>
+	<string name="com.twitter.sdk.android.CONSUMER_KEY">976105505067282432-Zztx5Ta5jfk9nTtSpcBbpKZVsOkFTml</string>
+	<string name="com.twitter.sdk.android.CONSUMER_SECRET">pyps8ci2pD7w9IA1BHFXiKwIKR5zqFgHu1Mx8dgnW9TQd</string>
+
 </resources>

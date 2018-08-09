@@ -92,12 +92,12 @@ apply from: "../../node_modules/react-native/react.gradle"
  * Upload all the APKs to the Play Store and people will download
  * the correct one based on the CPU architecture of their device.
  */
-def enableSeparateBuildPerCPUArchitecture = false
+def enableSeparateBuildPerCPUArchitecture = true
 
 /**
  * Run Proguard to shrink the Java bytecode in release builds.
  */
-def enableProguardInReleaseBuilds = false
+def enableProguardInReleaseBuilds = true
 
 android {
     compileSdkVersion 26
@@ -190,6 +190,14 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
         transitive = true;
     }
+
+    // Include all the Twitter APIs
+    compile 'com.twitter.sdk.android:twitter:3.1.1'
+ 
+    //include only the necessary dependencies to avoid the Android dex limit
+    //compile 'com.twitter.sdk.android:twitter-core:3.1.1'
+    //compile 'com.twitter.sdk.android:tweet-ui:3.1.1'
+
     //compile 'com.google.android.gms:play-services-base:9.0.2'
 
     //classpath 'com.google.gms:google-services:3.0.0'

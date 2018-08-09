@@ -5,6 +5,19 @@ import { AuthActions, UserActions } from '../../actions';
 import { AsyncStorage } from 'react-native';
 
 class Header extends React.PureComponent {
+
+  constructor(props) {
+    super(props);
+
+    AsyncStorage.getItem("res").then((value) => {
+      if(value){
+        let data = JSON.parse(value);
+        this.setState({goggleData : data.user})
+        console.log(data)
+      }
+    }).done();
+  }
+  
   componentDidMount() {
     this.props.profile();
   }

@@ -11,7 +11,7 @@ import {
   KeyboardAvoidingView,
 } from '../common';
 import Toast from 'react-native-root-toast';
-import { google, facebook} from 'react-native-simple-auth';
+import { google, facebook, twitter} from 'react-native-simple-auth';
 import { AsyncStorage } from "react-native"
 import { setAuthHeaders } from './../../api';
 import { AuthActions } from '../../actions';
@@ -22,6 +22,8 @@ class SocialSignUp extends React.PureComponent {
     super(props);
     console.log(this.props)
       this.goggleLogin = this.goggleLogin.bind(this);
+      this.facebookLogin = this.facebookLogin.bind(this);
+      this.twitterLogin = this.twitterLogin.bind(this);
   }
 
   gotToBack = () => this.props.navigation.navigate('Newsfeed');
@@ -60,8 +62,10 @@ class SocialSignUp extends React.PureComponent {
   goggleLogin = () => {
     console.log('starting user loging with google');
     google({
-      //appId : 'AIzaSyD0f2uYNf_EnOxtSFpD4tChsEDPHresegA'
+      //our key
       appId: '799673784369-1rm7ekellvreork3e9358oh58tbck0kh.apps.googleusercontent.com',
+      // seedIt Key
+      //appId : '283522117594-69esp2ajjrc1oiv7hl6a6kf6hnc537sd.apps.googleusercontent.com',
       callback: 'com.seedit:/oauth2redirect'
     }).then((res) => {
       setAuthHeaders(res.credentials.access_token);
@@ -89,11 +93,14 @@ class SocialSignUp extends React.PureComponent {
   facebookLogin = () => {
     console.log('starting user loging with facebook');
     facebook({
-        appId: '1129148127232364',
-        callback: 'fb1129148127232364://authorize',
+        //Our key
+        //appId: '1129148127232364',
+        //seedIT key
+        appId: '2088512791387208',
+        callback: 'fb2088512791387208://authorize',
         //callback: 'https://com.seedit/_oauth/facebook',
-        //scope: 'user_friends', // you can override the default scope here
-        fields: ['email', 'first_name', 'last_name' , 'picture' ], // you 
+        scope: 'user_friends', // you can override the default scope here
+        fields: ['email', 'first_name', 'last_name', 'picture' ], // you 
      }).then((res) => {
       console.log(res, 'facebooks****************************')
       // info.user - user details from the provider
@@ -107,11 +114,10 @@ class SocialSignUp extends React.PureComponent {
 
   twitterLogin = () => {
     console.log('starting user loging with twitter');
-    facebook({
-        appId: 'UQe2aS1KYC4ZSLbpViNVNFxOY',
-        appSecret: 'cba0987654321',
+    twitter({
+        appId: '976105505067282432-Zztx5Ta5jfk9nTtSpcBbpKZVsOkFTml',
+        appSecret: 'pyps8ci2pD7w9IA1BHFXiKwIKR5zqFgHu1Mx8dgnW9TQd',
         callback: 'com.seedit://authorize',
-        //callback: 'https://com.seedit/_oauth/facebook',
      }).then((res) => {
       console.log(res, 'twitter****************************')
       // info.user - user details from the provider
@@ -142,12 +148,12 @@ class SocialSignUp extends React.PureComponent {
               </View>
               <View className="f-center marginTop20">
                 <View className=" f-row textField m10 f-both">
-                  <Touchable className="m20" onPress={this.gotoInformation}>
+                  <Touchable className="m20" onPress={this.facebookLogin.bind(this)}>
                     <Text className="bold darkGrey">Sign Up with Facebook</Text>
                   </Touchable>
                 </View>
                 <View className=" f-row textField m10 f-both">
-                  <Touchable className="m20" onPress={this.gotoInformation}>
+                  <Touchable className="m20" onPress={this.twitterLogin.bind(this)}>
                     <Text className="bold darkGrey">Sign Up with Twitter</Text>
                   </Touchable>
                 </View>
