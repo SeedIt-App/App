@@ -63,11 +63,12 @@ class SocialSignUp extends React.PureComponent {
     console.log('starting user loging with google');
     google({
       //our key
-      appId: '799673784369-1rm7ekellvreork3e9358oh58tbck0kh.apps.googleusercontent.com',
+      //appId: '799673784369-1rm7ekellvreork3e9358oh58tbck0kh.apps.googleusercontent.com',
       // seedIt Key
-      //appId : '283522117594-69esp2ajjrc1oiv7hl6a6kf6hnc537sd.apps.googleusercontent.com',
-      callback: 'com.seedit:/oauth2redirect'
+      appId : '283522117594-69esp2ajjrc1oiv7hl6a6kf6hnc537sd.apps.googleusercontent.com',
+      callback: 'com.seedit:/authorize'
     }).then((res) => {
+      console.log(res, 'google****************************')
       setAuthHeaders(res.credentials.access_token);
         AsyncStorage.setItem('res', JSON.stringify(res));
         /*const userData = {
@@ -86,7 +87,7 @@ class SocialSignUp extends React.PureComponent {
       this.gotToBack()
     })
     .catch((error) => {
-      console.log(error, 'googleError')
+      console.log(error, 'google')
     })
   }
 
@@ -101,7 +102,7 @@ class SocialSignUp extends React.PureComponent {
         //callback: 'https://com.seedit/_oauth/facebook',
         scope: 'user_friends', // you can override the default scope here
         fields: ['email', 'first_name', 'last_name', 'picture' ], // you 
-     }).then((res) => {
+    }).then((res) => {
       console.log(res, 'facebooks****************************')
       // info.user - user details from the provider
       this.gotToBack()
@@ -115,8 +116,8 @@ class SocialSignUp extends React.PureComponent {
   twitterLogin = () => {
     console.log('starting user loging with twitter');
     twitter({
-        appId: '976105505067282432-Zztx5Ta5jfk9nTtSpcBbpKZVsOkFTml',
-        appSecret: 'pyps8ci2pD7w9IA1BHFXiKwIKR5zqFgHu1Mx8dgnW9TQd',
+        appId: 'UQe2aS1KYC4ZSLbpViNVNFxOY',
+        appSecret: '6K2ovfLbElUlk1tMqRYvKYrzGUKFzNlhZ3q308ZyQSGR0P9xSc',
         callback: 'com.seedit://authorize',
      }).then((res) => {
       console.log(res, 'twitter****************************')
