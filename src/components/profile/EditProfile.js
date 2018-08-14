@@ -38,7 +38,6 @@ class EditProfile extends React.PureComponent {
       fullAddress: '',
       image: '',
       flag : false,
-      goggleData : null
     };
   }
 
@@ -66,17 +65,6 @@ class EditProfile extends React.PureComponent {
   }
 
   componentDidMount() {
-    AsyncStorage.getItem("res").then((value) => {
-      if(value){
-        let data = JSON.parse(value);
-        this.setState({goggleData : data.user})
-      }
-    }).done();
-
-    if(this.state.goggleData){
-      this.setState({flag : true})
-    }
-
     if (
       this.props.luser &&
       this.props.luser.address &&
@@ -91,20 +79,19 @@ class EditProfile extends React.PureComponent {
     }
     if (this.props.luser) {
       this.setState({
-        userName: this.props.luser.userName || (this.state.goggleData && this.state.goggleData.given_name) || '',
+        userName: this.props.luser.userName  || '',
         country:
           (this.props.luser.address && this.props.luser.address.country) || '',
         bio: this.props.luser.bio || '',
         badges: this.props.luser.badges || [],
         fullName:
-          `${this.props.luser.firstName || (this.state.goggleData && this.state.goggleData.given_name) } ${this.props.luser.lastName || (this.state.goggleData && this.state.goggleData.family_name)}` || '',
+          `${this.props.luser.firstName} ${this.props.luser.lastName}` || '',
       });
     }
 
   }
 
   editProfile = () => {
-    if(this.state.flag === false){
       const nameArr = this.state.fullName;
       const addressArr = this.state.fullAddress;
 
@@ -139,16 +126,6 @@ class EditProfile extends React.PureComponent {
         picture : this.state.image
       };
       this.props.editProfile(values);
-    }
-    else{
-
-      Toast.show('Sorry!! You can not updated your profile',{
-        duration: Toast.durations.LONG,
-        position: Toast.positions.BOTTOM,
-        backgroundColor : '#bcf2c8',
-        textColor : 'black',
-      });
-    }
   };
 
   openPicker = () => {
@@ -222,10 +199,10 @@ class EditProfile extends React.PureComponent {
             <View className="f-column p5">
               <View className="f-center mt15">
                 <Touchable className=" mb20" onPress={this.openPicker}>
-                  { this.state.image ||( luser && luser.picture) || ( this.state.goggleData && this.state.goggleData.picture) ? (
+                  { this.state.image ||( luser && luser.picture) ? (
                     <Image
                       className="big_thumb"
-                      source={{ uri: ( (this.state.image)  || (luser && luser.picture) || (this.state.goggleData && this.state.goggleData.picture) )}}
+                      source={{ uri: ( (this.state.image)  || (luser && luser.picture)  )}}
                       resizeMode="cover"
                     />
                   ) : (
@@ -242,7 +219,7 @@ class EditProfile extends React.PureComponent {
                   <Text className="blue medium m10 bold ">Name :</Text>
                   <TextInput
                     style={{ color: 'grey', fontSize: 16 }}
-                    value={this.state.fullName || (this.state.goggleData && this.state.goggleData.given_name)}
+                    value={this.state.fullName}
                     autoCapitalize="none"
                     underlineColorAndroid="transparent"
                     onChangeText={fullName => this.setState({ fullName })}
@@ -252,7 +229,7 @@ class EditProfile extends React.PureComponent {
                   <Text className="blue medium m10 bold ">Username :</Text>
                   <TextInput
                     style={{ color: 'grey', fontSize: 16 }}
-                    value={this.state.userName || (this.state.goggleData && this.state.goggleData.family_name)}
+                    value={this.state.userName}
                     autoCapitalize="none"
                     underlineColorAndroid="transparent"
                     onChangeText={userName => this.setState({ userName })}

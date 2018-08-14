@@ -26,28 +26,28 @@ class SocialSignUp extends React.PureComponent {
       this.twitterLogin = this.twitterLogin.bind(this);
   }
 
-  gotToBack = () => this.props.navigation.navigate('Newsfeed');
+  goToBack = () => this.props.navigation.navigate('Newsfeed');
   goToSignUp = () => this.props.navigation.navigate('SignUp');
   goToLogin = () => this.props.navigation.navigate('Login');
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.signupErrorStatus ) {
-      Toast.show(nextProps.signupErrorStatus,{
+    if (nextProps.oauthSignupErrorStatus) {
+      Toast.show(nextProps.oauthSignupErrorStatus,{
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
         backgroundColor : '#bcf2c8',
         textColor : 'black',
       });
     }
-   /* if (nextProps.signupRequestStatus === 'SUCCESS') {
-      Toast.show('Signed Up successfully by Gmail',{
+    if (nextProps.oauthSignupRequestStatus === 'SUCCESS') {
+      Toast.show('Signed Up successfully' ,{
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
         backgroundColor : '#bcf2c8',
         textColor : 'black',
       });
-      this.props.navigation.navigate('Newsfeed');
-    }*/
+      this.goToBack()
+    }
   }
 
   gotoInformation = () => {
@@ -62,54 +62,57 @@ class SocialSignUp extends React.PureComponent {
   goggleLogin = () => {
     console.log('starting user loging with google');
     google({
-      //our key
-      //appId: '799673784369-1rm7ekellvreork3e9358oh58tbck0kh.apps.googleusercontent.com',
-      // seedIt Key
       appId : '283522117594-69esp2ajjrc1oiv7hl6a6kf6hnc537sd.apps.googleusercontent.com',
       callback: 'com.seedit:/authorize'
     }).then((res) => {
-      console.log(res, 'google****************************')
-      setAuthHeaders(res.credentials.access_token);
-        AsyncStorage.setItem('res', JSON.stringify(res));
-        /*const userData = {
+      console.log(res, 'googleResponse')
+      //setAuthHeaders(res.credentials.access_token);
+        const userData = {
           firstName: res.user.given_name || '',
           lastName: res.user.family_name || '',
           userName: res.user.name || '',
           email: res.user.email || '',
-          password: res.user.pwd || '',
-          phone: res.user.phoneNo || '',
+          provider: 'google',
+          id: res.user.id || '',
+          accessToken : res.credentials.access_token || '',
           gender: res.user.gender || '',
           birthDate: '',
-          picture : res.user.picture || ''
+          photo : res.user.picture || '',
+          _raw: '' 
         };
-        console.log(this.state)
-        this.props.signup(userData);*/
-      this.gotToBack()
+        this.props.oauthSignup(userData);
     })
     .catch((error) => {
-      console.log(error, 'google')
+      console.log(error, 'googleError')
     })
   }
 
   facebookLogin = () => {
     console.log('starting user loging with facebook');
     facebook({
-        //Our key
-        //appId: '1129148127232364',
-        //seedIT key
         appId: '2088512791387208',
         callback: 'fb2088512791387208://authorize',
-        //callback: 'https://com.seedit/_oauth/facebook',
-        scope: 'user_friends', // you can override the default scope here
-        fields: ['email', 'first_name', 'last_name', 'picture' ], // you 
+        scope: 'user_birthday', // you can override the default scope here
+        fields: ['email', 'first_name', 'last_name', 'picture' ,'name'  ], // you 
     }).then((res) => {
-      console.log(res, 'facebooks****************************')
-      // info.user - user details from the provider
-      this.gotToBack()
+      console.log(res, 'facebooksResponse')
+        //setAuthHeaders(res.credentials.access_token);
+        const userData = {
+          firstName: res.user.first_name || '',
+          lastName: res.user.last_name || '',
+          userName: res.user.name || '',
+          email: res.user.email || '',
+          provider: 'facebook',
+          id: res.user.id || '',
+          accessToken : res.credentials.access_token || '',
+          gender: res.user.gender || 'other',
+          birthDate: '',
+          photo :  res.user.picture.data.url ||'',
+          _raw: '' 
+        };
+        this.props.oauthSignup(userData);
     }).catch((error) => {
-      console.log(error, 'facebooks***************************')
-      // error.code
-      // error.description
+      console.log(error, 'facebooksError')
     });
   }
 
@@ -120,19 +123,31 @@ class SocialSignUp extends React.PureComponent {
         appSecret: '6K2ovfLbElUlk1tMqRYvKYrzGUKFzNlhZ3q308ZyQSGR0P9xSc',
         callback: 'com.seedit://authorize',
      }).then((res) => {
-      console.log(res, 'twitter****************************')
-      // info.user - user details from the provider
-      this.gotToBack()
+      console.log(res, 'twitterResponse')
+      // setAuthHeaders(res.credentials.access_token);
+      const userData = {
+        firstName: res.user.name || '',
+        lastName: '',
+        userName: res.user.screen_name || '',
+        email: res.user.name || '',
+        provider: 'twitter',
+        id: res.user.id_str || '',
+        accessToken : res.credentials.oauth_token || '',
+        gender: res.user.gender || 'other',
+        birthDate: '',
+        photo : res.user.profile_image_url || '',
+        _raw: '' 
+      };
+      this.props.oauthSignup(userData);
     }).catch((error) => {
-      console.log(error, 'twitter***************************')
-      // error.code
-      // error.description
+      console.log(error, 'twitterError')
     });
   }
 
   render() {
-    const {props } = this;
-    const { signupRequestStatus, signupErrorStatus } = this.props;
+     const { 
+     oauthSignupRequestStatus,
+     oauthSignupErrorStatus} = this.props;
     return (
       <KeyboardAvoidingView>
         <View className="screen">
@@ -174,7 +189,7 @@ class SocialSignUp extends React.PureComponent {
                 <Touchable className="m20" onPress={this.goToLogin}>
                   <Text className="complementary bold  m10">Login</Text>
                 </Touchable>
-                <Touchable className="m20" onPress={this.gotToBack}>
+                <Touchable className="m20" onPress={this.goToBack}>
                   <Text className="complementary  m10">Cancel</Text>
                 </Touchable>
               </View>
@@ -186,10 +201,10 @@ class SocialSignUp extends React.PureComponent {
   }
 }
 function mapStateToProps(state) {
-  const { signupErrorStatus, signupRequestStatus } = state.signup;
+  const { oauthSignupRequestStatus, oauthSignupErrorStatus } = state.signup;
   return {
-    signupErrorStatus,
-    signupRequestStatus,
+    oauthSignupRequestStatus,
+    oauthSignupErrorStatus
   };
 }
 export default connect(mapStateToProps, { ...AuthActions })(SocialSignUp);

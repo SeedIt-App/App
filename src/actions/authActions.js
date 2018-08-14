@@ -11,6 +11,17 @@ export const signupRequest = createAction(SIGNUP_REQUEST);
 export const signupSuccess = createAction(SIGNUP_SUCCESS);
 export const signupFailure = createAction(SIGNUP_FAILURE);
 
+// State for  OAUTH_SIGNUPuth SIGNUP process
+export const OAUTH_SIGNUP = 'AUTH/OAUTH_SIGNUP';
+export const OAUTH_SIGNUP_REQUEST = 'AUTH/OAUTH_SIGNUP_REQUEST';
+export const OAUTH_SIGNUP_SUCCESS = 'AUTH/OAUTH_SIGNUP_SUCCESS';
+export const OAUTH_SIGNUP_FAILURE = 'AUTH/OAUTH_SIGNUP_FAILURE';
+
+export const oauthSignup = createAction(OAUTH_SIGNUP);
+export const oauthSignupRequest = createAction(OAUTH_SIGNUP_REQUEST);
+export const oauthSignupSuccess = createAction(OAUTH_SIGNUP_SUCCESS);
+export const oauthSignupFailure = createAction(OAUTH_SIGNUP_FAILURE);
+
 // State for Login process
 export const LOGIN = 'AUTH/LOGIN';
 export const LOGIN_REQUEST = 'AUTH/LOGIN_REQUEST';

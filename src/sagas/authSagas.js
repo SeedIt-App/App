@@ -20,6 +20,30 @@ function* doSignUp(action) {
   }
 }
 
+// sign up for oauth user
+
+function* doOauthSignUp(action) {
+  yield put(AuthActions.oauthSignupRequest());
+  try {
+    const oauthSignUpURL = "/auth/oauth";
+    const { response } = yield call(POST, oauthSignUpURL, action.payload);
+    yield put(
+      AuthActions.setAuthUser({
+        user: idx(response, _ => _.data.user),
+        token: idx(response, _ => _.data.token)
+      })
+    );
+        yield put(AuthActions.oauthSignupSuccess());
+  
+  } catch (error) {
+    let msgError = null;
+    if (error.data) {
+      msgError = error.data;
+    }
+    yield put(AuthActions.oauthSignupFailure(msgError));
+  }
+}
+
 // login user
 
 function* doLogin(action) {
@@ -76,6 +100,7 @@ function* forgotPassword(action) {
     const forgotPasswordUrl = "/auth/forgot";
     const { response } = yield call(POST, forgotPasswordUrl, body);
     yield put(AuthActions.forgotPasswordSuccess());
+
   } catch (error) {
     let msgError = error;
     if (error.data) {
@@ -105,6 +130,7 @@ function* resetPassword(action) {
 
 export default function* authSagas() {
   yield all([fork(takeLatest, AuthActions.SIGNUP, doSignUp)]);
+  yield all([fork(takeLatest, AuthActions.OAUTH_SIGNUP, doOauthSignUp)]);
   yield all([fork(takeLatest, AuthActions.LOGIN, doLogin)]);
   yield all([fork(takeLatest, AuthActions.REFRESH_TOKEN, refreshToken)]);
   yield all([fork(takeLatest, AuthActions.RESET_PASSWORD, resetPassword)]);

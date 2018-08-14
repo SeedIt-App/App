@@ -6,16 +6,6 @@ import { AsyncStorage } from 'react-native';
 
 class NewsFeedHeader extends React.PureComponent {
 
-  componentWillReceiveProps(nextProps) {
-    /*if (this.props.token === '') {
-      const values = {
-        email: this.props.user.email,
-        refreshToken: this.props.token.refreshToken,
-      };
-      this.props.refreshToken(values);
-    }*/
-  }
-
   goToNotification = () => {
     this.props.navigation.navigate('Notifications');
   }
@@ -37,17 +27,6 @@ class NewsFeedHeader extends React.PureComponent {
               />
             </Touchable>
             <Text className="complementary title bold m10">{props.title}</Text>
-          
-            {
-              (this.props.token === null) &&
-                (<Touchable
-                  className="pull-right"
-                  onPress={this.goToSocialSignUp}
-                  >
-                  <Text className="complementary large_sm m10">Sign Up</Text>
-                </Touchable>
-                )
-              }
             { 
               (this.props.token !== null) &&
               (<Touchable

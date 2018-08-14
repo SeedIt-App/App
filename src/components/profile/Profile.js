@@ -21,14 +21,6 @@ class Profile extends React.PureComponent {
       allLikePost: [],
       goggleData : null
     };
-
-    AsyncStorage.getItem("res").then((value) => {
-      if(value){
-        let data = JSON.parse(value);
-        this.setState({goggleData : data.user})
-        console.log(data)
-      }
-    }).done();
   }
 
   componentDidMount() {
@@ -339,14 +331,14 @@ class Profile extends React.PureComponent {
     let fullAddress = '';
 
     if (this.props.luser && this.props.luser.address) {
-      fullAddress =
-        `${idx(this.props.luser.address, _ => _.city)}${'' + ' '}${
-          this.props.luser.address.state
-        }` +
-        `${'' + '\n '}${this.props.luser.address.country}` +
-        `${'' + ' '}${this.props.luser.address.zip}` +
-        '';
+      fullAddress = this.props.luser.address.city + '' + this.props.luser.address.state
+        + '' + this.props.luser.address.country   
     }
+    if(this.props.luser && this.props.luser.address &&this.props.luser.address.zip ){
+      fullAddress = this.props.luser.address.city + '' + this.props.luser.address.state
+        + '' + this.props.luser.address.country + '' +  this.props.luser.address.zip
+    }
+
 
     return (
       <KeyboardAvoidingView>
@@ -360,10 +352,10 @@ class Profile extends React.PureComponent {
             <View className="bg-transparent f-row mt10 space-between">
               <View className="mh15 f-row">
                 <View>
-                  {(luser && luser.picture) || (this.state.goggleData && this.state.goggleData.picture) ? (
+                  {(luser && luser.picture)  ? (
                     <Image
                       className="big_thumb"
-                      source={{ uri: (luser && luser.picture) || (this.state.goggleData && this.state.goggleData.picture) }}
+                      source={{ uri: (luser && luser.picture) }}
                       resizeMode="cover"
                     />
                   ) : (
@@ -378,14 +370,15 @@ class Profile extends React.PureComponent {
                   <Text className="darkGrey bold medium">
                     {(luser &&
                       luser.firstName &&
-                      `${luser.firstName || (this.state.goggleData && this.state.goggleData.given_name)} ${luser.lastName || (this.state.goggleData && this.state.goggleData.family_name)}` )}
+                      `${luser.firstName}${luser.lastName}`
+                    )}
                   </Text>
                   <Text className="lightGrey medium">
-                    {( (luser && luser.userName && luser.userName) || (this.state.goggleData && this.state.goggleData.given_name) )}
+                    {( (luser && luser.userName && luser.userName) )}
                   </Text>
                   <Text className="lightGrey medium">
-                    {luser && luser.address && fullAddress === 'undefined'
-                      ? 'Address'
+                    {luser && luser.address && fullAddress 
+                      ? fullAddress
                       : 'Address'}
                   </Text>
                 </View>
