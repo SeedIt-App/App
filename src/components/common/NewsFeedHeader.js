@@ -29,13 +29,12 @@ class NewsFeedHeader extends React.PureComponent {
             <Text className="complementary title bold m10">{props.title}</Text>
             { 
               (this.props.token === null) &&
-                <Touchable
+                (<Touchable
                   className="pull-right"
                   onPress={this.goToSocialSignUp}
                   >
                   <Text className="complementary large_sm m10">Sign Up</Text>
-                </Touchable>
-              )
+                </Touchable>)
             }  
             { 
               (this.props.token !== null) &&

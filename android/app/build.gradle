@@ -203,9 +203,7 @@ dependencies {
     //classpath 'com.google.gms:google-services:3.0.0'
     //implementation 'com.google.android.gms:play-services:12.0.1'
     //compile "com.google.android.gms:play-services-auth:10.0.1"
-      //compile 'com.google.android.gms:play-services-vision:+'
-
-
+    //compile 'com.google.android.gms:play-services-vision:+'
 }
 
 // apply plugin: "com.google.gms.google-services"
