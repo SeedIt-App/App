@@ -191,7 +191,7 @@ class EditProfile extends React.PureComponent {
         <View className="screen">
           <Header
             back
-            title="EditProfile"
+            title="Edit Profile"
             navigation={this.props.navigation}
             saveProfile={this.editProfile}
           />

@@ -58,7 +58,7 @@ class NewsFeed extends React.PureComponent {
     const { user } = this.props;
     return (
       <ScrollView>
-        <View class="p5">
+        <View className="p5">
           <View className="f-column">
             <View className="bg-transparent mt10 space-between">
               <View className="f-row p5 mr20">
@@ -121,17 +121,20 @@ class NewsFeed extends React.PureComponent {
                     </View>
                 </View>
                 <View className="f-row pull-right f-both m20">
-                  <Touchable
-                    className="p5"
-                    key={i}
-                    onPress={this.updateWaterToPost.bind(this, searchPosts)}
-                  >
-                    <Image
-                      className="normal_thumb m10"
-                      source={require('../images/icons/drop.jpg')}
-                      resizeMode="cover"
-                    />
-                  </Touchable>
+                   {searchPosts.waters &&
+                      searchPosts.waters.length > 0 &&
+                      <View className="f-row">
+                        <Image
+                          className="normal_thumb m10"
+                          source={require('../images/icons/drop.jpg')}
+                          resizeMode="cover"
+                        />
+                        <Text className=" mt20 marginLeft20 darkgrey bold small t-center">
+                          {' '}
+                          ({searchPosts.waters.length} )
+                        </Text>
+                      </View>  
+                    }
                 </View>
               </View>
             </View>
@@ -176,13 +179,10 @@ class NewsFeed extends React.PureComponent {
             onChangeText={this.searchPosts}
           />
         </View>
-        <ListView
-          dataSource={ds.cloneWithRows(this.state.searchPosts)}
-          renderRow={this.renderAdress}
-        />
+      
         {this.state.searchPosts.length === 0 && (
           <ScrollView>
-            <View class="p5">
+            <View className="p5">
               <View className="f-column">
                 <View className="bg-transparent mt10 space-between">
                   {userNewsFeedRequestStatus === 'SUCCESS' ||
@@ -248,17 +248,20 @@ class NewsFeed extends React.PureComponent {
                           </View>
                         </View>
                         <View className="f-row pull-right f-both m20">
-                          <Touchable
-                            className="p5"
-                            key={i}
-                            onPress={this.updateWaterToPost.bind(this, value)}
-                          >
-                            <Image
-                              className="normal_thumb m10"
-                              source={require('../images/icons/drop.jpg')}
-                              resizeMode="cover"
-                            />
-                          </Touchable>
+                           {value.waters &&
+                              value.waters.length > 0 &&
+                              <View className="f-row">
+                                <Image
+                                  className="normal_thumb m10"
+                                  source={require('../images/icons/drop.jpg')}
+                                  resizeMode="cover"
+                                />
+                                <Text className=" mt20 marginLeft20 darkgrey bold small t-center">
+                                  {' '}
+                                  ({value.waters.length} )
+                                </Text>
+                              </View>  
+                            }
                         </View>
                       </View>
                     ))
@@ -271,6 +274,11 @@ class NewsFeed extends React.PureComponent {
             </View>
           </ScrollView>
         )}
+
+        <ListView
+          dataSource={ds.cloneWithRows(this.state.searchPosts)}
+          renderRow={this.renderAdress}
+        />
         <Footer navigation={this.props.navigation} />
       </View>
     );

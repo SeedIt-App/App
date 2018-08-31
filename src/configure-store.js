@@ -12,6 +12,10 @@ const localStorageMiddleware = ({ getState }) => next => action => {
     AsyncStorage.setItem('authState', JSON.stringify(getState().auth));
     setAuthHeaders(getState().auth.authToken);
   }
+  if (action.type === AuthActions.LOGOUT) {
+    AsyncStorage.removeItem('authState');
+    setAuthHeaders('');
+  }
   return result;
 };
 

@@ -16,7 +16,7 @@ class Tags extends React.PureComponent {
       modalVisible: false,
       goggleData : null
     };
-    this.updateWaterToPost = this.updateWaterToPost.bind(this);
+    this.addAndUpdateWaterToPost = this.addAndUpdateWaterToPost.bind(this);
     
     AsyncStorage.getItem("res").then((value) => {
       if(value){
@@ -52,14 +52,6 @@ class Tags extends React.PureComponent {
         textColor : 'black',
       });
     }
-    if (nextProps.updateWaterPostRequestStatus === 'SUCCESS') {
-      Toast.show(nextProps.updateWaterToPost,{
-        duration: Toast.durations.LONG,
-        position: Toast.positions.BOTTOM,
-        backgroundColor : '#bcf2c8',
-        textColor : 'black',
-      });
-    }
     if (nextProps.updateWaterPostErrorStatus === 'FAILED') {
       Toast.show(nextProps.updateWaterPostErrorStatus,{
         duration: Toast.durations.LONG,
@@ -81,11 +73,14 @@ class Tags extends React.PureComponent {
     });
   };
 
-  updateWaterToPost = value => {
+  addAndUpdateWaterToPost = value => {
     const body = {
       postId: value._id,
     };
     this.props.updateWaterPost(body);
+    if(this.props.updateWaterPostRequestStatus === 'SUCCESS') {
+        this.props.getPosts();
+    }
   };
 
   goToSingleTag = value => {
@@ -164,17 +159,20 @@ class Tags extends React.PureComponent {
             )}
         </View>
         <View className="f-row pull-right f-both m20">
-          <Touchable
-            className="p5"
-            key={i}
-            onPress={this.updateWaterToPost.bind(this, section)}
-          >
-            <Image
-              className="normal_thumb m10"
-              source={require('../images/icons/drop.jpg')}
-              resizeMode="cover"
-            />
-          </Touchable>
+           {section.waters &&
+            section.waters.length > 0 &&
+            <View className="f-row">
+              <Image
+                className="normal_thumb m10"
+                source={require('../images/icons/drop.jpg')}
+                resizeMode="cover"
+              />
+              <Text className=" mt20 marginLeft20 darkgrey bold small t-center">
+                {' '}
+                ({section.waters.length} )
+              </Text>
+            </View>  
+          }
         </View>
         <View className="dividerGrey" />
       </View>
@@ -256,7 +254,7 @@ class Tags extends React.PureComponent {
           <Touchable
             className="p5"
             key={i}
-            onPress={this.updateWaterToPost.bind(this, section)}
+            onPress={this.addAndUpdateWaterToPost.bind(this, section)}
           >
             <Image
               className="normal_thumb m10"
@@ -277,7 +275,7 @@ class Tags extends React.PureComponent {
       getPostsErrorStatus,
       updateWaterPostRequestStatus,
       updateWaterPostErrorStatus,
-      updateWaterToPost,
+      addAndUpdateWaterToPost,
     } = this.props;
     const { props } = this;
     return (
@@ -332,7 +330,7 @@ function mapStateToProps(state) {
     getPostsErrorStatus,
     updateWaterPostRequestStatus,
     updateWaterPostErrorStatus,
-    updateWaterToPost,
+    addAndUpdateWaterToPost,
   } = state.post;
   
   if(getAllPosts && getAllPosts.posts){
@@ -351,7 +349,7 @@ function mapStateToProps(state) {
     getPostsErrorStatus,
     updateWaterPostRequestStatus,
     updateWaterPostErrorStatus,
-    updateWaterToPost,
+    addAndUpdateWaterToPost,
   };
 }
 export default connect(mapStateToProps, {

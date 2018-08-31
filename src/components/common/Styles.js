@@ -49,6 +49,9 @@ const margins = {
   mh25: {
     marginHorizontal: 30,
   },
+  mh35: {
+    marginHorizontal: 35,
+  },
   mb5: {
     marginBottom: 5,
   },
@@ -544,13 +547,6 @@ export default StyleSheet.create({
     height: 60,
     width: 280,
     backgroundColor: Colors.white,
-    shadowColor: '#000000',
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowRadius: 5,
-    shadowOpacity: 1.0,
   },
   showPassword: {
     height: 50,

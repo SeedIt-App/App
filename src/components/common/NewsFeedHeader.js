@@ -36,17 +36,29 @@ class NewsFeedHeader extends React.PureComponent {
                   <Text className="complementary large_sm m10">Sign Up</Text>
                 </Touchable>)
             }  
-            { 
-              (this.props.token !== null) &&
-              (<Touchable
-                className="pull-right"
-                  onPress={this.goToNotification}
+          
+            { (this.props.token !== null) &&
+                (<Touchable
+                  className="pull-right mh35"
+                  onPress={() => this.props.createPostRequest()}
                 >
-                <Image
-                  className="mini1_thumb"
-                  source={require('../images/icons/alerts.png')}
-                />
-              </Touchable>
+                  <Image
+                    className="mini1_thumb"
+                    source={require('../images/icons/plus.png')}
+                  />
+                </Touchable>)
+            }
+
+              { (this.props.token !== null) &&
+                (<Touchable
+                  className="pull-right "
+                    onPress={this.goToNotification}
+                  >
+                  <Image
+                    className="mini1_thumb"
+                    source={require('../images/icons/alerts.png')}
+                  />
+                </Touchable>
               )
             }
           </View>

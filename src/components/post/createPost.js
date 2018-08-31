@@ -46,6 +46,7 @@ class CreatePost extends React.PureComponent {
         backgroundColor : '#bcf2c8',
         textColor : 'black',
       });
+      this.props.navigation.navigate('Newsfeed');
     }
   }
 

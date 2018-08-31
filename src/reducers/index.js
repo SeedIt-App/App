@@ -23,6 +23,9 @@ const appReducer = combineReducers({
 });
 
 const rootReducer = (state, action) => {
+  if (action.type === AuthActions.LOGOUT) {
+    state = { newsFeed: state.newsFeed };
+  }
   return appReducer(state, action);
 };
 

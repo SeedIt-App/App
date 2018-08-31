@@ -73,3 +73,7 @@ export const setAuthUser = createAction(SET_AUTH_USER);
 // State for update Auth User process
 export const UPDATE_AUTH_USER = 'AUTH/UPDATE_AUTH_USER';
 export const updateAuthUser = createAction(UPDATE_AUTH_USER);
+
+// State for logout user
+export const LOGOUT = 'AUTH/LOGOUT';
+export const logout = createAction(LOGOUT);

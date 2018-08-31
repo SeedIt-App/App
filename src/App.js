@@ -18,6 +18,7 @@ import Tags from './components/tags/tags';
 import Redwood from './components/redwood/redwood';
 import Notifications from './components/notification/Notification';
 import SingleTag from './components/tags/singleTag';
+import Logout from './components/logout/Logout';
 
 const AppNavigator = StackNavigator({
   SplashScreen: {
@@ -107,6 +108,14 @@ const AppNavigator = StackNavigator({
       header: null,
     }),
   },
+
+  Logout: {
+    screen: Logout,
+    navigationOptions: () => ({
+      header: null,
+    }),
+  },
+  
 });
 
 class App extends React.PureComponent {

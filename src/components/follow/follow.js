@@ -15,9 +15,9 @@ class Follow extends React.PureComponent {
     this.state = {
       user: this.props.user,
       modalVisible: false,
-      goggleData : null
+      goggleData : null,
     };
-    this.updateWaterToPost = this.updateWaterToPost.bind(this);
+    //this.updateWaterToPost = this.updateWaterToPost.bind(this);
     
     AsyncStorage.getItem("res").then((value) => {
       if(value){
@@ -51,15 +51,15 @@ class Follow extends React.PureComponent {
         backgroundColor : '#bcf2c8',
         textColor : 'black',
       });
-      }
-    if (nextProps.updateWaterPostRequestStatus === 'SUCCESS') {
+    }
+    /*if (nextProps.updateWaterPostRequestStatus === 'SUCCESS') {
       Toast.show(nextProps.updateWaterToPost,{
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
         backgroundColor : '#bcf2c8',
         textColor : 'black',
       });
-    }
+    }*/
     if (nextProps.updateWaterPostErrorStatus === 'FAILED') {
       Toast.show(nextProps.updateWaterPostErrorStatus,{
         duration: Toast.durations.LONG,
@@ -81,11 +81,15 @@ class Follow extends React.PureComponent {
     });
   };
 
-  updateWaterToPost = section => {
+  addAndUpdateWaterToPost = section => {
     const body = {
       postId: section._id,
     };
     this.props.updateWaterPost(body);
+    if(this.props.updateWaterPostRequestStatus === 'SUCCESS') {
+        this.props.getPosts();
+    }
+
   };
 
   modelVisibleToggle = () => {
@@ -142,25 +146,28 @@ class Follow extends React.PureComponent {
           </View>
           {this.state.user &&
             this.state.user.role === 'admin' && (
-              <Image
-                className="micro_thumb m5"
-                source={require('../images/icons/delete.jpg')}
-                resizeMode="cover"
-              />
-            )}
-        </View>
-        <View className="f-row pull-right f-both m20">
-          <Touchable
-            className="p5"
-            key={i}
-            onPress={this.updateWaterToPost.bind(this, section)}
-          >
             <Image
-              className="normal_thumb m10"
-              source={require('../images/icons/drop.jpg')}
+              className="micro_thumb m5"
+              source={require('../images/icons/delete.jpg')}
               resizeMode="cover"
             />
-          </Touchable>
+          )}
+        </View>
+        <View className="f-row pull-right f-both m20">
+          {section.waters &&
+            section.waters.length > 0 &&
+            <View className="f-row">
+              <Image
+                className="normal_thumb m10"
+                source={require('../images/icons/drop.jpg')}
+                resizeMode="cover"
+              />
+              <Text className=" mt20 marginLeft20 darkgrey bold small t-center">
+                {' '}
+                ({section.waters.length} )
+              </Text>
+            </View>  
+          }
         </View>
         <View className="dividerGrey" />
       </View>
@@ -241,8 +248,7 @@ class Follow extends React.PureComponent {
         <View className="marginTop15">
           <Touchable
             className="p5"
-            key={i}
-            onPress={this.updateWaterToPost.bind(this, section)}
+            onPress={this.addAndUpdateWaterToPost.bind(this, section)}
           >
             <Image
               className="normal_thumb m10"
