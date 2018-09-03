@@ -76,7 +76,8 @@ class SingleTag extends React.PureComponent {
     const body = {
       postId: section._id
     };
-     this.props.updateWaterPost(body);
+    this.props.updateWaterPost(body);
+    this.props.getPosts();
     if(this.props.updateWaterPostRequestStatus === 'SUCCESS') {
         this.props.getPosts();
     }

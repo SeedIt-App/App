@@ -34,7 +34,7 @@ class Profile extends React.PureComponent {
 
     if(this.state.goggleData ===null){
       if (nextProps.token == null || ''){
-        Toast.show('Please login',{
+        Toast.show('Please login' , {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
         backgroundColor : '#bcf2c8',
@@ -86,6 +86,17 @@ class Profile extends React.PureComponent {
     });
   };
 
+  addAndUpdateWaterToPost = section => {
+    const body = {
+      postId: section._id,
+    };
+    this.props.updateWaterPost(body);
+    if(this.props.updateWaterPostRequestStatus === 'SUCCESS') {
+      console.log(this.props.updateWaterToPost, 'this.props.updateWaterToPost')
+        this.props.getPosts();
+    }
+  };
+
   renderTab = () => {
     const {
       allFollowers,
@@ -134,13 +145,6 @@ class Profile extends React.PureComponent {
                     </View>
                   </Touchable>
                 </View>
-                <View className="f-row pull-right f-both m20">
-                  <Image
-                    className="normal_thumb m10"
-                    source={require('../images/icons/drop.jpg')}
-                    resizeMode="cover"
-                  />
-                </View>
               </View>
             ))}
           {singleUser === null && (
@@ -182,11 +186,20 @@ class Profile extends React.PureComponent {
                   </View>
                 </View>
                 <View className="f-row pull-right f-both m20">
-                  <Image
-                    className="normal_thumb m10"
-                    source={require('../images/icons/drop.jpg')}
-                    resizeMode="cover"
-                  />
+                  {p.waters &&
+                    p.waters.length > 0 &&
+                    <View className="f-row">
+                      <Image
+                        className="normal_thumb m10"
+                        source={require('../images/icons/drop.jpg')}
+                        resizeMode="cover"
+                      />
+                      <Text className=" mt20 marginLeft20 darkgrey bold small t-center">
+                        {' '}
+                        ({p.waters.length} )
+                      </Text>
+                    </View>  
+                  }
                 </View>
               </View>
             ))}
@@ -234,13 +247,6 @@ class Profile extends React.PureComponent {
                     </View>
                   </Touchable>
                 </View>
-                <View className="f-row pull-right f-both m20">
-                  <Image
-                    className="normal_thumb m10"
-                    source={require('../images/icons/drop.jpg')}
-                    resizeMode="cover"
-                  />
-                </View>
               </View>
             ))}
           {allFollowers &&
@@ -286,13 +292,6 @@ class Profile extends React.PureComponent {
                       </Text>
                     </View>
                   </Touchable>
-                </View>
-                <View className="f-row pull-right f-both m20">
-                  <Image
-                    className="normal_thumb m10"
-                    source={require('../images/icons/drop.jpg')}
-                    resizeMode="cover"
-                  />
                 </View>
               </View>
             ))}

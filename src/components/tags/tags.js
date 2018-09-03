@@ -78,6 +78,7 @@ class Tags extends React.PureComponent {
       postId: value._id,
     };
     this.props.updateWaterPost(body);
+    this.props.getPosts();
     if(this.props.updateWaterPostRequestStatus === 'SUCCESS') {
         this.props.getPosts();
     }

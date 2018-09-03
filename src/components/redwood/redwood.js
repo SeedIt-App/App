@@ -88,6 +88,7 @@ class Redwood extends React.PureComponent {
       postId: section._id,
     };
     this.props.updateWaterPost(body);
+    this.props.getPosts();
     if(this.props.updateWaterPostRequestStatus === 'SUCCESS') {
       console.log(this.props.updateWaterToPost, 'this.props.updateWaterToPost')
         this.props.getPosts();
@@ -338,7 +339,7 @@ class Redwood extends React.PureComponent {
               <View className="bg-transparent mt10 space-between">
                 <View className="f-row p5">
                   <View className="f-row bgWhite w-1-1 space-between">
-                    <View className="mh10 p5">
+                    <View className="mh10 p5 mt5 f-both">
                       <Touchable
                         style={{
                           backgroundColor: 'transparent',
@@ -362,7 +363,7 @@ class Redwood extends React.PureComponent {
                         </View>
                       </Touchable>
                     </View>
-                    <View className="mh10 p5">
+                    <View className="mh10 p5 mt5 f-both">
                       <Touchable
                         style={{
                           backgroundColor: 'transparent',
@@ -388,7 +389,7 @@ class Redwood extends React.PureComponent {
                         </View>
                       </Touchable>
                     </View>
-                    <View className="mh10 p5">
+                    <View className="mh10 p5 f-both">
                       <Touchable
                         style={{
                           backgroundColor: 'transparent',
@@ -407,14 +408,14 @@ class Redwood extends React.PureComponent {
                         <View className="mh10 p5">
                           <Image
                             className="micro1_thumb m5"
-                            source={require('../images/icons/rt.png')}
+                            source={require('../images/icons/Tree.jpg')}
                             resizeMode="cover"
                           />
                           <Text className="black medium">Tree</Text>
                         </View>
                       </Touchable>
                     </View>
-                    <View className="mh10 p5">
+                    <View className="mh10 p5 mt5 f-both">
                       <Touchable
                         style={{
                           backgroundColor: 'transparent',

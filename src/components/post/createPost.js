@@ -13,7 +13,7 @@ import {
 } from '../common';
 import { AuthActions, PostActions } from '../../actions';
 import idx from 'idx';
-import { TextInput } from 'react-native';
+import { TextInput,Platform } from 'react-native';
 import Toast from 'react-native-root-toast';
 import ImagePicker from 'react-native-image-picker';
 import ImageResizer from 'react-native-image-resizer';
@@ -80,8 +80,11 @@ class CreatePost extends React.PureComponent {
       } else {
         ImageResizer.createResizedImage(response.uri, 100, 100, 'JPEG', 100, 0)
           .then(({ uri, path }) => {
-            const source = { uri };
-            this.uploadProfileImage(source.uri);
+            let source =  uri;
+            if (Platform.OS == 'ios') {
+              source = source.replace('file://', '');
+            }
+            this.uploadProfileImage(source);
           })
           .catch(err => {
             console.log(err);
@@ -175,7 +178,7 @@ class CreatePost extends React.PureComponent {
                 </View>
                 <View className="dividerGrey " />
               </View>
-              <View className="m10 ">
+              <View className="m10 mt20">
                 <View className="f-center f-row">
                   <View>
                     <TextInput
@@ -190,7 +193,7 @@ class CreatePost extends React.PureComponent {
                     />
                   </View>
                 </View>
-                <View className="f-center f-row">
+                <View className="f-center f-row mt20">
                   {this.state.image !== '' && (
                     <Image
                       className="x_large_thumb"

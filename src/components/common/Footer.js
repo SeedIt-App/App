@@ -11,6 +11,7 @@ class Footer extends React.PureComponent {
   goToFollow = () => this.props.navigation.navigate('Follow');
   goToTags = () => this.props.navigation.navigate('Tags');
   goToRedwood = () => this.props.navigation.navigate('Redwood');
+  goToNotification = () => this.props.navigation.navigate('Notifications');
 
   render() {
     const { props } = this;
@@ -33,18 +34,6 @@ class Footer extends React.PureComponent {
               <Text className="text">Login</Text>
             </View>
           )}
-          <View className="p5">
-              <Touchable onPress={this.goToLogin}>
-                <View className="f-row f-both m20">
-                  <Image
-                    className="mini_thumb m10"
-                    source={require('../images/icons/Login.png')}
-                    resizeMode="cover"
-                  />
-                </View>
-              </Touchable>
-              <Text className="text">Login</Text>
-            </View>
           { this.props.token !== null && (
             <View className="p5">
               <Touchable onPress={this.goToProfile}>
@@ -59,7 +48,6 @@ class Footer extends React.PureComponent {
               <Text className="text">Profile</Text>
             </View>
           )}
-
           <View className="p5">
             <Touchable onPress={this.goToTags}>
               <View className="f-row f-both m20">
@@ -89,7 +77,7 @@ class Footer extends React.PureComponent {
               <View className="f-row f-both m20 mt5">
                 <Image
                   className="micro1_thumb m10"
-                  source={require('../images/icons/Redwood_Tree.png')}
+                  source={require('../images/icons/Tree.jpg')}
                   resizeMode="center"
                 />
               </View>
@@ -97,6 +85,18 @@ class Footer extends React.PureComponent {
             <Text>Redwood</Text>
           </View>
           <View className="p5">
+            <Touchable onPress={this.goToNotification}>
+              <View className="f-row f-both m20 mt5">
+                <Image
+                  className="micro1_thumb m10"
+                  source={require('../images/icons/alert_Black.png')}
+                  resizeMode="center"
+                />
+              </View>
+            </Touchable>
+            <Text>Notification</Text>
+          </View>
+          {/*<View className="p5">
             <Touchable onPress={this.goToFollow}>
               <View className="f-row f-both m20 mt5">
                 <Image
@@ -107,7 +107,7 @@ class Footer extends React.PureComponent {
               </View>
             </Touchable>
             <Text>Followed</Text>
-          </View>
+          </View>*/}
         </View>
       </View>
     );

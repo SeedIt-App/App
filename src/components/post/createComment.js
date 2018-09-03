@@ -11,7 +11,7 @@ import {
   Switch,
 } from '../common';
 import { AuthActions, PostActions } from '../../actions';
-import { TextInput } from 'react-native';
+import { TextInput, Platform  } from 'react-native';
 import Toast from 'react-native-root-toast';
 import ImagePicker from 'react-native-image-picker';
 import ImageResizer from 'react-native-image-resizer';
@@ -79,8 +79,11 @@ class CreateComment extends React.PureComponent {
       } else {
         ImageResizer.createResizedImage(response.uri, 100, 100, 'JPEG', 100, 0)
           .then(({ uri, path }) => {
-            const source = { uri };
-            this.uploadProfileImage(source.uri);
+            let source =  uri;
+            if (Platform.OS == 'ios') {
+              source = source.replace('file://', '');
+            }
+            this.uploadProfileImage(source);
           })
           .catch(err => {
             console.log(err);
@@ -140,7 +143,7 @@ class CreateComment extends React.PureComponent {
           <View>
             <View className="f-column bg-transparent  space-between">
               <View className="mt10">
-                <View className="f-row p5 mr20">
+                <View className="f-row p5 mr20 mb25">
                   <View className="f-row f-both m20 mr20">
                    {this.props.user && this.props.user.picture ? (
                       <Image
@@ -183,7 +186,7 @@ class CreateComment extends React.PureComponent {
                 <View className="dividerGrey" />
                 <View className="dividerGrey" />
               </View>
-              <View className="m10 ">
+              <View className="m10 mt20">
                 <View className="f-center f-row">
                   <View>
                     <Text className="black bold large t-center ">
@@ -211,7 +214,7 @@ class CreateComment extends React.PureComponent {
                     />
                   </View>
                 </View>
-                <View className="f-center f-row">
+                <View className="f-center f-row mt20">
                   {this.state.image !== '' && (
                     <Image
                       className="x_large_thumb"
@@ -228,7 +231,7 @@ class CreateComment extends React.PureComponent {
         <View className="dividerGrey" />
         <View className="dividerGrey" />
         <View className="m10 ">
-          <View className="f-row f-both   w-1-0  space-between">
+          <View className="f-row f-both w-1-0 space-between">
             <View className="p5">
               <Touchable onPress={this.goToLogin}>
                 <View className="f-row f-both m20">

@@ -6,7 +6,6 @@ import { TextInput,AsyncStorage } from 'react-native';
 import Toast from 'react-native-root-toast';
 import Accordion from 'react-native-collapsible/Accordion';
 import { View as NativeView } from 'react-native';
-import ModalSelector from 'react-native-modal-selector';
 import Modal from 'react-native-modal';
 
 class Follow extends React.PureComponent {

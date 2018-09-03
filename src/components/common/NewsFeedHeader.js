@@ -39,7 +39,7 @@ class NewsFeedHeader extends React.PureComponent {
           
             { (this.props.token !== null) &&
                 (<Touchable
-                  className="pull-right mh35"
+                  className="pull-right"
                   onPress={() => this.props.createPostRequest()}
                 >
                   <Image
@@ -49,9 +49,9 @@ class NewsFeedHeader extends React.PureComponent {
                 </Touchable>)
             }
 
-              { (this.props.token !== null) &&
+            {/*{ (this.props.token !== null) &&
                 (<Touchable
-                  className="pull-right "
+                  className="pull-right mh35"
                     onPress={this.goToNotification}
                   >
                   <Image
@@ -60,7 +60,7 @@ class NewsFeedHeader extends React.PureComponent {
                   />
                 </Touchable>
               )
-            }
+            }*/}
           </View>
         </View>
         <View className="dividerBlack" />

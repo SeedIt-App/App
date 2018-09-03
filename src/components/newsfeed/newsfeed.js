@@ -107,18 +107,18 @@ class NewsFeed extends React.PureComponent {
                     </View>
                    
                   </View>
-                   <View className="f-row flex w-1-2 mr30">
-                      {searchPosts.images &&
-                        searchPosts.images.length > 0 &&
-                        searchPosts.images[0] !== 'image1.png' &&
-                        searchPosts.images.map(v => (
+                  <View className="f-row flex w-1-2 mr30">
+                    {searchPosts.images &&
+                      searchPosts.images.length > 0 &&
+                      searchPosts.images.map(v => (
+                        (v !== 'image1.png' && v!== '') &&
                           <Image
                             className="x_l_thumb m5"
                             source={{ uri: v }}
                             resizeMode="cover"
                           />
-                        ))}
-                    </View>
+                    ))}
+                  </View>
                 </View>
                 <View className="f-row pull-right f-both m20">
                    {searchPosts.waters &&
@@ -236,13 +236,13 @@ class NewsFeed extends React.PureComponent {
                             <View className="f-row flex w-1-2 mr30">
                               {value.images &&
                                 value.images.length > 0 &&
-                                value.images[0] !== 'image1.png' &&
                                 value.images.map(v => (
-                                  <Image
-                                    className="x_l_thumb m5"
-                                    source={{ uri: v }}
-                                    resizeMode="cover"
-                                  />
+                                  (v !== 'image1.png' && v!== '') &&
+                                    <Image
+                                      className="x_l_thumb m5"
+                                      source={{ uri: v }}
+                                      resizeMode="cover"
+                                    />
                                 ))}
                             </View>
                           </View>
