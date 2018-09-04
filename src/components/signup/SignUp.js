@@ -61,7 +61,7 @@ class SignUp extends React.PureComponent {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
         backgroundColor : '#bcf2c8',
-        textColor : 'black',
+        textColor : '#585858',
       });
     }
     if (nextProps.signupRequestStatus === 'SUCCESS') {
@@ -69,7 +69,7 @@ class SignUp extends React.PureComponent {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
         backgroundColor : '#bcf2c8',
-        textColor : 'black',
+        textColor : '#585858',
       });
       this.props.navigation.navigate('Login');
     }
@@ -106,7 +106,7 @@ class SignUp extends React.PureComponent {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
         backgroundColor : '#bcf2c8',
-        textColor : 'black',
+        textColor : '#585858',
       });
     }
     else {
@@ -115,7 +115,7 @@ class SignUp extends React.PureComponent {
           duration: Toast.durations.LONG,
           position: Toast.positions.BOTTOM,
           backgroundColor : '#bcf2c8',
-          textColor : 'black',
+          textColor : '#585858',
         });
       }
       else if(!validateUserName.test(this.state.username)){
@@ -123,7 +123,7 @@ class SignUp extends React.PureComponent {
           duration: Toast.durations.LONG,
           position: Toast.positions.BOTTOM,
           backgroundColor : '#bcf2c8',
-          textColor : 'black',
+          textColor : '#585858',
         });
       }
       else if(!validatePassword.test(this.state.pwd)){
@@ -131,7 +131,7 @@ class SignUp extends React.PureComponent {
           duration: Toast.durations.LONG,
           position: Toast.positions.BOTTOM,
           backgroundColor : '#bcf2c8',
-          textColor : 'black',
+          textColor : '#585858',
         });
       }
       else if(this.state.pwd !== this.state.confirmPwd){
@@ -139,7 +139,7 @@ class SignUp extends React.PureComponent {
           duration: Toast.durations.LONG,
           position: Toast.positions.BOTTOM,
           backgroundColor : '#bcf2c8',
-          textColor : 'black',
+          textColor : '#585858',
         });
       }
       else if(!validateEmail.test(this.state.email)){
@@ -147,7 +147,7 @@ class SignUp extends React.PureComponent {
           duration: Toast.durations.LONG,
           position: Toast.positions.BOTTOM,
           backgroundColor : '#bcf2c8',
-          textColor : 'black',
+          textColor : '#585858',
         });
       }
       else if(!validatePhNumber.test(this.state.phoneNo)){
@@ -155,7 +155,7 @@ class SignUp extends React.PureComponent {
           duration: Toast.durations.LONG,
           position: Toast.positions.BOTTOM,
           backgroundColor : '#bcf2c8',
-          textColor : 'black',
+          textColor : '#585858',
         });
       }
       else{
@@ -286,7 +286,7 @@ class SignUp extends React.PureComponent {
                         className="showPasswordAuth"
                         onPress={this.toggleSwitchP}
                       >
-                        <Text className="darkGrey bold medium m10">Show</Text>
+                        <Text className="#585858 bold medium m10">Show</Text>
                       </Touchable>
                     </View>
                   </View>
@@ -311,7 +311,7 @@ class SignUp extends React.PureComponent {
                         className="showPasswordAuth"
                         onPress={this.toggleSwitchCp}
                       >
-                        <Text className="darkGrey bold medium m10">Show</Text>
+                        <Text className="#585858 bold medium m10">Show</Text>
                       </Touchable>
                     </View>
                   </View>

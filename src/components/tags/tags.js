@@ -22,7 +22,6 @@ class Tags extends React.PureComponent {
       if(value){
         let data = JSON.parse(value);
         this.setState({goggleData : data.user})
-        console.log(data)
       }
     }).done();
   }
@@ -38,7 +37,7 @@ class Tags extends React.PureComponent {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
         backgroundColor : '#bcf2c8',
-        textColor : 'black',
+        textColor : 'darkGrey',
       });
         this.props.navigation.navigate('Login');
       } 
@@ -49,7 +48,7 @@ class Tags extends React.PureComponent {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
         backgroundColor : '#bcf2c8',
-        textColor : 'black',
+        textColor : 'darkGrey',
       });
     }
     if (nextProps.updateWaterPostErrorStatus === 'FAILED') {
@@ -57,7 +56,7 @@ class Tags extends React.PureComponent {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
         backgroundColor : '#bcf2c8',
-        textColor : 'black',
+        textColor : 'darkGrey',
       });
     }
   }
@@ -97,83 +96,73 @@ class Tags extends React.PureComponent {
 
   renderHeader = (section, i) => (
     <NativeView>
-      <View className="f-row p5 mr20">
-        <View className="f-row f-both m20">
-          {section.postedBy.picture ? 
-            (<Image
-              className="med_thumb m10"
-              source={{uri : section.postedBy.picture}}
-              resizeMode="cover"
-            />)
-            : (<Image
-              className="med_thumb m10"
-              source={require('../images/icons/Login_Black.png')}
-              resizeMode="cover"
-            />)
-          }
-        </View>
-        <View className="f-column j-start mt10 w-2-1">
-          <Text className="black bold large t-left ">
-            {section.postedBy.userName}
-          </Text>
-          <View className="f-column">
-            <Text className="black large t-left">{section.text}</Text>
-          </View>
-          <View className="f-column">
-            <View className="f-row flexWrap">
-              {section.tags &&
-                section.tags.length > 0 &&
-                section.tags.map((value, i) => (
-                  <Touchable
-                    className="touchableMin"
-                    key={i}
-                    onPress={this.goToSingleTag.bind(this, value)}
-                  >
-                    <Text className="lgBlue bold large t-left">
-                      {' '}
-                      #{value.tag}
-                    </Text>
-                  </Touchable>
-                ))}
+      <View>
+        <View className="f-row p5 mr10 j-start">
+          <View>
+            {section.postedBy.picture ? 
+              (<Image
+                className="med_thumb m10"
+                source={{uri : section.postedBy.picture}}
+                resizeMode="cover"
+              />)
+              : (<Image
+                className="med_thumb m10"
+                source={require('../images/icons/Login_Black.png')}
+                resizeMode="cover"
+              />)
+            }
+          </View>  
+          <View className="f-column w-2-1">
+            <Text className="darkGrey bold large t-left ">
+              {section.postedBy.userName}
+            </Text>
+            <View className="f-column">
+              <Text className="lightGrey medium t-left">{section.text}</Text>
+            </View>
+            <View className="f-column mr30">
+              <View className="f-row flexWrap  ">
+                {section.tags &&
+                  section.tags.length > 0 &&
+                  section.tags.map((value, i) => (
+                    <Touchable
+                      className="touchableMin"
+                      key={i}
+                      onPress={this.goToSingleTag.bind(this, value)}
+                    >
+                      <Text className="lgBlue bold medium t-left">
+                        {' '}
+                        #{value.tag}
+                      </Text>
+                    </Touchable>
+                  ))}
+              </View>
+            </View>
+            <View className="f-row flex w-1-2 mr30" >
+              {section.images &&
+                section.images.length > 0 &&
+                section.images[0] !== 'image1.png' &&
+                section.images.map(v => (
+                  <Image
+                    className="x_l_thumb m5"
+                    source={{ uri: section.images[0] }}
+                    resizeMode="cover"
+                  />
+                ))
+              }
             </View>
           </View>
-          <View className="f-row flex w-1-2">
-            {section.images &&
-              section.images.length > 0 &&
-              section.images[0] !== 'image1.png' &&
-              section.images.map(v => (
+          <View className="f-row pull-right f-both ">
+            {section.waters &&
+              section.waters.length > 0 &&
+              <View className="f-row">
                 <Image
-                  className="x_l_thumb m5"
-                  source={{ uri: section.images[0] }}
+                  className="normal_thumb m10"
+                  source={require('../images/icons/drop.jpg')}
                   resizeMode="cover"
                 />
-              ))
+              </View>  
             }
           </View>
-          {this.state.user &&
-            this.state.user.role === 'admin' && (
-              <Image
-                className="micro_thumb m5"
-                source={require('../images/icons/delete.jpg')}
-                resizeMode="cover"
-              />
-            )}
-        </View>
-        <View className="f-row pull-right f-both m20">
-           {section.waters &&
-            section.waters.length > 0 &&
-            <View className="f-row">
-              <Image
-                className="normal_thumb m10"
-                source={require('../images/icons/drop.jpg')}
-                resizeMode="cover"
-              />
-              <Text className=" mt20 marginLeft20 darkgrey bold small t-center">
-                {' '}
-                ({section.waters.length} )
-              </Text>
-            </View>  
-          }
         </View>
         <View className="dividerGrey" />
       </View>
@@ -244,7 +233,7 @@ class Tags extends React.PureComponent {
           <View className="marginTop10">
             {section.comments &&
               section.comments.length > 0 && (
-                <Text className="mt20 darkgrey bold small t-center">
+                <Text className="mt20 lightGrey bold small t-center">
                   {' '}
                   ({section.comments.length} )
                 </Text>
@@ -308,7 +297,7 @@ class Tags extends React.PureComponent {
                   allPosts &&
                   allPosts.length === 0 && (
                     <View className="flex f-both p10">
-                      <Text className="black bold">There are no tags.</Text>
+                      <Text className="darkGrey bold">There are no tags.</Text>
                     </View>
                   )}
               </View>

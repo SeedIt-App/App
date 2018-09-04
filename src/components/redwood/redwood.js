@@ -20,9 +20,7 @@ import Modal from 'react-native-modal';
 class Redwood extends React.PureComponent {
   constructor(props) {
     super(props);
-
     this.state = {
-      user: this.props.user,
       activeFlag: 'seed',
       activeFlagBorderColor: '#3CCDFD',
       activeFlagTextColor: 'white',
@@ -44,12 +42,12 @@ class Redwood extends React.PureComponent {
 
   componentWillReceiveProps(nextProps) {
     if(this.state.goggleData === null){
-      if (nextProps.token == null){
+      if (nextProps.token === null){
         Toast.show('Please login',{
           duration: Toast.durations.LONG,
           position: Toast.positions.BOTTOM,
           backgroundColor : '#bcf2c8',
-          textColor : 'black',
+          textColor : '#585858',
         });
         this.props.navigation.navigate('Login');
       } 
@@ -59,7 +57,7 @@ class Redwood extends React.PureComponent {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
         backgroundColor : '#bcf2c8',
-        textColor : 'black',
+        textColor : '#585858',
       });
     }
      if (nextProps.updateWaterPostErrorStatus === 'FAILED') {
@@ -67,7 +65,7 @@ class Redwood extends React.PureComponent {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
         backgroundColor : '#bcf2c8',
-        textColor : 'black',
+        textColor : '#585858',
       });
     }
   }
@@ -104,8 +102,8 @@ class Redwood extends React.PureComponent {
 
     if (this.state.activeFlag === 'sapling') {
       return (
-        <View className="bg-transparent  mb20 mt10 space-between">
-          <Text className="f-both t-center bold medium">
+        <View className="bg-transparent mb20 mt10 space-between">
+          <Text className="f-both darkGrey t-center bold medium">
             There is no sapling
           </Text>
         </View>
@@ -130,7 +128,7 @@ class Redwood extends React.PureComponent {
           {getPostsRequestStatus === 'SUCCESS' &&
             allPosts.length === 0 && (
               <View className="flex f-both p10">
-                <Text className="black bold">There are no posts</Text>
+                <Text className="darkGrey bold">There are no posts</Text>
               </View>
             )}
         </View>
@@ -138,13 +136,15 @@ class Redwood extends React.PureComponent {
     } else if (this.state.activeFlag === 'tree') {
       return (
         <View className="bg-transparent mt10  mb20 space-between">
-          <Text className="f-both t-center bold medium">There is no tree</Text>
+          <Text className="f-both darkGrey t-center bold medium">
+            There is no tree
+          </Text>
         </View>
       );
     } else if (this.state.activeFlag === 'redwood') {
       return (
         <View className="bg-transparent mt10  mb20 space-between">
-          <Text className="f-both t-center bold medium">
+          <Text className="f-both darkGrey t-center bold medium">
             There is no redwood
           </Text>
         </View>
@@ -152,10 +152,10 @@ class Redwood extends React.PureComponent {
     }
   };
 
-  renderHeader = (section, i) => (
+  renderHeader = (section , i) => (
     <NativeView>
       <View className="f-row p5 mr20">
-        <View className="f-row f-both m20">
+        <View>
           {section.postedBy.picture ? 
             (<Image
               className="med_thumb m10"
@@ -170,24 +170,22 @@ class Redwood extends React.PureComponent {
           }
         </View>
         <View className="f-column j-start mt10 w-2-1">
-          <Text className="black bold large t-left ">
-            {section.postedBy.userName}
-          </Text>
+          <Text className="darkGrey bold large t-left ">{section.postedBy.userName}</Text>
           <View className="f-column">
-            <Text className="black large t-left">{section.text}</Text>
+            <Text className="lightGrey medium t-left">{section.text}</Text>
           </View>
-          <View className="f-column">
-            <View className="f-row flexWrap">
+          <View className="f-column mr30">
+            <View className="f-row flexWrap  ">
               {section.tags &&
                 section.tags.length > 0 &&
                 section.tags.map((value, i) => (
-                  <Text className="lgBlue bold large t-left">
+                  <Text className="lgBlue bold medium t-left">
                     {' '}
                     #{value.tag}
                   </Text>
                 ))}
+              </View>
             </View>
-          </View>
           <View className="f-row flex w-1-2">
             {section.images &&
               section.images.length > 0 &&
@@ -199,15 +197,7 @@ class Redwood extends React.PureComponent {
                   resizeMode="cover"
                 />
               ))}
-          </View>
-          {this.state.user &&
-            this.state.user.role === 'admin' && (
-              <Image
-                className="micro_thumb m5"
-                source={require('../images/icons/delete.jpg')}
-                resizeMode="cover"
-              />
-            )}
+          </View>  
         </View>
         <View className="f-row pull-right f-both m20">
           {section.waters &&
@@ -218,12 +208,8 @@ class Redwood extends React.PureComponent {
                 source={require('../images/icons/drop.jpg')}
                 resizeMode="cover"
               />
-              <Text className=" mt20 marginLeft20 darkgrey bold small t-center">
-                {' '}
-                ({section.waters.length} )
-              </Text>
             </View>  
-          }
+          } 
         </View>
         <View className="dividerGrey" />
       </View>
@@ -294,7 +280,7 @@ class Redwood extends React.PureComponent {
           <View className="marginTop10">
             {section.comments &&
               section.comments.length > 0 && (
-                <Text className="mt20 darkgrey bold small t-center">
+                <Text className="mt20 lightGrey bold small t-center">
                   {' '}
                   ({section.comments.length} )
                 </Text>
@@ -353,13 +339,13 @@ class Redwood extends React.PureComponent {
                           this.setState({ activeFlag: 'seed' });
                         }}
                       >
-                        <View>
+                        <View className="f-both">
                           <Image
                             className="micro1_thumb m5"
                             source={require('../images/icons/seed.png')}
                             resizeMode="cover"
                           />
-                          <Text className="black medium">Seed</Text>
+                          <Text className="darkGrey medium">Seed</Text>
                         </View>
                       </Touchable>
                     </View>
@@ -379,13 +365,13 @@ class Redwood extends React.PureComponent {
                           });
                         }}
                       >
-                        <View>
+                        <View className="f-both">
                           <Image
                             className="micro1_thumb m5"
                             source={require('../images/icons/sapling.jpg')}
                             resizeMode="cover"
                           />
-                          <Text className="black medium">Sapling</Text>
+                          <Text className="darkGrey medium">Sapling</Text>
                         </View>
                       </Touchable>
                     </View>
@@ -405,13 +391,13 @@ class Redwood extends React.PureComponent {
                           });
                         }}
                       >
-                        <View className="mh10 p5">
+                        <View className="mh10 f-both p5">
                           <Image
                             className="micro1_thumb m5"
                             source={require('../images/icons/Tree.jpg')}
                             resizeMode="cover"
                           />
-                          <Text className="black medium">Tree</Text>
+                          <Text className="darkGrey medium">Tree</Text>
                         </View>
                       </Touchable>
                     </View>
@@ -431,13 +417,13 @@ class Redwood extends React.PureComponent {
                           });
                         }}
                       >
-                        <View>
+                        <View className="f-both">
                           <Image
                             className="micro1_thumb m5"
                             source={require('../images/icons/tree.png')}
                             resizeMode="cover"
                           />
-                          <Text className="black medium">Redwood</Text>
+                          <Text className="darkGrey medium">Redwood</Text>
                         </View>
                       </Touchable>
                     </View>

@@ -43,7 +43,7 @@ class Notifications extends React.PureComponent {
               {notificationStatus === 'SUCCESS' &&
                 allNotification.length === 0 && (
                 <View className="flex f-both p10">
-                  <Text className="black bold">There are no notifications for you.</Text>
+                  <Text className="darkGrey bold">There are no notifications for you.</Text>
                 </View>
               )}
               {notificationStatus === 'SUCCESS' &&
@@ -52,7 +52,7 @@ class Notifications extends React.PureComponent {
                   <View className="f-column h50 f-both  w-1-1">   
                     <View className="f-both p5">
                       <Touchable >
-                        <Text className="black bold">
+                        <Text className="darkGrey bold">
                           {value.message}
                         </Text>
                       </Touchable>

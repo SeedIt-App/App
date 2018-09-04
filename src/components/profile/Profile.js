@@ -38,7 +38,7 @@ class Profile extends React.PureComponent {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
         backgroundColor : '#bcf2c8',
-        textColor : 'black',
+        textColor : '#585858',
       });
         this.props.navigation.navigate('Login');
       } 
@@ -48,7 +48,7 @@ class Profile extends React.PureComponent {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
         backgroundColor : '#bcf2c8',
-        textColor : 'black',
+        textColor : '#585858',
       });
     }
     if (nextProps.getPostsErrorStatus === 'FAILED') {
@@ -56,7 +56,7 @@ class Profile extends React.PureComponent {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
         backgroundColor : '#bcf2c8',
-        textColor : 'black',
+        textColor : '#585858',
       });
     }
     if (nextProps.getPostsRequestStatus === 'SUCCESS') {
@@ -91,9 +91,10 @@ class Profile extends React.PureComponent {
       postId: section._id,
     };
     this.props.updateWaterPost(body);
+    this.props.getPosts();
     if(this.props.updateWaterPostRequestStatus === 'SUCCESS') {
       console.log(this.props.updateWaterToPost, 'this.props.updateWaterToPost')
-        this.props.getPosts();
+
     }
   };
 
@@ -138,9 +139,12 @@ class Profile extends React.PureComponent {
                     key={i}
                     onPress={this.goToPublicProfile.bind(this, user)}
                   >
-                    <View className="f-both">
-                      <Text className="black large t-left">
-                        {user.userName} {'\n'} {user.email}
+                    <View className="f-column ">
+                      <Text className="darkGrey bold large t-left">
+                        {user.userName} 
+                      </Text>
+                      <Text className="lightGrey medium t-left">
+                        {user.email}
                       </Text>
                     </View>
                   </Touchable>
@@ -178,11 +182,11 @@ class Profile extends React.PureComponent {
                   }
                 </View>
                 <View className="f-column w-2-1">
-                  <Text className="black bold large t-left">
+                  <Text className="darkGrey bold large t-left">
                     {p.postedBy.userName}
                   </Text>
                   <View className="f-both">
-                    <Text className="black large t-left">{p.text}</Text>
+                    <Text className="lightGrey medium t-left">{p.text}</Text>
                   </View>
                 </View>
                 <View className="f-row pull-right f-both m20">
@@ -194,10 +198,6 @@ class Profile extends React.PureComponent {
                         source={require('../images/icons/drop.jpg')}
                         resizeMode="cover"
                       />
-                      <Text className=" mt20 marginLeft20 darkgrey bold small t-center">
-                        {' '}
-                        ({p.waters.length} )
-                      </Text>
                     </View>  
                   }
                 </View>
@@ -240,9 +240,12 @@ class Profile extends React.PureComponent {
                     key={i}
                     onPress={this.goToPublicProfile.bind(this, user)}
                   >
-                    <View className="f-both">
-                      <Text className="black large t-left">
-                        {user.userName} {'\n'} {user.email}
+                    <View className="f-column ">
+                      <Text className="darkGrey bold large t-left">
+                        {user.userName} 
+                      </Text>
+                      <Text className="lightGrey medium t-left">
+                        {user.email}
                       </Text>
                     </View>
                   </Touchable>
@@ -286,9 +289,12 @@ class Profile extends React.PureComponent {
                     key={i}
                     onPress={this.goToPublicProfile.bind(this, user)}
                   >
-                    <View className="f-both">
-                      <Text className="black large t-left">
-                        {user.userName} {'\n'} {user.email}
+                   <View className="f-column ">
+                      <Text className="darkGrey bold large t-left">
+                        {user.userName} 
+                      </Text>
+                      <Text className="lightGrey medium t-left">
+                        {user.email}
                       </Text>
                     </View>
                   </Touchable>

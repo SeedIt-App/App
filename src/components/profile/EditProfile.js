@@ -51,7 +51,7 @@ class EditProfile extends React.PureComponent {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
         backgroundColor : '#bcf2c8',
-        textColor : 'black',
+        textColor : '#585858',
       });
     }
     if (nextProps.editProfileRequestStatus === 'SUCCESS') {
@@ -59,7 +59,7 @@ class EditProfile extends React.PureComponent {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
         backgroundColor : '#bcf2c8',
-        textColor : 'black',
+        textColor : '#585858',
       });
     }
   }

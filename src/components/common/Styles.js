@@ -387,6 +387,9 @@ export default StyleSheet.create({
   'w-1-0': {
     width: '90%',
   },
+  'w-1-9': {
+    width: '95%',
+  },
   'w-1-2': {
     width: '50%',
   },

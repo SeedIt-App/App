@@ -35,7 +35,7 @@ class CreateComment extends React.PureComponent {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
         backgroundColor : '#bcf2c8',
-        textColor : 'black',
+        textColor : '#585858',
       });
     }
   }
@@ -57,7 +57,7 @@ class CreateComment extends React.PureComponent {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
         backgroundColor : '#bcf2c8',
-        textColor : 'black',
+        textColor : '#585858',
       });
       }
     } else {
@@ -65,7 +65,7 @@ class CreateComment extends React.PureComponent {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
         backgroundColor : '#bcf2c8',
-        textColor : 'black',
+        textColor : '#585858',
       });
     }
   };
@@ -73,9 +73,7 @@ class CreateComment extends React.PureComponent {
   openPicker = () => {
     ImagePicker.showImagePicker(response => {
       if (response.didCancel) {
-        console.log('User cancelled image picker');
       } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
       } else {
         ImageResizer.createResizedImage(response.uri, 100, 100, 'JPEG', 100, 0)
           .then(({ uri, path }) => {
@@ -86,7 +84,6 @@ class CreateComment extends React.PureComponent {
             this.uploadProfileImage(source);
           })
           .catch(err => {
-            console.log(err);
             return Alert.alert(
               'Unable to resize the photo',
               'Check the console for full the error message',
@@ -120,7 +117,6 @@ class CreateComment extends React.PureComponent {
           })
           .catch(err => {
             // error handling ..
-            console.log(err);
           });
       });
   };
@@ -132,10 +128,6 @@ class CreateComment extends React.PureComponent {
       addNewCommentToPostErrorStatus,
     } = this.props;
     const { props } = this;
-    console.log(
-      this.props.navigation.state.params,
-      'this.props.navigation.state.params',
-    );
     return (
       <View className="screen">
         <Header title="Add a Comment" back navigation={this.props.navigation} />
@@ -147,14 +139,14 @@ class CreateComment extends React.PureComponent {
                   <View className="f-row f-both m20 mr20">
                    {this.props.user && this.props.user.picture ? (
                       <Image
-                        className="med_thumb"
+                        className="large_thumb"
                         source={{ uri: idx(this.props.user, _ => _.picture) }}
                         resizeMode="cover"
                       />
                     ) : (
                       <Image
-                        className="normal_thumb"
-                        source={require('../images/icons/user.png')}
+                        className="large_thumb"
+                        source={require('../images/icons/Login_Black.png')}
                         resizeMode="contain"
                       />
                     )}
@@ -162,21 +154,21 @@ class CreateComment extends React.PureComponent {
                   <View className="f-column j-start mt10 ">
                     <View className="f-row">
                       {this.state.userNameFlag ? (
-                        <Text className="black bold large t-center">
+                        <Text className="darkGrey bold large t-center">
                           {this.props.user
                             ? idx(this.props.user, _ => _.userName)
                             : 'User name'}
                         </Text>
                       ) : null}
                     </View>
-                    <Text className="black medium t-center">
+                    <Text className="lightGrey medium t-center">
                       {this.props.user
                         ? idx(this.props.user.address, _ => _.city)
                         : 'Location'}
                     </Text>
                   </View>
                   <View className="f-column pull-right mt10 f-both m20">
-                    <Text className="black medium t-center">Show Username</Text>
+                    <Text className="lightGrey medium t-center">Show Username</Text>
                     <Switch
                       value={this.state.userNameFlag}
                       onChange={this.ShowUserName}
@@ -189,24 +181,24 @@ class CreateComment extends React.PureComponent {
               <View className="m10 mt20">
                 <View className="f-center f-row">
                   <View>
-                    <Text className="black bold large t-center ">
+                    <Text className="darkGrey bold large t-center ">
                       {this.state.currentPostData.text}
                     </Text>
                     {this.state.currentPostData &&
                       this.state.currentPostData.comments &&
                       this.state.currentPostData.comments.length > 0 &&
                       this.state.currentPostData.comments.map(value => (
-                        <Text className="black bold medium t-left">
+                        <Text className="darkGrey bold medium t-left">
                           {value.text}
                           {'\n'} {' - '}
                           {value.commentBy.userName}
                         </Text>
                       ))}
                     <TextInput
-                      style={{ color: 'black', fontSize: 16, width: 250 }}
+                      style={{ color: '#585858', fontSize: 16, width: 250 }}
                       value={this.state.message}
                       placeholder="Type your comment here"
-                      placeholderTextColor="black"
+                      placeholderTextColor="#585858"
                       autoCapitalize="none"
                       underlineColorAndroid="transparent"
                       multiline

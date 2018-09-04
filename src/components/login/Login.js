@@ -35,7 +35,7 @@ class Login extends React.PureComponent {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
         backgroundColor : '#bcf2c8',
-        textColor : 'black',
+        textColor : '#585858',
       });
     }
     if (nextProps.loginRequestStatus === 'SUCCESS') {
@@ -43,7 +43,7 @@ class Login extends React.PureComponent {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
         backgroundColor : '#bcf2c8',
-        textColor : 'black',
+        textColor : '#585858',
       });
       this.props.navigation.dispatch({
         type: 'Navigation/RESET',
@@ -81,7 +81,7 @@ class Login extends React.PureComponent {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
         backgroundColor : '#bcf2c8',
-        textColor : 'black',
+        textColor : '#585858',
       });
     }
     else {
@@ -90,7 +90,7 @@ class Login extends React.PureComponent {
           duration: Toast.durations.LONG,
           position: Toast.positions.BOTTOM,
           backgroundColor : '#bcf2c8',
-          textColor : 'black',
+          textColor : '#585858',
         });
       }
       else{
@@ -174,7 +174,7 @@ class Login extends React.PureComponent {
                         className="showPasswordAuth"
                         onPress={this.toggleSwitch}
                       >
-                        <Text className="darkGrey bold medium m10">Show</Text>
+                        <Text className="#585858 bold medium m10">Show</Text>
                       </Touchable>
                     </View>
                   </View>

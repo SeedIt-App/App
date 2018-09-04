@@ -81,7 +81,11 @@ const imageStyles = StyleSheet.create({
   },
   large_thumb: {
     height: 55,
-    width: 55,
+    width: 55, 
+    borderRadius: 55 / 2,
+    padding: 20,
+    alignSelf: 'center',
+    backgroundColor: 'white',
   },
   x_large_thumb: {
     height: 100,
@@ -89,8 +93,11 @@ const imageStyles = StyleSheet.create({
   },
   x_l_thumb: {
     height: 100,
-    width: 180,
+    width: 200, 
+    borderRadius: 5,
+    borderWidth: 1,
   },
+
 });
 
 export default props => {

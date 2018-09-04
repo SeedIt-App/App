@@ -7,7 +7,6 @@ import Text from './Text';
 import Styles from './Styles';
 import Icon from './Icon';
 import Dimensions from './Dimensions';
-import ErrorPage from './ErrorPage';
 import Image from './Image';
 import BackgroundImage from './BackgroundImage';
 import TextInput from './TextInput';
@@ -31,7 +30,6 @@ export {
   Colors,
   Icon,
   Dimensions,
-  ErrorPage,
   Image,
   BackgroundImage,
   TextInput,

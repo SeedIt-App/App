@@ -31,7 +31,7 @@ class NewsFeed extends React.PureComponent {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
         backgroundColor : '#bcf2c8',
-        textColor : 'black',
+        textColor : '#585858',
       });
     }
   }
@@ -60,7 +60,7 @@ class NewsFeed extends React.PureComponent {
       <ScrollView>
         <View className="p5">
           <View className="f-column">
-            <View className="bg-transparent mt10 space-between">
+            <View className="bg-transparent mt5 space-between">
               <View className="f-row p5 mr20">
                 <View className="f-row f-both m20">
                   {searchPosts.postedBy.picture ? 
@@ -77,11 +77,11 @@ class NewsFeed extends React.PureComponent {
                   }
                 </View>
                 <View className="f-column j-start w-2-1 mt10">
-                  <Text className="black bold large t-left">
+                  <Text className="darkGrey bold large t-left">
                     {searchPosts.postedBy.userName}
                   </Text>
                   <View className="f-column">
-                    <Text className="black large t-left">
+                    <Text className="lightGrey large t-left">
                       {searchPosts.text}
                     </Text>
                     {this.state.user &&
@@ -161,7 +161,7 @@ class NewsFeed extends React.PureComponent {
           navigation={this.props.navigation}
           createPostRequest={this.goToCreatePost}
         />
-        <View className="shadowBox w-1-1">
+        {/*<View className="shadowBox w-1-1">
           <TextInput
             style={{
               height: 35,
@@ -178,19 +178,18 @@ class NewsFeed extends React.PureComponent {
             underlineColorAndroid="transparent"
             onChangeText={this.searchPosts}
           />
-        </View>
-      
+        </View>*/}
         {this.state.searchPosts.length === 0 && (
           <ScrollView>
-            <View className="p5">
+            <View className="p3">
               <View className="f-column">
-                <View className="bg-transparent mt10 space-between">
+                <View className="bg-transparent space-between">
                   {userNewsFeedRequestStatus === 'SUCCESS' ||
                   guestUserNewsFeedRequestStatus === 'SUCCESS' ||
                   (getAllNewsFeed && getAllNewsFeed.length > 0) ? (
                     getAllNewsFeed.map((value, i) => (
-                      <View className="f-row p5 mr20">
-                        <View className="f-row f-both m20">
+                      <View className="f-row p5 mr10 j-start">
+                        <View>
                           {value.postedBy.picture ? 
                             (<Image
                               className="med_thumb m10"
@@ -204,12 +203,12 @@ class NewsFeed extends React.PureComponent {
                             />)
                           }
                         </View>
-                        <View className="f-column j-start w-2-1 mt10">
-                          <Text className="black bold large t-left">
+                        <View className="f-column  w-2-1 ">
+                          <Text className="darkGrey bold large t-left">
                             {value.postedBy.userName}
                           </Text>
                           <View className="f-column">
-                            <Text className="black large t-left">
+                            <Text className="lightGrey medium t-left">
                               {value.text}
                             </Text>
                             {this.state.user &&
@@ -227,7 +226,7 @@ class NewsFeed extends React.PureComponent {
                               {value.tags &&
                                 value.tags.length > 0 &&
                                 value.tags.map((v, i) => (
-                                  <Text className="lgBlue bold large t-left">
+                                  <Text className="lgBlue bold medium t-left">
                                     {' '}
                                     #{v.tag}
                                   </Text>
@@ -247,7 +246,7 @@ class NewsFeed extends React.PureComponent {
                             </View>
                           </View>
                         </View>
-                        <View className="f-row pull-right f-both m20">
+                        <View className="f-row pull-right f-both ">
                            {value.waters &&
                               value.waters.length > 0 &&
                               <View className="f-row">
@@ -256,13 +255,10 @@ class NewsFeed extends React.PureComponent {
                                   source={require('../images/icons/drop.jpg')}
                                   resizeMode="cover"
                                 />
-                                <Text className=" mt20 marginLeft20 darkgrey bold small t-center">
-                                  {' '}
-                                  ({value.waters.length} )
-                                </Text>
                               </View>  
                             }
                         </View>
+                        <View className="dividerGrey" />
                       </View>
                     ))
                   ) : (<View className="p15 mt30">
@@ -275,10 +271,10 @@ class NewsFeed extends React.PureComponent {
           </ScrollView>
         )}
 
-        <ListView
+        {/*<ListView
           dataSource={ds.cloneWithRows(this.state.searchPosts)}
           renderRow={this.renderAdress}
-        />
+        />*/}
         <Footer navigation={this.props.navigation} />
       </View>
     );

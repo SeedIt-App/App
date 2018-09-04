@@ -38,7 +38,7 @@ class DateTimeInput extends React.PureComponent {
     return (
       <Touchable className="flex1 j-end mr10 ml10" onPress={this.togglePicker}>
         <View className="w-1-1 border-bot">
-          <Text className="black t-left">
+          <Text className="darkGrey t-left">
             {moment(value).format(format)}
           </Text>
           <DateTimePicker

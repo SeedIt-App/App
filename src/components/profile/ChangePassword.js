@@ -21,6 +21,8 @@ class ChangePassword extends React.PureComponent {
     this.state = {
       oldPwd: '',
       newPwd: '',
+      showOldPassword: true,
+      showNewPassword: true,
     };
   }
 
@@ -30,13 +32,12 @@ class ChangePassword extends React.PureComponent {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
         backgroundColor : '#bcf2c8',
-        textColor : 'black',
+        textColor : 'darkGrey',
       });
     }
   }
 
   changePassword = () => {
-
     let validatePassword  = /^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$/;
     const body = {
       resetToken: this.props.user.resetToken,
@@ -47,7 +48,7 @@ class ChangePassword extends React.PureComponent {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
         backgroundColor : '#bcf2c8',
-        textColor : 'black',
+        textColor : 'darkGrey',
       });
     }
     else {
@@ -56,7 +57,7 @@ class ChangePassword extends React.PureComponent {
           duration: Toast.durations.LONG,
           position: Toast.positions.BOTTOM,
           backgroundColor : '#bcf2c8',
-          textColor : 'black',
+          textColor : 'darkGrey',
         });
       }
       else{
@@ -64,6 +65,14 @@ class ChangePassword extends React.PureComponent {
       }
     }
   }
+
+  toggleSwitchOPwd = () => {
+    this.setState({ showOldPassword: !this.state.showOldPassword });
+  };
+
+  toggleSwitchopNPwd = () => {
+    this.setState({ showNewPassword: !this.state.showNewPassword });
+  };
 
   render() {
     const { props } = this;
@@ -82,16 +91,18 @@ class ChangePassword extends React.PureComponent {
                 <View className="bgWhite f-row w-1-0 changePwdEditField j-start m5">
                   <Text className="blue small m10 bold ">Old Password :</Text>
                   <TextInput
-                    style={{ color: 'grey', fontSize: 16, width: 280 }}
+                    style={{ color: '#585858', fontSize: 16, width: 280 }}
                     value={this.state.oldPwd}
                     placeholder="Old Password"
                     placeholderTextColor="grey"
                     autoCapitalize="none"
+                    secureTextEntry={this.state.showOldPassword}
                     underlineColorAndroid="transparent"
                     onChangeText={oldPwd => this.setState({ oldPwd })}
                   />
                   <View className="pull-right">
-                    <Touchable className="showPassword" onPress={() => {}}>
+                    <Touchable className="showPassword" 
+                        onPress={this.toggleSwitchOPwd}>
                       <Text className="blue bold medium m10">Show</Text>
                     </Touchable>
                   </View>
@@ -99,23 +110,25 @@ class ChangePassword extends React.PureComponent {
                 <View className="bgWhite f-row w-1-0 changePwdEditField j-start m5">
                   <Text className="blue small m10 bold">New Password :</Text>
                   <TextInput
-                    style={{ color: 'grey', fontSize: 16, width: 280 }}
+                    style={{ color: '#585858', fontSize: 16, width: 280 }}
                     value={this.state.newPwd}
                     placeholder="New Password"
                     placeholderTextColor="grey"
                     autoCapitalize="none"
+                    secureTextEntry={this.state.showNewPassword}
                     underlineColorAndroid="transparent"
                     onChangeText={newPwd => this.setState({ newPwd })}
                   />
                   <View className="pull-right">
-                    <Touchable className="showPassword" onPress={() => {}}>
+                    <Touchable className="showPassword" 
+                        onPress={this.toggleSwitchopNPwd}>
                       <Text className="blue bold medium m10">Show</Text>
                     </Touchable>
                   </View>
                 </View>
               </View>
               <View className="mt5">
-                <Text className="darkGrey t-center bold small m5">Tip : Use atleast 6 characters and one number</Text>
+                <Text className="lightGrey t-center bold small m5">Tip : Use atleast 6 characters and one number</Text>
               </View>
               <View className="f-center j-end f-both mt25 mb15">
                 <Touchable className="submitFieldPwd m20" onPress={this.changePassword}>

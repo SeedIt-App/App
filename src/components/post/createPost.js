@@ -36,7 +36,7 @@ class CreatePost extends React.PureComponent {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
         backgroundColor : '#bcf2c8',
-        textColor : 'black',
+        textColor : '#585858',
       });
     }
     if (nextProps.createPostRequestStatus === 'SUCCESS') {
@@ -44,7 +44,7 @@ class CreatePost extends React.PureComponent {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
         backgroundColor : '#bcf2c8',
-        textColor : 'black',
+        textColor : '#585858',
       });
       this.props.navigation.navigate('Newsfeed');
     }
@@ -66,7 +66,7 @@ class CreatePost extends React.PureComponent {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
         backgroundColor : '#bcf2c8',
-        textColor : 'black',
+        textColor : '#585858',
       });
     }
   };
@@ -140,14 +140,14 @@ class CreatePost extends React.PureComponent {
                   <View className="f-row f-both mr20 m20">
                     {user && picture ? (
                       <Image
-                        className="med_thumb"
+                        className="large_thumb"
                         source={{ uri: idx(user, _ => _.picture) }}
                         resizeMode="cover"
                       />
                     ) : (
                       <Image
-                        className="normal_thumb"
-                        source={require('../images/icons/user.png')}
+                        className="large_thumb"
+                        source={require('../images/icons/Login_Black.png')}
                         resizeMode="contain"
                       />
                     )}
@@ -155,21 +155,21 @@ class CreatePost extends React.PureComponent {
                   <View className="f-column j-start mt10 ">
                     <View className="f-row">
                       {this.state.userNameFlag ? (
-                        <Text className="black bold large t-center">
+                        <Text className="darkGrey bold large t-center">
                           {this.props.user
                             ? idx(this.props.user, _ => _.userName)
                             : 'User name'}
                         </Text>
                       ) : null}
                     </View>
-                    <Text className="black medium t-center">
+                    <Text className="lightGrey medium t-center">
                       {this.props.user
                         ? idx(this.props.user.address, _ => _.city)
                         : 'Location'}
                     </Text>
                   </View>
                   <View className="f-column pull-right mt10 f-both m20">
-                    <Text className="black medium t-center">Show Username</Text>
+                    <Text className="darkGrey medium t-center">Show Username</Text>
                     <Switch
                       value={this.state.userNameFlag}
                       onChange={this.ShowUserName}
@@ -182,10 +182,10 @@ class CreatePost extends React.PureComponent {
                 <View className="f-center f-row">
                   <View>
                     <TextInput
-                      style={{ color: 'black', fontSize: 16, width: 250 }}
+                      style={{ color: '#585858', fontSize: 16, width: 250 }}
                       value={this.state.message}
                       placeholder="Type your idea here"
-                      placeholderTextColor="black"
+                      placeholderTextColor="#585858"
                       autoCapitalize="none"
                       underlineColorAndroid="transparent"
                       multiline

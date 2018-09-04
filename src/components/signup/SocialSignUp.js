@@ -36,7 +36,7 @@ class SocialSignUp extends React.PureComponent {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
         backgroundColor : '#bcf2c8',
-        textColor : 'black',
+        textColor : '#585858',
       });
     }
     if (nextProps.oauthSignupRequestStatus === 'SUCCESS') {
@@ -44,7 +44,7 @@ class SocialSignUp extends React.PureComponent {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
         backgroundColor : '#bcf2c8',
-        textColor : 'black',
+        textColor : '#585858',
       });
       this.goToBack()
     }
@@ -55,7 +55,7 @@ class SocialSignUp extends React.PureComponent {
       duration: Toast.durations.LONG,
       position: Toast.positions.BOTTOM,
       backgroundColor : '#bcf2c8',
-      textColor : 'black',
+      textColor : '#585858',
     });
   };
 
@@ -65,8 +65,6 @@ class SocialSignUp extends React.PureComponent {
       appId : '283522117594-69esp2ajjrc1oiv7hl6a6kf6hnc537sd.apps.googleusercontent.com',
       callback: 'com.seedit:/authorize'
     }).then((res) => {
-      console.log(res, 'googleResponse')
-      //setAuthHeaders(res.credentials.access_token);
         const userData = {
           firstName: res.user.given_name || '',
           lastName: res.user.family_name || '',

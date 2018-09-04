@@ -38,7 +38,7 @@ class PublicProfile extends React.PureComponent {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
         backgroundColor : '#bcf2c8',
-        textColor : 'black',
+        textColor : '#585858',
       });
     }
 
@@ -47,7 +47,7 @@ class PublicProfile extends React.PureComponent {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
         backgroundColor : '#bcf2c8',
-        textColor : 'black',
+        textColor : '#585858',
       });
     }
     if (nextProps.getPostsRequestStatus === 'SUCCESS') {
@@ -114,18 +114,14 @@ class PublicProfile extends React.PureComponent {
                   }
                 </View>
                 <View className="f-column">
-                  <View className="f-both">
-                    <Text className="black large t-left">
-                      {user.userName} {'\n'} {user.email}
+                  <View className="f-column ">
+                    <Text className="darkGrey bold large t-left">
+                      {user.userName} 
+                    </Text>
+                    <Text className="lightGrey medium t-left">
+                      {user.email}
                     </Text>
                   </View>
-                </View>
-                <View className="f-row pull-right f-both m20">
-                  <Image
-                    className="normal_thumb m10"
-                    source={require('../images/icons/drop.jpg')}
-                    resizeMode="cover"
-                  />
                 </View>
               </View>
             ))}
@@ -141,7 +137,7 @@ class PublicProfile extends React.PureComponent {
     } else if (this.state.activeFlag === 'posted') {
       return (
         <View className="bg-transparent mt10 space-between">
-          {allPosts &&
+          {allPosts && allPosts.length > 0 && 
             allPosts.map(p => (
               <View className="f-row p5 mr20">
                 <View className="f-row f-both m20">
@@ -159,8 +155,11 @@ class PublicProfile extends React.PureComponent {
                   }
                 </View>
                 <View className="f-column w-2-1">
+                  <Text className="darkGrey bold large t-left">
+                    {p && p.postedBy && p.postedBy.userName}
+                  </Text>
                   <View className="f-both">
-                    <Text className="black large t-left">{p.text}</Text>
+                    <Text className="lightGrey medium t-left">{p.text}</Text>
                   </View>
                 </View>
                 <View className="f-row pull-right f-both m20">
@@ -185,14 +184,14 @@ class PublicProfile extends React.PureComponent {
     } else if (this.state.activeFlag === 'followers') {
       return (
         <View className="bg-transparent mt10 space-between">
-          {allFollowers &&
+          {allFollowers && allFollowers.length > 0 &&
             allFollowers.map(p => (
               <View className="f-row p5 mr20">
                 <View className="f-row f-both m20">
-                  {p.postedBy && p.postedBy.picture ? 
+                  {p && p.picture ? 
                     (<Image
                       className="med_thumb m10"
-                      source={{uri : p.postedBy.picture}}
+                      source={{uri : p.picture}}
                       resizeMode="cover"
                     />)
                     : (<Image
@@ -203,18 +202,14 @@ class PublicProfile extends React.PureComponent {
                   }
                 </View>
                 <View className="f-column">
-                  <View className="f-both">
-                    <Text className="black large t-left">
-                      {p.userName} {'\n'} {p.email}
+                  <View className="f-column ">
+                    <Text className="darkGrey bold large t-left">
+                      {p.userName} 
+                    </Text>
+                    <Text className="lightGrey medium t-left">
+                      {p.email}
                     </Text>
                   </View>
-                </View>
-                <View className="f-row pull-right f-both m20">
-                  <Image
-                    className="normal_thumb m10"
-                    source={require('../images/icons/drop.jpg')}
-                    resizeMode="cover"
-                  />
                 </View>
               </View>
             ))}
@@ -231,14 +226,14 @@ class PublicProfile extends React.PureComponent {
     } else if (this.state.activeFlag === 'following') {
       return (
         <View className="bg-transparent mt10 space-between">
-          {allfollowings &&
+          {allfollowings && allfollowings.length > 0 &&
             allfollowings.map(f => (
               <View className="f-row p5 mr20">
                 <View className="f-row f-both m20">
-                  {f.postedBy && f.postedBy.picture ? 
+                  {f && f.picture ? 
                     (<Image
                       className="med_thumb m10"
-                      source={{uri : f.postedBy.picture}}
+                      source={{uri : f.picture}}
                       resizeMode="cover"
                     />)
                     : (<Image
@@ -249,18 +244,14 @@ class PublicProfile extends React.PureComponent {
                   }
                 </View>
                 <View className="f-column">
-                  <View className="f-both">
-                    <Text className="black large t-left">
-                      {f.userName} {'\n'} {f.email}
+                  <View className="f-column ">
+                    <Text className="darkGrey bold large t-left">
+                      {f.userName} 
+                    </Text>
+                    <Text className="lightGrey medium t-left">
+                      {f.email}
                     </Text>
                   </View>
-                </View>
-                <View className="f-row pull-right f-both m20">
-                  <Image
-                    className="normal_thumb m10"
-                    source={require('../images/icons/drop.jpg')}
-                    resizeMode="cover"
-                  />
                 </View>
               </View>
             ))}
