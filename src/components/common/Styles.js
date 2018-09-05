@@ -103,8 +103,11 @@ const margins = {
   ml15: {
     marginLeft: 15,
   },
+  ml25: {
+    marginLeft: 25,
+  },
   mt3 : {
-    marginTop: 2,
+    marginTop: 3,
   },
   mt5: {
     marginTop: 5,
@@ -495,7 +498,7 @@ export default StyleSheet.create({
   dividerGrey: {
     alignSelf: 'stretch',
     height: 0.6,
-    backgroundColor: '#DCDCDC',
+    backgroundColor: '#585858',
   },
   'abs-cover': {
     position: 'absolute',

@@ -6,9 +6,9 @@ import { AsyncStorage } from 'react-native';
 
 class NewsFeedHeader extends React.PureComponent {
 
-  goToNotification = () => {
+  /* goToNotification = () => {
     this.props.navigation.navigate('Notifications');
-  }
+  }*/
 
   goToSocialSignUp = () => this.props.navigation.navigate('SocialSignUp');
 
@@ -20,7 +20,7 @@ class NewsFeedHeader extends React.PureComponent {
         <View className="f-row bg-header p5">
           <View className="w-1-1 f-row f-both h65">
             
-            <Touchable className="pull-left" >
+            <Touchable className="pull-left">
               <Image
                 className="medium_thumb"
                 source={require('../images/logo.png')}

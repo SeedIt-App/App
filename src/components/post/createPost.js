@@ -46,7 +46,7 @@ class CreatePost extends React.PureComponent {
         backgroundColor : '#bcf2c8',
         textColor : '#585858',
       });
-      this.props.navigation.navigate('Newsfeed');
+      this.props.navigation.navigate('newsfeed');
     }
   }
 
@@ -136,8 +136,8 @@ class CreatePost extends React.PureComponent {
           <View>
             <View className="f-column bg-transparent space-between">
               <View className="mt10">
-                <View className="f-row p5 mr20 mb25">
-                  <View className="f-row f-both mr20 m20">
+                <View className="f-row p5  mb25">
+                  <View className="f-row f-both">
                     {user && picture ? (
                       <Image
                         className="large_thumb"
@@ -155,11 +155,25 @@ class CreatePost extends React.PureComponent {
                   <View className="f-column j-start mt10 ">
                     <View className="f-row">
                       {this.state.userNameFlag ? (
-                        <Text className="darkGrey bold large t-center">
-                          {this.props.user
-                            ? idx(this.props.user, _ => _.userName)
-                            : 'User name'}
-                        </Text>
+                        <View>
+                          <Text className="darkGrey bold large t-center">
+                            {this.props.user
+                              ? idx(this.props.user, _ => _.userName)
+                              : 'User name'}
+                          </Text>
+                          <View className="f-row ml25 mt3">
+                            <Image
+                              className="mt5"
+                              source={require('../images/icons/location.png')}
+                              resizeMode="cover"
+                            />
+                            <Text className="lightGrey medium ml5">
+                              {this.props.user && this.props.user.address && this.props.user.city 
+                              ? this.props.user.address.city
+                              : 'Add a location'}
+                            </Text>
+                          </View>
+                        </View>
                       ) : null}
                     </View>
                     <Text className="lightGrey medium t-center">
@@ -168,7 +182,7 @@ class CreatePost extends React.PureComponent {
                         : 'Location'}
                     </Text>
                   </View>
-                  <View className="f-column pull-right mt10 f-both m20">
+                  <View className="f-column pull-right mt10 f-both m10">
                     <Text className="darkGrey medium t-center">Show Username</Text>
                     <Switch
                       value={this.state.userNameFlag}
@@ -176,7 +190,7 @@ class CreatePost extends React.PureComponent {
                     />
                   </View>
                 </View>
-                <View className="dividerGrey " />
+                <View className="dividerGrey" />
               </View>
               <View className="m10 mt20">
                 <View className="f-center f-row">
@@ -196,7 +210,7 @@ class CreatePost extends React.PureComponent {
                 <View className="f-center f-row mt20">
                   {this.state.image !== '' && (
                     <Image
-                      className="x_large_thumb"
+                      className="x_l_thumb"
                       source={{ uri: this.state.image }}
                       resizeMode="cover"
                     />
@@ -207,14 +221,13 @@ class CreatePost extends React.PureComponent {
           </View>
         </ScrollView>
         <View className="dividerGrey" />
-        <View className="m10 ">
+        <View className="m5 ">
           <View className="f-row f-both w-1-0 space-between">
             <View className="p5">
               <Touchable onPress={this.goToLogin}>
-                <View className="f-row f-both m20">
+                <View className="f-row f-both ">
                   <Touchable className="p5" onPress={this.openPicker}>
                     <Image
-                      className="mini_thumb m10"
                       source={require('../images/icons/camera.png')}
                       resizeMode="cover"
                     />

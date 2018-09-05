@@ -111,7 +111,6 @@ function mapStateToProps(state) {
     refreshTokenErrorStatus,
   } = state.auth;
   const token = state.auth.authToken;
-  console.log(state, 'HeaderState');
   return {
     user,
     token,

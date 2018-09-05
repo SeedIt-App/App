@@ -102,7 +102,6 @@ class CreateComment extends React.PureComponent {
       .get(`/s3?fileName=${fileName}&fileType='image/jpeg'`)
       .then(response => {
         const { signedRequest, url } = response.data;
-        console.log({ signedRequest, url, fileName });
         RNFetchBlob.fetch(
           'PUT',
           signedRequest,
@@ -154,11 +153,25 @@ class CreateComment extends React.PureComponent {
                   <View className="f-column j-start mt10 ">
                     <View className="f-row">
                       {this.state.userNameFlag ? (
-                        <Text className="darkGrey bold large t-center">
-                          {this.props.user
-                            ? idx(this.props.user, _ => _.userName)
-                            : 'User name'}
-                        </Text>
+                        <View>
+                          <Text className="darkGrey bold large t-center">
+                            {this.props.user
+                              ? idx(this.props.user, _ => _.userName)
+                              : 'User name'}
+                          </Text>
+                           <View className="f-row ml25 mt3">
+                            <Image
+                              className="mt5"
+                              source={require('../images/icons/location.png')}
+                              resizeMode="cover"
+                            />
+                            <Text className="lightGrey medium ml5">
+                              {this.props.user && this.props.user.address && this.props.user.city 
+                              ? this.props.user.address.city
+                              : 'Add a location'}
+                            </Text>
+                          </View>
+                        </View>
                       ) : null}
                     </View>
                     <Text className="lightGrey medium t-center">
@@ -175,7 +188,6 @@ class CreateComment extends React.PureComponent {
                     />
                   </View>
                 </View>
-                <View className="dividerGrey" />
                 <View className="dividerGrey" />
               </View>
               <View className="m10 mt20">
@@ -220,16 +232,13 @@ class CreateComment extends React.PureComponent {
           </View>
         </ScrollView>
         <View className="dividerGrey" />
-        <View className="dividerGrey" />
-        <View className="dividerGrey" />
-        <View className="m10 ">
+        <View className="m5 ">
           <View className="f-row f-both w-1-0 space-between">
             <View className="p5">
               <Touchable onPress={this.goToLogin}>
-                <View className="f-row f-both m20">
+                <View className="f-row f-both ">
                   <Touchable className="p5" onPress={this.openPicker}>
                     <Image
-                      className="mini_thumb m10"
                       source={require('../images/icons/camera.png')}
                       resizeMode="cover"
                     />

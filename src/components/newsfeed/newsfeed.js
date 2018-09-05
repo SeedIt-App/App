@@ -54,89 +54,86 @@ class NewsFeed extends React.PureComponent {
     this.setState({ searchPosts });
   };
 
+
   renderAdress = (searchPosts, i) => {
     const { user } = this.props;
     return (
       <ScrollView>
-        <View className="p5">
+        <View className="p3">
           <View className="f-column">
-            <View className="bg-transparent mt5 space-between">
-              <View className="f-row p5 mr20">
-                <View className="f-row f-both m20">
-                  {searchPosts.postedBy.picture ? 
-                    (<Image
-                      className="med_thumb m10"
-                      source={{uri : searchPosts.postedBy.picture}}
-                      resizeMode="cover"
-                    />)
-                    : (<Image
-                      className="med_thumb m10"
-                      source={require('../images/icons/Login_Black.png')}
-                      resizeMode="cover"
-                    />)
-                  }
-                </View>
-                <View className="f-column j-start w-2-1 mt10">
-                  <Text className="darkGrey bold large t-left">
-                    {searchPosts.postedBy.userName}
-                  </Text>
-                  <View className="f-column">
-                    <Text className="lightGrey large t-left">
-                      {searchPosts.text}
+            <View className="bg-transparent space-between">
+                <View className="f-row p5 mr10 j-start">
+                  <View>
+                    {searchPosts.postedBy.picture ? 
+                      (<Image
+                        className="med_thumb m10"
+                        source={{uri : searchPosts.postedBy.picture}}
+                        resizeMode="cover"
+                      />)
+                      : (<Image
+                        className="med_thumb m10"
+                        source={require('../images/icons/Login_Black.png')}
+                        resizeMode="cover"
+                      />)
+                    }
+                  </View>
+                  <View className="f-column  w-2-1 ">
+                    <Text className="darkGrey bold large t-left">
+                      {searchPosts.postedBy.userName}
                     </Text>
-                    {this.state.user &&
-                      this.state.user.role === 'admin' && (
-                        <Image
-                          className="micro_thumb m5"
-                          source={require('../images/icons/delete.jpg')}
-                          resizeMode="cover"
-                        />
-                      )}
-                  </View>
-
-                  <View className="f-column">
-                    <View className="f-row flex w-1-2 mr30">
-                      {searchPosts.tags &&
-                        searchPosts.tags.length > 0 &&
-                        searchPosts.tags.map((v, i) => (
-                          <Text className="lgBlue bold large t-left">
-                            {' '}
-                            #{v.tag}
-                          </Text>
-                        ))}
-                    </View>
-                   
-                  </View>
-                  <View className="f-row flex w-1-2 mr30">
-                    {searchPosts.images &&
-                      searchPosts.images.length > 0 &&
-                      searchPosts.images.map(v => (
-                        (v !== 'image1.png' && v!== '') &&
+                    <View className="f-column">
+                      <Text className="lightGrey medium t-left">
+                        {searchPosts.text}
+                      </Text>
+                      {this.state.user &&
+                        this.state.user.role === 'admin' && (
                           <Image
-                            className="x_l_thumb m5"
-                            source={{ uri: v }}
+                            className="micro_thumb m5"
+                            source={require('../images/icons/delete.jpg')}
                             resizeMode="cover"
                           />
-                    ))}
+                        )}
+                    </View>
+
+                    <View className="f-column">
+                      <View className="f-row flex w-1-2 mr30">
+                        {searchPosts.tags &&
+                          searchPosts.tags.length > 0 &&
+                          searchPosts.tags.map((v, i) => (
+                            <Text className="lgBlue bold medium t-left">
+                              {' '}
+                              #{v.tag}
+                            </Text>
+                          ))}
+                      </View>
+                      <View className="f-row flex w-1-2 mr30">
+                        {searchPosts.images &&
+                          searchPosts.images.length > 0 &&
+                          searchPosts.images.map(v => (
+                            (v !== 'image1.png' && v!== '') &&
+                              <Image
+                                className="x_l_thumb m5"
+                                source={{ uri: v }}
+                                resizeMode="cover"
+                              />
+                          ))}
+                      </View>
+                    </View>
                   </View>
+                  <View className="f-row pull-right f-both ">
+                     {searchPosts.waters &&
+                        searchPosts.waters.length > 0 &&
+                        <View className="f-row">
+                          <Image
+                            className="normal_thumb m10"
+                            source={require('../images/icons/drop.jpg')}
+                            resizeMode="cover"
+                          />
+                        </View>  
+                      }
+                  </View>
+                  <View className="dividerGrey" />
                 </View>
-                <View className="f-row pull-right f-both m20">
-                   {searchPosts.waters &&
-                      searchPosts.waters.length > 0 &&
-                      <View className="f-row">
-                        <Image
-                          className="normal_thumb m10"
-                          source={require('../images/icons/drop.jpg')}
-                          resizeMode="cover"
-                        />
-                        <Text className=" mt20 marginLeft20 darkgrey bold small t-center">
-                          {' '}
-                          ({searchPosts.waters.length} )
-                        </Text>
-                      </View>  
-                    }
-                </View>
-              </View>
             </View>
           </View>
         </View>
@@ -161,16 +158,15 @@ class NewsFeed extends React.PureComponent {
           navigation={this.props.navigation}
           createPostRequest={this.goToCreatePost}
         />
-        {/*<View className="shadowBox w-1-1">
+        <View className="shadowBox w-1-1">
           <TextInput
             style={{
-              height: 35,
+              height: 36,
               backgroundColor: Colors.white,
               borderRadius: 5,
               borderWidth: 1,
               borderColor: Colors.white,
-              alignItems: 'center',
-              justifyContent: 'center',
+              textAlign: 'center'
             }}
             placeholder="Search"
             placeholderTextColor="grey"
@@ -178,7 +174,7 @@ class NewsFeed extends React.PureComponent {
             underlineColorAndroid="transparent"
             onChangeText={this.searchPosts}
           />
-        </View>*/}
+        </View>
         {this.state.searchPosts.length === 0 && (
           <ScrollView>
             <View className="p3">
@@ -271,10 +267,11 @@ class NewsFeed extends React.PureComponent {
           </ScrollView>
         )}
 
-        {/*<ListView
+
+        <ListView
           dataSource={ds.cloneWithRows(this.state.searchPosts)}
           renderRow={this.renderAdress}
-        />*/}
+        />
         <Footer navigation={this.props.navigation} />
       </View>
     );
