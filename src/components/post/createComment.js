@@ -193,10 +193,10 @@ class CreateComment extends React.PureComponent {
               <View className="m10 mt20">
                 <View className="f-center f-row">
                   <View>
-                    <Text className="darkGrey bold large t-center ">
+                    <Text className="darkGrey bold large t-center mb20">
                       {this.state.currentPostData.text}
                     </Text>
-                    {this.state.currentPostData &&
+                    {/* {this.state.currentPostData &&
                       this.state.currentPostData.comments &&
                       this.state.currentPostData.comments.length > 0 &&
                       this.state.currentPostData.comments.map(value => (
@@ -205,7 +205,7 @@ class CreateComment extends React.PureComponent {
                           {'\n'} {' - '}
                           {value.commentBy.userName}
                         </Text>
-                      ))}
+                      ))}*/}
                     <TextInput
                       style={{ color: '#585858', fontSize: 16, width: 250 }}
                       value={this.state.message}

@@ -12,7 +12,7 @@ import BackgroundImage from './BackgroundImage';
 import TextInput from './TextInput';
 import KeyboardAvoidingView from './KeyboardAvoidingView';
 import Header from './Header';
-import NewsFeedHeader from './NewsFeedHeader';
+import TagHeader from './TagHeader';
 import Footer from './Footer';
 import Switch from './Switch';
 import Overlay from './Overlay';
@@ -34,7 +34,7 @@ export {
   BackgroundImage,
   TextInput,
   Header,
-  NewsFeedHeader,
+  TagHeader,
   Footer,
   Switch,
   Overlay,

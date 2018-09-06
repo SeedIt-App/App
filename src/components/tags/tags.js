@@ -67,7 +67,7 @@ class Tags extends React.PureComponent {
 
   goToAddComment = section => {
     console.log(section);
-    this.props.navigation.navigate('CreateComment', {
+    this.props.navigation.navigate('ViewComments', {
       postData: section,
     });
   };
@@ -153,16 +153,33 @@ class Tags extends React.PureComponent {
           </View>
           <View className="f-row pull-right f-both ">
             {section.waters &&
-              section.waters.length > 0 &&
+              section.waters.length > 0 ?
+                <View className="f-row">
+                  { section.waters.map( v => (
+                    (v._id === this.state.user._id) &&
+                    <Image
+                      className="normal_thumb m15"
+                      source={require('../images/icons/drop.jpg')}
+                      resizeMode="cover"
+                    />)
+                  )}
+                  <Text className=" mt20 marginLeft20 darkgrey bold medium t-center">
+                    {' '}{section.waters.length}
+                  </Text>
+                </View> 
+              :
               <View className="f-row">
                 <Image
-                  className="normal_thumb m10"
-                  source={require('../images/icons/drop.jpg')}
+                  className="big_thumb m5"
+                  source={require('../images/icons/grey_drop.png')}
                   resizeMode="cover"
                 />
+                <Text className=" mt20 marginLeft20 darkgrey bold medium t-center">
+                  {' '}{section.waters.length}
+                </Text>  
               </View>  
-            }
-          </View>
+            }  
+        </View>
         </View>
         <View className="dividerGrey" />
       </View>

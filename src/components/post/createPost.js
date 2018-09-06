@@ -11,7 +11,7 @@ import {
   Switch,
   BackgroundImage,
 } from '../common';
-import { AuthActions, PostActions } from '../../actions';
+import { AuthActions, PostActions , NewsFeedActions} from '../../actions';
 import idx from 'idx';
 import { TextInput,Platform } from 'react-native';
 import Toast from 'react-native-root-toast';
@@ -46,7 +46,10 @@ class CreatePost extends React.PureComponent {
         backgroundColor : '#bcf2c8',
         textColor : '#585858',
       });
-      this.props.navigation.navigate('newsfeed');
+      nextProps.userNewsFeed();
+      if(nextProps.userNewsFeedRequestStatus === 'SUCCESS' ){
+        this.props.navigation.navigate('NewsFeed')
+      }
     }
   }
 
@@ -127,7 +130,8 @@ class CreatePost extends React.PureComponent {
   };
 
   render() {
-    const { user, createPostRequestStatus, createPostErrorStatus } = this.props;
+    const { user, createPostRequestStatus, createPostErrorStatus,
+    userNewsFeed, userNewsFeedRequestStatus, userNewsFeedErrorStatus } = this.props;
     const { picture } = this.props.user;
     return (
       <View className="screen">
@@ -198,7 +202,7 @@ class CreatePost extends React.PureComponent {
                     <TextInput
                       style={{ color: '#585858', fontSize: 16, width: 250 }}
                       value={this.state.message}
-                      placeholder="Type your idea here"
+                      placeholder="What's bothering you?"
                       placeholderTextColor="#585858"
                       autoCapitalize="none"
                       underlineColorAndroid="transparent"
@@ -249,11 +253,19 @@ function mapStateToProps(state) {
   const token = state.auth.authToken;
   const { user } = state.auth;
   const { createPostRequestStatus, createPostErrorStatus } = state.post;
+  const {
+    userNewsFeed,
+    userNewsFeedRequestStatus,
+    userNewsFeedErrorStatus,
+  } = state.newsFeed;
   return {
     token,
     user,
     createPostRequestStatus,
     createPostErrorStatus,
+    userNewsFeed,
+    userNewsFeedRequestStatus,
+    userNewsFeedErrorStatus,
   };
 }
-export default connect(mapStateToProps, { ...AuthActions, ...PostActions })(CreatePost);
+export default connect(mapStateToProps, { ...AuthActions, ...PostActions, ...NewsFeedActions })(CreatePost);

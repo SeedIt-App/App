@@ -125,7 +125,7 @@ class Login extends React.PureComponent {
             className="flex f-row expand"
             source={require('../images/background_images/Seed_IT.png')}
           >
-            <View className="h-1-1 space-around flex">
+            <View className="h-1-1 space-around flex mt20">
               <ScrollView>
                 <View className="f-center">
                   <Text className="dashHeading complementary bold">
@@ -174,7 +174,7 @@ class Login extends React.PureComponent {
                         className="showPasswordAuth"
                         onPress={this.toggleSwitch}
                       >
-                        <Text className="#585858 bold medium m10">Show</Text>
+                        <Text className="darkGrey medium m10">Show</Text>
                       </Touchable>
                     </View>
                   </View>

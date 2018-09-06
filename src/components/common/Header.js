@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { View, Colors, Touchable, Icon, Text, Image } from './';
 import { AuthActions, UserActions } from '../../actions';
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage ,StatusBar} from 'react-native';
 
 class Header extends React.PureComponent {
 
@@ -42,64 +42,74 @@ class Header extends React.PureComponent {
     const { user, token } = this.props;
     return (
       <View>
-        <View className="f-row bg-header p5">
-          <View className="w-1-1 f-row f-both h65">
-            {props.back ? (
-              <Touchable className="pull-left" onPress={this.goBack}>
-                <Icon
-                  name="keyboard-backspace"
-                  color={Colors.white}
-                  size={28}
-                />
-              </Touchable>
-            ) : (
-              <Touchable className="pull-left" onPress={this.goToNewsfeed}>
-                <Image
-                  className="medium_thumb"
-                  source={require('../images/logo.png')}
-                />
-              </Touchable>
-            )}
-            <Text className="complementary title bold m10">{props.title}</Text>
-           
-            {(props.title === 'Tags' ||
-              props.title === 'Followed' ||
-              props.title === 'Levels') &&
-              (token !== '') && (
-                <Touchable
-                  className="pull-right"
-                  onPress={() => this.props.createPostRequest()}
-                >
+        <View>
+          <StatusBar
+            translucent
+            backgroundColor="rgba(0, 0, 0, 0.10)"
+            animated
+            barStyle="light-content"
+          />
+        </View>  
+        <View>     
+          <View className="f-row bg-header p5">
+            <View className="w-1-1 f-row f-both h65 mt15">
+              {props.back ? (
+                <Touchable className="pull-left" onPress={this.goBack}>
+                  <Icon
+                    name="keyboard-backspace"
+                    color={Colors.white}
+                    size={28}
+                  />
+                </Touchable>
+              ) : (
+                <Touchable className="pull-left" onPress={this.goToNewsfeed}>
                   <Image
-                    className="mini1_thumb"
-                    source={require('../images/icons/plus.png')}
+                    className="medium_thumb"
+                    source={require('../images/logo.png')}
                   />
                 </Touchable>
               )}
-            {props.title === 'Profile' && (
-              <Touchable
-                className="pull-right"
-                onPress={() => this.props.openRequest()}
-              >
-                <Image
-                  className="medium_thumb"
-                  source={require('../images/icons/setting.png')}
-                />
-              </Touchable>
-            )}
+              <Text className="complementary title bold m10">{props.title}</Text>
+             
+              {(props.title === 'NewsFeed' ||
+                props.title === 'Tags' ||
+                props.title === 'Followed' ||
+                props.title === 'Levels') &&
+                (token !== '') && (
+                  <Touchable
+                    className="pull-right"
+                    onPress={() => this.props.createPostRequest()}
+                  >
+                    <Image
+                      className="mini1_thumb"
+                      source={require('../images/icons/plus.png')}
+                    />
+                  </Touchable>
+                )}
+              {props.title === 'Profile' && (
+                <Touchable
+                  className="pull-right"
+                  onPress={() => this.props.openRequest()}
+                >
+                  <Image
+                    className="medium_thumb"
+                    source={require('../images/icons/setting.png')}
+                  />
+                </Touchable>
+              )}
 
-            {props.title === 'EditProfile' && (
-              <Touchable
-                className="pull-right"
-                onPress={() => this.props.saveProfile()}
-              >
-                <Text className="complementary title m10">Save</Text>
-              </Touchable>
-            )}
+              {props.title === 'EditProfile' && (
+                <Touchable
+                  className="pull-right"
+                  onPress={() => this.props.saveProfile()}
+                >
+                  <Text className="complementary title m10">Save</Text>
+                </Touchable>
+              )}
+            </View>
           </View>
         </View>
-        <View className="dividerBlack" />
-      </View>
+      </View>  
     );
   }
 }

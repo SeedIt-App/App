@@ -286,7 +286,7 @@ class SignUp extends React.PureComponent {
                         className="showPasswordAuth"
                         onPress={this.toggleSwitchP}
                       >
-                        <Text className="#585858 bold medium m10">Show</Text>
+                        <Text className="darkGrey medium m10">Show</Text>
                       </Touchable>
                     </View>
                   </View>
@@ -311,7 +311,7 @@ class SignUp extends React.PureComponent {
                         className="showPasswordAuth"
                         onPress={this.toggleSwitchCp}
                       >
-                        <Text className="#585858 bold medium m10">Show</Text>
+                        <Text className="darkGrey medium m10">Show</Text>
                       </Touchable>
                     </View>
                   </View>

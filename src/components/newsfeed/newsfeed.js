@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Text, View, Touchable, NewsFeedHeader, Image, Footer, ScrollView, Spinner, Colors} from '../common';
+import { Text, View, Touchable, Header, Image, Footer, ScrollView, Spinner, Colors} from '../common';
 import { AuthActions, NewsFeedActions, PostActions } from '../../actions';
 import { TextInput, ListView } from 'react-native';
 import Toast from 'react-native-root-toast';
@@ -47,10 +47,28 @@ class NewsFeed extends React.PureComponent {
     this.props.updateWaterPost(body);
   };
 
+  // searchPosts = searchedText => {
+  //   const searchPosts =
+  //     this.props.getAllNewsFeed &&
+  //     this.props.getAllNewsFeed.filter((nf) => nf.text.toLowerCase().indexOf(searchedText.toLowerCase()) > -1);
+  //   this.setState({ searchPosts });
+  // };
+
   searchPosts = searchedText => {
-    const searchPosts =
+    let searchPosts = [];
       this.props.getAllNewsFeed &&
-      this.props.getAllNewsFeed.filter((nf) => nf.text.toLowerCase().indexOf(searchedText.toLowerCase()) > -1);
+       this.props.getAllNewsFeed.forEach(function(nf){
+          if(nf.text.toLowerCase().indexOf(searchedText)!=-1){
+            searchPosts.push(nf);
+          }
+          else{
+            nf.tags.forEach(function(t){
+              if(t.tag.toLowerCase().indexOf(searchedText)!=-1){
+                searchPosts.push(nf);
+              }
+           }) 
+          }
+        });
     this.setState({ searchPosts });
   };
 
@@ -153,7 +171,7 @@ class NewsFeed extends React.PureComponent {
     return (
       <View className="screen">
         <NotificationHandler />
-        <NewsFeedHeader
+        <Header
           title="NewsFeed"
           navigation={this.props.navigation}
           createPostRequest={this.goToCreatePost}
@@ -244,15 +262,32 @@ class NewsFeed extends React.PureComponent {
                         </View>
                         <View className="f-row pull-right f-both ">
                            {value.waters &&
-                              value.waters.length > 0 &&
+                              value.waters.length > 0 ?
+                                <View className="f-row">
+                                  { value.waters.map( v => (
+                                    (v._id === this.props.user._id) &&
+                                    <Image
+                                      className="normal_thumb m15"
+                                      source={require('../images/icons/drop.jpg')}
+                                      resizeMode="cover"
+                                    />)
+                                  )}
+                                  <Text className=" mt20 marginLeft20 darkgrey bold medium t-center">
+                                    {' '}{value.waters.length}
+                                  </Text>
+                                </View> 
+                              :
                               <View className="f-row">
                                 <Image
-                                  className="normal_thumb m10"
-                                  source={require('../images/icons/drop.jpg')}
+                                  className="big_thumb m5"
+                                  source={require('../images/icons/grey_drop.png')}
                                   resizeMode="cover"
                                 />
+                                <Text className=" mt20 marginLeft20 darkgrey bold medium t-center">
+                                  {' '}{value.waters.length}
+                                </Text>  
                               </View>  
-                            }
+                            }  
                         </View>
                         <View className="dividerGrey" />
                       </View>

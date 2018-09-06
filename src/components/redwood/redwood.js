@@ -208,6 +208,9 @@ class Redwood extends React.PureComponent {
                 source={require('../images/icons/drop.jpg')}
                 resizeMode="cover"
               />
+              <Text className=" mt20 marginLeft20 darkgrey bold medium t-center">
+                {' '}{section.waters.length}
+              </Text>
             </View>  
           } 
         </View>

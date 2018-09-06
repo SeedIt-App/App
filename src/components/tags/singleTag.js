@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {Text, View, Touchable, Header, Image, Footer, ScrollView,Spinner} from '../common';
+import {Text, View, Touchable, TagHeader, Image, Footer, ScrollView,Spinner} from '../common';
 import { AuthActions, FollowActions, PostActions } from '../../actions';
 import { AsyncStorage } from 'react-native';
 import Toast from 'react-native-root-toast';
@@ -259,7 +259,7 @@ class SingleTag extends React.PureComponent {
 
     return (
       <View className="screen">
-        <Header
+        <TagHeader
           title={ '#'+ this.state.currentTagData.tag}
           back navigation={this.props.navigation}
           createPostRequest={this.goToCreatePost}

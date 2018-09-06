@@ -97,6 +97,10 @@ const imageStyles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 1,
   },
+  big_thumb : {
+    height: 60,
+    width: 60,
+  }
 
 });
 

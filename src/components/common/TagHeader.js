@@ -2,13 +2,20 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { View, Colors, Touchable, Icon, Text, Image } from './';
 import { AuthActions, UserActions } from '../../actions';
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage , StatusBar} from 'react-native';
 
-class NewsFeedHeader extends React.PureComponent {
+class TagHeader extends React.PureComponent {
 
   /* goToNotification = () => {
     this.props.navigation.navigate('Notifications');
   }*/
+
+  goToNewsfeed = () => {
+    this.props.navigation.navigate('Newsfeed');
+  };
+  goBack = () => {
+    this.props.navigation.goBack();
+  };
 
   goToSocialSignUp = () => this.props.navigation.navigate('SocialSignUp');
 
@@ -17,26 +24,33 @@ class NewsFeedHeader extends React.PureComponent {
     const { user, token } = this.props;
     return (
       <View>
+      <View>
+          <StatusBar
+            translucent
+            backgroundColor="rgba(0, 0, 0, 0.10)"
+            animated
+            barStyle="light-content"
+          />
+        </View> 
         <View className="f-row bg-header p5">
-          <View className="w-1-1 f-row f-both h65">
-            
-            <Touchable className="pull-left">
-              <Image
-                className="medium_thumb"
-                source={require('../images/logo.png')}
-              />
-            </Touchable>
+          <View className="w-1-1 f-row f-both h65 mt15">
+            {props.back ? (
+              <Touchable className="pull-left" onPress={this.goBack}>
+                <Icon
+                  name="keyboard-backspace"
+                  color={Colors.white}
+                  size={28}
+                />
+              </Touchable>
+            ) : (
+              <Touchable className="pull-left" onPress={this.goToNewsfeed}>
+                <Image
+                  className="medium_thumb"
+                  source={require('../images/logo.png')}
+                />
+              </Touchable>
+            )}
             <Text className="complementary title bold m10">{props.title}</Text>
-            { 
-              (this.props.token === null) &&
-                (<Touchable
-                  className="pull-right"
-                  onPress={this.goToSocialSignUp}
-                  >
-                  <Text className="complementary large_sm m10">Sign Up</Text>
-                </Touchable>)
-            }  
-          
             { (this.props.token !== null) &&
                 (<Touchable
                   className="pull-right"
@@ -63,7 +77,6 @@ class NewsFeedHeader extends React.PureComponent {
             }*/}
           </View>
         </View>
-        <View className="dividerBlack" />
       </View>
     );
   }
@@ -84,4 +97,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { ...AuthActions, ...UserActions })(NewsFeedHeader);
+export default connect(mapStateToProps, { ...AuthActions, ...UserActions })(TagHeader);
