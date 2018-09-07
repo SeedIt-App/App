@@ -139,17 +139,34 @@ class NewsFeed extends React.PureComponent {
                     </View>
                   </View>
                   <View className="f-row pull-right f-both ">
-                     {searchPosts.waters &&
-                        searchPosts.waters.length > 0 &&
+                    {searchPosts.waters &&
+                      searchPosts.waters.length > 0 ?
                         <View className="f-row">
-                          <Image
-                            className="normal_thumb m10"
-                            source={require('../images/icons/drop.jpg')}
-                            resizeMode="cover"
-                          />
-                        </View>  
-                      }
-                  </View>
+                          { searchPosts.waters.map( v => (
+                            (v._id === this.props.user._id) &&
+                            <Image
+                              className="normal_thumb m15"
+                              source={require('../images/icons/drop.jpg')}
+                              resizeMode="cover"
+                            />)
+                          )}
+                          <Text className=" mt20 marginLeft20 darkgrey bold medium t-center">
+                            {' '}{searchPosts.waters.length}
+                          </Text>
+                        </View> 
+                      :
+                      <View className="f-row">
+                        <Image
+                          className="big_thumb m5"
+                          source={require('../images/icons/grey_drop.png')}
+                          resizeMode="cover"
+                        />
+                        <Text className=" mt20 marginLeft20 darkgrey bold medium t-center">
+                          {' '}{searchPosts.waters.length > 0 && searchPosts.waters.length}
+                        </Text>  
+                      </View>  
+                    }  
+                </View>
                   <View className="dividerGrey" />
                 </View>
             </View>
@@ -284,7 +301,7 @@ class NewsFeed extends React.PureComponent {
                                   resizeMode="cover"
                                 />
                                 <Text className=" mt20 marginLeft20 darkgrey bold medium t-center">
-                                  {' '}{value.waters.length}
+                                  {' '}{value.waters.length > 0 && value.waters.length}
                                 </Text>  
                               </View>  
                             }  

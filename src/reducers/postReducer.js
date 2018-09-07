@@ -109,7 +109,7 @@ export default function (state = initialState, action) {
       state = ip.setIn(
         state,
         ['addNewCommentToPostErrorStatus'],
-        action.payload,
+        action.payload
       );
       return ip.setIn(
         state,

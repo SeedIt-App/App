@@ -31,12 +31,21 @@ class CreateComment extends React.PureComponent {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.addNewCommentToPostErrorStatus) {
-      Toast.show(nextProps.addNewCommentToPostErrorStatus,{
+      Toast.show('text length must be at least 8 characters long',{
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
         backgroundColor : '#bcf2c8',
         textColor : '#585858',
       });
+    }
+    if (nextProps.addNewCommentToPostRequestStatus === 'SUCCESS') {
+      Toast.show('Comment added to the post',{
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM,
+        backgroundColor : '#bcf2c8',
+        textColor : '#585858',
+      });
+        this.props.navigation.navigate('NewsFeed')
     }
   }
 
@@ -45,28 +54,29 @@ class CreateComment extends React.PureComponent {
   };
 
   addToComment = () => {
+    let validateText = /^[a-zA-Z0-9_ ]{8,}$/;
+
     if (this.state.message !== '') {
-      const body = {
-        postId: this.state.currentPostData._id,
-        text: this.state.message,
-        images: [this.state.image],
-      };
-      this.props.addNewCommentToPost(body);
-      if (this.props.addNewCommentToPostRequestStatus === 'SUCCESS') {
-        Toast.show('Comment added to the post',{
-        duration: Toast.durations.LONG,
-        position: Toast.positions.BOTTOM,
-        backgroundColor : '#bcf2c8',
-        textColor : '#585858',
-      });
-      }
-    } else {
       Toast.show('Please write the text for comment',{
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
         backgroundColor : '#bcf2c8',
         textColor : '#585858',
       });
+    } else if(!validateText.test(parseInt(this.state.message)) ){
+      Toast.show("Post length must be at least 8 characters long",{
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM,
+        backgroundColor : '#bcf2c8',
+        textColor : '#585858',
+      });
+    }  else {
+      const body = {
+        postId: this.state.currentPostData._id,
+        text: this.state.message,
+        images: [this.state.image],
+      };
+      this.props.addNewCommentToPost(body);
     }
   };
 
@@ -154,31 +164,25 @@ class CreateComment extends React.PureComponent {
                     <View className="f-row">
                       {this.state.userNameFlag ? (
                         <View>
-                          <Text className="darkGrey bold large t-center">
+                          <Text className="darkGrey bold large t-left">
                             {this.props.user
                               ? idx(this.props.user, _ => _.userName)
                               : 'User name'}
                           </Text>
-                           <View className="f-row ml25 mt3">
+                           <View className="f-row  mt3">
                             <Image
                               className="mt5"
                               source={require('../images/icons/location.png')}
                               resizeMode="cover"
                             />
-                            <Text className="lightGrey medium ml5">
-                              {this.props.user && this.props.user.address && this.props.user.city 
-                              ? this.props.user.address.city
-                              : 'Add a location'}
+                            <Text className="lightGrey medium  t-left">
+                              {(this.props.user && this.props.user.address && this.props.user.address.city) ?
+                              this.props.user.address.city : 'Add a location'}
                             </Text>
                           </View>
                         </View>
                       ) : null}
                     </View>
-                    <Text className="lightGrey medium t-center">
-                      {this.props.user
-                        ? idx(this.props.user.address, _ => _.city)
-                        : 'Location'}
-                    </Text>
                   </View>
                   <View className="f-column pull-right mt10 f-both m20">
                     <Text className="lightGrey medium t-center">Show Username</Text>

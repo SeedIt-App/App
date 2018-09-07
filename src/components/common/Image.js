@@ -101,7 +101,6 @@ const imageStyles = StyleSheet.create({
     height: 60,
     width: 60,
   }
-
 });
 
 export default props => {

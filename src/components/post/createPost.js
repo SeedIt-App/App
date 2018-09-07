@@ -31,8 +31,8 @@ class CreatePost extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.createPostErrorStatus) {
-      Toast.show(nextProps.createPostErrorStatus,{
+    if (nextProps.createPostErrorStatus  === 'FAILED') {
+      Toast.show(nextProps.createPostErrorStatus ,{
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
         backgroundColor : '#bcf2c8',
@@ -58,19 +58,30 @@ class CreatePost extends React.PureComponent {
   };
 
   createNewPost = () => {
-    if (this.state.message !== '') {
-      const body = {
-        text: this.state.message,
-        images: [this.state.image],
-      };
-      this.props.createPost(body);
-    } else {
+    let validateText = /^[a-zA-Z0-9_ ]{8,}$/;
+
+    if (this.state.message === '') {
       Toast.show('Please write the text for post',{
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
         backgroundColor : '#bcf2c8',
         textColor : '#585858',
       });
+    }
+    else if(!validateText.test(this.state.message) ){
+      Toast.show("Post length must be at least 8 characters long",{
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM,
+        backgroundColor : '#bcf2c8',
+        textColor : '#585858',
+      });
+    } 
+    else {
+      const body = {
+        text: this.state.message,
+        images: [this.state.image],
+      };
+      this.props.createPost(body);
     }
   };
 
@@ -159,19 +170,19 @@ class CreatePost extends React.PureComponent {
                   <View className="f-column j-start mt10 ">
                     <View className="f-row">
                       {this.state.userNameFlag ? (
-                        <View>
-                          <Text className="darkGrey bold large t-center">
+                        <View className="mh20">
+                          <Text className="darkGrey bold large t-left">
                             {this.props.user
                               ? idx(this.props.user, _ => _.userName)
                               : 'User name'}
                           </Text>
-                          <View className="f-row ml25 mt3">
+                          <View className="f-row  mt3">
                             <Image
                               className="mt5"
                               source={require('../images/icons/location.png')}
                               resizeMode="cover"
                             />
-                            <Text className="lightGrey medium ml5">
+                            <Text className="lightGrey medium ">
                               {this.props.user && this.props.user.address && this.props.user.city 
                               ? this.props.user.address.city
                               : 'Add a location'}
@@ -180,11 +191,6 @@ class CreatePost extends React.PureComponent {
                         </View>
                       ) : null}
                     </View>
-                    <Text className="lightGrey medium t-center">
-                      {this.props.user
-                        ? idx(this.props.user.address, _ => _.city)
-                        : 'Location'}
-                    </Text>
                   </View>
                   <View className="f-column pull-right mt10 f-both m10">
                     <Text className="darkGrey medium t-center">Show Username</Text>
