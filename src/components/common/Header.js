@@ -49,7 +49,7 @@ class Header extends React.PureComponent {
             barStyle="dark-content"
             hidden={false} 
           />
-        </View>   : 
+        </View> : 
         <View>
           <StatusBar
             backgroundColor="rgba(0, 0, 0, 0.10)"

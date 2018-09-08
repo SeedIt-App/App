@@ -47,7 +47,7 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
-  self.window.backgroundColor = [UIColor colorWithRed:8 green:232 blue:236 alpha:1.00];
+  self.window.backgroundColor = [UIColor colorWithRed:8 green:232 blue:236 alpha:0.50];
   [application setStatusBarStyle:UIStatusBarStyleLightContent];
   return YES;
 }

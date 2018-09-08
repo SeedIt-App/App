@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { View, Colors, Touchable, Icon, Text, Image } from './';
 import { AuthActions, UserActions } from '../../actions';
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage,Platform } from 'react-native';
 
 class Footer extends React.PureComponent {
   goToLogin = () => this.props.navigation.navigate('Login');
@@ -19,6 +19,7 @@ class Footer extends React.PureComponent {
 
     return (
       <View className="footer">
+        <View className="footerBottom">
         <View className="w-1-9 f-row f-both space-between m10">
           { this.props.token === null && (
             <View className="p5">
@@ -121,6 +122,7 @@ class Footer extends React.PureComponent {
             <Text>Followed</Text>
           </View>*/}
         </View>
+      </View>
       </View>
     );
   }

@@ -609,6 +609,9 @@ export default StyleSheet.create({
   'app-container': {
     marginTop: Platform.OS === 'ios' ? 20 : 0,
   },
+  footerBottom : {
+    marginBottom : Platform.OS === 'ios' && height == 812 ? 20 : null,
+  },
   footer: {
     position: 'absolute',
     flex: 0.1,
@@ -619,7 +622,7 @@ export default StyleSheet.create({
     borderTopColor: Colors.lgGrey,
     borderTopWidth: 2,
     flexDirection: 'row',
-    height: 68,
+    height: Platform.OS === 'ios' && height == 812 ? 90 : 68,
     alignItems: 'center',
   },
   overlay: {
