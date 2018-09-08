@@ -40,13 +40,15 @@
                                                       moduleName:@"SeedIt"
                                                initialProperties:nil
                                                    launchOptions:launchOptions];
-  rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
+  rootView.backgroundColor = [[UIColor alloc] initWithRed:0 green:0 blue:0 alpha:0.10];
 
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   UIViewController *rootViewController = [UIViewController new];
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+  self.window.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.10];
+  [application setStatusBarStyle:UIStatusBarStyleLightContent];
   return YES;
 }
 
